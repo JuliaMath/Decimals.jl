@@ -54,6 +54,18 @@ d = [
 @test float(Decimal(0, 2001, 2)) == 200100
 @test float(Decimal(1, 123, -3)) == -0.123
 @test float(Decimal(0, 123, -2)) == 1.23
+@test number(Decimal(0, 1, -2)) == 0.01
+@test number(Decimal(0, 1, -3)) == 0.001
+@test number(Decimal(0, 1523, -2)) == 15.23
+@test number(Decimal(0, 543, 0)) == 543
+@test number(Decimal(1, 345, 0)) == -345
+@test number(Decimal(0, 123, 0)) == 123
+@test number(Decimal(1, 32, 0)) == -32
+@test number(Decimal(0, 2001, 2)) == 200100
+@test number(Decimal(1, 123, -3)) == -0.123
+@test number(Decimal(0, 123, -2)) == 1.23
+@test string(float(Decimal(0, 543, 0))) == "543.0"
+@test string(number(Decimal(0, 543, 0))) == "543"
 
 # Equality
 @test equals(Decimal(0, 2, -3), Decimal(0, 2, -3))

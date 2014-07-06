@@ -7,8 +7,7 @@ function decimal(str::String)
     if 'e' in str
         n, expo = split(str, 'e')
         n = split(n, '.')
-        shift = length(n[2])
-        return decimal(join(n) * repeat("0", int(expo) - shift))
+        return decimal(join(n) * repeat("0", int(expo) - length(n[2])))
     else
         for chr in str
             index += 1
@@ -46,3 +45,11 @@ end
 
 # Convert a decimal to a float
 float(x::Decimal) = float(string(x))
+
+# Convert a decimal to an integer if possible, a float if not
+function number(x::Decimal)
+    str = string(x)
+    fx = float(str)
+    ix = int(fx)
+    (ix == fx) ? ix : fx
+end

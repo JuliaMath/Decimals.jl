@@ -6,7 +6,7 @@ module Decimals
 import Base: string, float
 
 # TODO export equality operators
-export Decimal, decimal, string, float, equals, ==, triple_equals, is,
+export Decimal, decimal, string, float, number, equals, ==, triple_equals, is,
     add, subtract, negative, multiply, normalize, round
 
 # Numerical value: (-1)^s * c * 10^q

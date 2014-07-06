@@ -50,7 +50,7 @@ It is also possible to call the Decimal constructor directly, by specifying the 
 
 The numerical value of a Decimal is given by `(-1)^s * c * 10^q`.  `s` must be 0 (positive) or 1 (negative).  `c` must be non-negative; `c` and `q` must be integers.
 
-#### Arithmetic operations
+#### Operations
 
     julia> x, y = decimal("0.2"), decimal("0.1");
 
