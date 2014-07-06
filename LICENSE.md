@@ -1,6 +1,6 @@
 The Decimals.jl package is licensed under the MIT "Expat" License:
 
-> Copyright (c) 2014: Jack Peterson.
+> Copyright (c) 2014: Jack Peterson <jack@tinybike.net>
 >
 > Permission is hereby granted, free of charge, to any person obtaining
 > a copy of this software and associated documentation files (the
