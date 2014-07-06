@@ -87,3 +87,6 @@ d = [
 @test decimal(0.2) * 0.1 == 0.2 * decimal(0.1) == decimal(0.02)
 @test decimal(12.34) * 0.1234 == 12.34 * decimal(0.1234) == decimal(1.522756)
 @test decimal(0.21084210) * -2 == -2 * decimal(0.21084210) == decimal(-0.4216842)
+
+# Quantization
+

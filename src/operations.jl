@@ -5,11 +5,9 @@ triple_equals(x::Decimal, y::Decimal) = ((x.s === y.s) &&
 triple_equals(x::Decimal, y::Number) = false
 triple_equals(x::Number, y::Decimal) = false
 
-function equals(x::Decinum, y::Decinum)
-    x_decimal = normalize((isa(x, Decimal)) ? x : decimal(x))
-    y_decimal = normalize((isa(y, Decimal)) ? y : decimal(y))
-    triple_equals(x_decimal, y_decimal)
-end
+equals(x::Decimal, y::Decimal) = triple_equals(normalize(x), normalize(y))
+equals(x::Decimal, y::Number) = equals(x, decimal(y))
+equals(x::Number, y::Decimal) = equals(decimal(x), y)
 
 # Addition
 # To add, convert both decimals to the same exponent.
@@ -48,3 +46,8 @@ is(x::Decinum, y::Decinum) = triple_equals(x, y)
 -(x::Decimal) = negative(x)
 -(x::Decinum, y::Decinum) = subtract(x, y)
 *(x::Decinum, y::Decinum) = multiply(x, y)
+
+# Quantization
+function quantize(x::Decimal)
+
+end
