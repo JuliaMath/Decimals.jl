@@ -50,7 +50,7 @@ It is also possible to call the Decimal constructor directly, by specifying the 
 
 The numerical value of a Decimal is given by `(-1)^s * c * 10^q`.  `s` must be 0 (positive) or 1 (negative).  `c` must be non-negative; `c` and `q` must be integers.
 
-#### Operations
+#### Arithmetic operations
 
     julia> x, y = decimal("0.2"), decimal("0.1");
 
@@ -96,6 +96,14 @@ Equals:
     false
 
 (I haven't yet been able to overload and export `==` or `===` operators.  If you know how to do this, please let me know...)
+
+Rounding:
+
+    julia> round(decimal(3.1415), 2)
+    Decimal(0,314,-2)
+
+    julia> string(ans)
+    "3.14"
 
 ### Tests
 
