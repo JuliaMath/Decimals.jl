@@ -1,15 +1,15 @@
 ## Decimals.jl
 
-Some basic routines for exact decimal arithmetic, as specified in [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point "Wikipedia: IEEE floating point").  Supports addition, subtraction, negation, multiplication, and equality operations; division and exponentiation coming as soon as I find the time to write them.  Tested in Julia v. 0.3.0-prerelease+4028.
+Some basic routines for exact decimal arithmetic, as specified in [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point "Wikipedia: IEEE floating point").  Supports addition, subtraction, negation, multiplication, and equality operations; division and exponentiation coming as soon as I find the time to write them.  (Tested in Julia v. 0.3.0-prerelease+4028.)
 
 ### Background
 
 Why is this needed?  Because floating point arithmetic does things like this:
 
-    julia> 0.1+0.2
+    julia> 0.1 + 0.2
     0.30000000000000004
 
-Yikes.  Clearly, this is not okay for fields like finance, where it's important to be able to trust that $0.30 is actually 30 cents, not 30.000000000000004 cents.
+Clearly, this is not okay for fields like finance, where it's important to be able to trust that $0.30 is actually 30 cents, rather than 30.000000000000004 cents.
 
 (For an in-depth explanation of the underlying problem - "ordinary" decimals like 0.1 and 0.2 are base-10 numbers, many of which do not have an exact representation in binary - check out the amusingly-named [floating-point-gui.de](http://floating-point-gui.de/ "What Every Programmer Should Know About Floating-Point Arithmetic").)
 
@@ -72,7 +72,7 @@ Multiplication:
     julia> string(x * y)
     "0.02"
 
-Equals (can't export overloaded `==` operator...):
+Equals:
 
     julia> equals(x, decimal("0.2"))
     true
@@ -80,18 +80,20 @@ Equals (can't export overloaded `==` operator...):
     julia> equals(x, decimal("0.1"))
     false
 
-`equals` returns true for Decimal-Number comparisons:
+`equals()` returns true for Decimal-Number comparisons:
 
     julia> equals(x, 0.2)
     true
 
-`is` only returns true between two Decimal objects:
+`is()` only returns true between two Decimal objects:
 
     julia> is(x, decimal("0.2"))
     true
 
     julia> is(x, 0.2)
     false
+
+(I haven't yet been able to overload and export `==` or `===` operators.  If you know how to do this, please let me know...)
 
 ### Tests
 
