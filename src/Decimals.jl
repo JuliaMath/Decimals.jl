@@ -10,11 +10,13 @@ export Decimal, decimal, string, float, equals, ==, triple_equals, is,
     add, subtract, negative, multiply
 
 # Numerical value: (-1)^s * c * 10^q
-type Decimal
+immutable Decimal
     s::Integer  # sign can be 0 (+) or 1 (-)
     c::Integer  # coefficient (or significand)
     q::Integer  # exponent
 end
+
+Decinum = Union(Decimal, Number)
 
 # Convert between Decimal objects, numbers, and strings
 include("decimal.jl")

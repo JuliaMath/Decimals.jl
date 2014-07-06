@@ -14,5 +14,6 @@ before_install:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
 script:
   - julia -e 'Pkg.init(); Pkg.clone(pwd()); Pkg.test("Decimals")'
+  - julia --code-coverage test/runtests.jl
 after_success:
   - julia -e 'cd(Pkg.dir("Decimals")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'

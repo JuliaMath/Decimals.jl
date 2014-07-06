@@ -5,7 +5,7 @@ triple_equals(x::Decimal, y::Decimal) = ((x.s === y.s) &&
 triple_equals(x::Decimal, y::Number) = false
 triple_equals(x::Number, y::Decimal) = false
 
-function equals(x::Union(Decimal, Number), y::Union(Decimal, Number))
+function equals(x::Decinum, y::Decinum)
     x_decimal = normalize((isa(x, Decimal)) ? x : decimal(x))
     y_decimal = normalize((isa(y, Decimal)) ? y : decimal(y))
     triple_equals(x_decimal, y_decimal)
@@ -22,12 +22,15 @@ function add(x::Decimal, y::Decimal)
     d = Decimal(s, abs(cx + cy), min(x.q, y.q))
     normalize(d)
 end
+add(x::Decimal, y::Number) = add(x, decimal(y))
+add(x::Number, y::Decimal) = add(decimal(x), y)
 
 # Negation
 negative(x::Decimal) = Decimal((x.s == 1) ? 0 : 1, x.c, x.q)
+negative(x::Number) = -x
 
 # Subtraction
-subtract(x::Decimal, y::Decimal) = add(x, negative(y))
+subtract(x::Decinum, y::Decinum) = add(x, negative(y))
 
 # Multiplication
 function multiply(x::Decimal, y::Decimal)
@@ -35,16 +38,13 @@ function multiply(x::Decimal, y::Decimal)
     d = Decimal(s, x.c * y.c, x.q + y.q)
     normalize(d)
 end
+multiply(x::Decimal, y::Number) = multiply(x, decimal(y))
+multiply(x::Number, y::Decimal) = multiply(decimal(x), y)
 
 # Operator overloading
-==(x::Decimal, y::Decimal) = equals(x, y)
-
-is(x::Union(Decimal, Number), y::Union(Decimal, Number)) = triple_equals(x, y)
-
-+(x::Decimal, y::Decimal) = add(x, y)
-
+==(x::Decinum, y::Decinum) = equals(x, y)
+is(x::Decinum, y::Decinum) = triple_equals(x, y)
++(x::Decinum, y::Decinum) = add(x, y)
 -(x::Decimal) = negative(x)
-
--(x::Decimal, y::Decimal) = subtract(x, y)
-
-*(x::Decimal, y::Decimal) = multiply(x, y)
+-(x::Decinum, y::Decinum) = subtract(x, y)
+*(x::Decinum, y::Decinum) = multiply(x, y)
