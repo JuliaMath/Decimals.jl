@@ -48,7 +48,7 @@ It is also possible to call the Decimal constructor directly, by specifying the 
 
     julia> Decimal(1,2,-2)
 
-The numerical value of a Decimal is given by `(-1)^s * c * 10^q`.  `s` must be 0 (positive) or 1 (negative).  `c` and `q` must be non-negative integers.
+The numerical value of a Decimal is given by `(-1)^s * c * 10^q`.  `s` must be 0 (positive) or 1 (negative).  `c` must be non-negative; `c` and `q` must be integers.
 
 #### Operations
 

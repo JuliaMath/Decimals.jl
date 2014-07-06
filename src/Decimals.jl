@@ -7,7 +7,7 @@ import Base: string, float
 
 # TODO export equality operators
 export Decimal, decimal, string, float, equals, ==, triple_equals, is,
-    add, subtract, negative, multiply
+    add, subtract, negative, multiply, normalize, round
 
 # Numerical value: (-1)^s * c * 10^q
 immutable Decimal
@@ -24,7 +24,13 @@ include("decimal.jl")
 # Decimal normalization
 include("normalize.jl")
 
-# Addition, subtraction, negation, multiplication, and equality operators
-include("operations.jl")
+# Addition, subtraction, negation, multiplication
+include("arithmetic.jl")
+
+# Equality
+include("equals.jl")
+
+# Rounding
+include("round.jl")
 
 end
