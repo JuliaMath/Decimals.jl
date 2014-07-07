@@ -76,15 +76,15 @@ Multiplication:
 
 Equals:
 
-    julia> equals(x, decimal("0.2"))
+    julia> isequal(x, decimal("0.2"))
     true
 
-    julia> equals(x, decimal("0.1"))
+    julia> isequal(x, decimal("0.1"))
     false
 
-`equals()` returns true for Decimal-Number comparisons:
+`isequal()` returns true for Decimal-Number comparisons:
 
-    julia> equals(x, 0.2)
+    julia> isequal(x, 0.2)
     true
 
 `is()` only returns true between two Decimal objects:
