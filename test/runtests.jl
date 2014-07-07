@@ -30,6 +30,9 @@ d = [
 @test decimal("541724.2") == decimal(541724.2) == Decimal(0,5417242,-1)
 @test decimal("2.5e6") == decimal(2.5e6) == Decimal(0, 25, 5)
 @test decimal("2.385350e8") == decimal(2.385350e8) == Decimal(0, 238535, 3)
+@test decimal("12.3e-4") == decimal(12.3e-4) == Decimal(0, 123, -5)
+@test decimal("-12.3e4") == decimal(-12.3e4) == Decimal(1, 123000, 0)
+@test decimal("-12.3e-4") == decimal(-12.3e-4) == Decimal(1, 123, -5)
 
 # Decimal-to-string conversions
 @test string(Decimal(0, 1, -2)) == "0.01"
@@ -66,36 +69,37 @@ d = [
 @test number(Decimal(0, 123, -2)) == 1.23
 @test string(float(Decimal(0, 543, 0))) == "543.0"
 @test string(number(Decimal(0, 543, 0))) == "543"
+@test string(number(Decimal(0, 543, -1))) == "54.3"
 
 # Equality
-@test equals(Decimal(0, 2, -3), Decimal(0, 2, -3))
-@test equals(Decimal(0, 2, -3), 0.002)
-@test equals(Decimal(1, 2, 0), -2)
+@test isequal(Decimal(0, 2, -3), Decimal(0, 2, -3))
+@test isequal(Decimal(0, 2, -3), 0.002)
+@test isequal(Decimal(1, 2, 0), -2)
+@test is(Decimal(0, 2, -3), Decimal(0, 2, -3))
 @test ~is(decimal("0.2"), 0.2)
-@test triple_equals(Decimal(0, 2, -3), Decimal(0, 2, -3))
 
 # Normalization
 @test Decimal(1, 151100, -4) == Decimal(1, 1511, -2)
 @test Decimal(0, 100100, -5) == Decimal(0, 1001, -3)
 
 # Addition
-@test d[1] + d[2] == d[2] + d[1] == add(d[1], d[2]) == add(d[2], d[1]) == Decimal(0, 3, -1)
+@test d[1] + d[2] == d[2] + d[1] == Decimal(0, 3, -1)
 @test decimal(0.1) + 0.2 == 0.1 + decimal(0.2) == decimal(0.1) + decimal(0.2) == decimal(0.3)
 
 # Subtraction
-@test subtract(d[1], d[2]) == d[1] - d[2] == Decimal(0, 1, -1)
-@test subtract(d[3], d[4]) == d[3] - d[4] == Decimal(1, 1511, -2)
-@test subtract(d[4], d[3]) == d[4] - d[3] == Decimal(0, 1511, -2)
+@test d[1] - d[2] == Decimal(0, 1, -1)
+@test d[3] - d[4] == Decimal(1, 1511, -2)
+@test d[4] - d[3] == Decimal(0, 1511, -2)
 @test decimal(0.3) - 0.1 == 0.3 - decimal(0.1) == decimal(0.3) - decimal(0.1) == decimal(0.2)
 
 # Negation
-@test negative(d[1]) == -d[1] == Decimal(1, 2, -1)
-@test negative(d[5]) == -d[5] == Decimal(0, 3, -2)
+@test -d[1] == Decimal(1, 2, -1)
+@test -d[5] == Decimal(0, 3, -2)
 
 # Multiplication
-@test multiply(d[1], d[2]) == d[1] * d[2] == Decimal(0, 2, -2)
-@test multiply(d[1], d[5]) == d[1] * d[5] == Decimal(1, 6, -3)
-@test multiply(d[5], d[6]) == d[5] * d[6] == Decimal(0, 12, -8)
+@test d[1] * d[2] == Decimal(0, 2, -2)
+@test d[1] * d[5] == Decimal(1, 6, -3)
+@test d[5] * d[6] == Decimal(0, 12, -8)
 @test decimal(0.2) * 0.1 == 0.2 * decimal(0.1) == decimal(0.02)
 @test decimal(12.34) * 0.1234 == 12.34 * decimal(0.1234) == decimal(1.522756)
 @test decimal(0.21084210) * -2 == -2 * decimal(0.21084210) == decimal(-0.4216842)

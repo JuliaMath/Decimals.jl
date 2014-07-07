@@ -1,25 +1,29 @@
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
 function decimal(str::String)
-    s = (str[1] == '-') ? 1 : 0
-    c = ""
-    index = 0
-    q = 0
     if 'e' in str
         n, expo = split(str, 'e')
         n = split(n, '.')
-        return decimal(join(n) * repeat("0", int(expo) - length(n[2])))
-    else
-        for chr in str
-            index += 1
-            if chr == '.'
-                q = int(length(str) - index)
-            else
-                c *= string(chr)
-            end
+        sgn = ""
+        if n[1][1] == '-'
+            sgn *= "-"
+            n[1] = n[1][2:end]
         end
-        d = Decimal(s, abs(int(c)), -q)
+        if int(expo) > 0
+            digits = (length(n) == 2) ? length(n[2]) : 0
+            steps = int(expo) - digits
+            param = sgn * join(n) * repeat("0", steps)
+        else
+            digits = (length(n) == 2) ? length(n[1]) : length(n)
+            steps = -int(expo) - digits
+            param = sgn * "0." * repeat("0", steps) * join(n)
+        end
+        return decimal(param)
     end
-    normalize(d)
+    s = (str[1] == '-') ? 1 : 0
+    arr = split(str, '.')
+    c = join(arr)
+    q = (length(arr) == 2) ? length(arr[2]) : 0
+    Decimal(s, abs(int(c)), -q)
 end
 
 # Convert a number to a decimal
@@ -35,7 +39,7 @@ function string(x::Decimal)
     elseif x.q < 0
         shift = x.q + length(c)
         if shift > 0
-            c = c[1:shift] * "." * c[shift+1:end]
+            c = c[1:shift] * "." * c[(shift+1):end]
         else
             c = "0." * repeat("0", -shift) * c            
         end
@@ -48,8 +52,6 @@ float(x::Decimal) = float(string(x))
 
 # Convert a decimal to an integer if possible, a float if not
 function number(x::Decimal)
-    str = string(x)
-    fx = float(str)
-    ix = int(fx)
+    ix = (str = string(x); fx = float(str); int(fx))
     (ix == fx) ? ix : fx
 end

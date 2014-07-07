@@ -1,14 +1,11 @@
 # Equality
-triple_equals(x::Decimal, y::Decimal) = ((x.s === y.s) &&
-                                         (x.c === y.c) &&
-                                         (x.q === y.q))::Bool
-triple_equals(x::Decimal, y::Number) = false
-triple_equals(x::Number, y::Decimal) = false
+is(x::Decimal, y::Decimal) = ((x.s === y.s) &&
+                              (x.c === y.c) &&
+                              (x.q === y.q))::Bool
+is(x::Decimal, y::Number) = false
+is(x::Number, y::Decimal) = false
 
-equals(x::Decimal, y::Decimal) = triple_equals(normalize(x), normalize(y))
-equals(x::Decimal, y::Number) = equals(x, decimal(y))
-equals(x::Number, y::Decimal) = equals(decimal(x), y)
-
-# Operator overloading
-==(x::Decinum, y::Decinum) = equals(x, y)
-is(x::Decinum, y::Decinum) = triple_equals(x, y)
+isequal(x::Decimal, y::Decimal) = is(norm(x), norm(y))
+isequal(x::Decimal, y::Number) = isequal(x, decimal(y))
+isequal(x::Number, y::Decimal) = isequal(decimal(x), y)
+==(x::Decinum, y::Decinum) = isequal(x, y)

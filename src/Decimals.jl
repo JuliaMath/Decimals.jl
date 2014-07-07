@@ -3,11 +3,11 @@
 
 module Decimals
 
-import Base: string, float
+import Core: ===
+import Base: string, float, ==
 
 # TODO export equality operators
-export Decimal, decimal, string, float, number, equals, ==, triple_equals, is,
-    add, subtract, negative, multiply, normalize, round
+export Decimal, decimal, string, float, number, norm, round, isequal, is, +, -, *
 
 # Numerical value: (-1)^s * c * 10^q
 immutable Decimal
@@ -22,7 +22,7 @@ Decinum = Union(Decimal, Number)
 include("decimal.jl")
 
 # Decimal normalization
-include("normalize.jl")
+include("norm.jl")
 
 # Addition, subtraction, negation, multiplication
 include("arithmetic.jl")
