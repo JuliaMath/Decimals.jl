@@ -28,8 +28,8 @@ function *(x::Decimal, y::Decimal)
 end
 *(x::Decimal, y::Number) = *(x, decimal(y))
 *(x::Number, y::Decimal) = *(decimal(x), y)
-.*(x::Decimal, y::Array{Decimal}) = broadcast(*, x, y)
-.*(x::Array{Decimal}, y::Decimal) = broadcast(*, x, y)
+.*(x::Decimal, y::Array{Decimal}) = [i*x for i in y]
+.*(x::Array{Decimal}, y::Decimal) = [i*y for i in x]
 .*(x::Number, y::Array{Decimal}) = broadcast(*, decimal(x), y)
 .*(x::Array{Decimal}, y::Number) = broadcast(*, x, decimal(y))
 .*{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(*, decimal(x), y)
