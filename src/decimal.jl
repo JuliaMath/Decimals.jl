@@ -40,7 +40,7 @@ function scinote(str::String)
 end
 
 # Convert a decimal to a string
-function string(x::Decimal)
+function Base.string(x::Decimal)
     c = string(x.c)
     if x.q > 0
         for i in 1:x.q
@@ -58,7 +58,7 @@ function string(x::Decimal)
 end
 
 # Convert a decimal to a float
-float(x::Decimal) = float(string(x))
+Base.float(x::Decimal) = float(string(x))
 
 # Convert a decimal to an integer if possible, a float if not
 function number(x::Decimal)

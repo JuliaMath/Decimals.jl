@@ -1,5 +1,5 @@
 # Rounding
-function round(x::Decimal, dpts::Int)
+function Base.round(x::Decimal, dpts::Int)
     shift = dpts + x.q
     if shift > 0 || shift < x.q
         throw(error("Invalid number of decimal points: $dpts"))
