@@ -3,16 +3,24 @@ function decimal(str::String)
     if 'e' in str
         return decimal(scinote(str))
     end
-    arr = split(str, '.')
-    Decimal(
-        (str[1] == '-') ? 1 : 0,
-        abs(int(join(arr))),
-        (length(arr) == 2) ? -length(arr[2]) : 0
-    )
+    c, q = parameters(('.' in str) ? split(str, '.') : str)
+    norm(Decimal((str[1] == '-') ? 1 : 0, c, q))
 end
 
 # Convert a number to a decimal
 decimal(x::Number) = decimal(string(x))
+
+# Convert an array to an array of decimals
+decimal(x::Array) = map(decimal, x)
+
+# Get Decimal constructor parameters from string
+parameters(x::String) = (abs((length(x) < 11) ? int(x) : int64(x)), 0)
+
+# Get Decimal constructor parameters from array
+function parameters(x::Array)
+    c = (length(x[2]) < 11) ? int(join(x)) : int64(join(x))
+    (abs(c), -length(x[2]))
+end
 
 # Get decimal() argument from scientific notation
 function scinote(str::String)

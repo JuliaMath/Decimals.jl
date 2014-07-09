@@ -19,6 +19,11 @@ using Base.Test
 @test decimal("12.3e-4") == decimal(12.3e-4) == Decimal(0, 123, -5)
 @test decimal("-12.3e4") == decimal(-12.3e4) == Decimal(1, 123000, 0)
 @test decimal("-12.3e-4") == decimal(-12.3e-4) == Decimal(1, 123, -5)
+@test decimal("0.1234567891") == decimal(0.1234567891) == Decimal(0,1234567891, -10)
+@test decimal("0.12345678912") == decimal(0.12345678912) == Decimal(0,12345678912, -11)
+
+# Array-to-decimal conversion
+@test decimal([0.1 0.2 0.3]) == [decimal(0.1) decimal(0.2) decimal(0.3)]
 
 # Decimal-to-string conversions
 @test string(Decimal(0, 1, -2)) == "0.01"
