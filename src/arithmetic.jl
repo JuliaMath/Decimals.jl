@@ -10,12 +10,16 @@ function +(x::Decimal, y::Decimal)
 end
 +(x::Decimal, y::Number) = +(x, decimal(y))
 +(x::Number, y::Decimal) = +(decimal(x), y)
++{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(+, x, y)
++{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(+, x, y)
 
 # Negation
 -(x::Decimal) = Decimal((x.s == 1) ? 0 : 1, x.c, x.q)
 
 # Subtraction
 -(x::Decinum, y::Decinum) = +(x, -y)
+-{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(-, x, y)
+-{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(-, x, y)
 
 # Multiplication
 function *(x::Decimal, y::Decimal)
@@ -24,6 +28,10 @@ function *(x::Decimal, y::Decimal)
 end
 *(x::Decimal, y::Number) = *(x, decimal(y))
 *(x::Number, y::Decimal) = *(decimal(x), y)
+.*(x::Number, y::Array{Decimal}) = broadcast(*, decimal(x), y)
+.*(x::Array{Decimal}, y::Number) = broadcast(*, x, decimal(y))
+.*{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(*, decimal(x), y)
+.*{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(*, x, decimal(y))
 
 # TODO division
 # TODO exponentiation
