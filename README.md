@@ -74,28 +74,26 @@ Multiplication:
     julia> string(x * y)
     "0.02"
 
-Equals:
+Equals (`==` and `isequal`):
 
-    julia> isequal(x, decimal("0.2"))
+    julia> x == decimal("0.2")
     true
 
-    julia> isequal(x, decimal("0.1"))
+    julia> x != decimal("0.1")
+    true
+
+`==` returns true for Decimal vs. Number comparisons:
+
+    julia> x == 0.2
+    true
+
+`===` and `is` only return true between two equivalent Decimal objects:
+
+    julia> x === decimal("0.2")
+    true
+
+    julia> x === 0.2
     false
-
-`isequal()` returns true for Decimal-Number comparisons:
-
-    julia> isequal(x, 0.2)
-    true
-
-`is()` only returns true between two Decimal objects:
-
-    julia> is(x, decimal("0.2"))
-    true
-
-    julia> is(x, 0.2)
-    false
-
-(I haven't yet been able to overload and export `==` or `===` operators.  If you know how to do this, please let me know...)
 
 Rounding:
 
@@ -107,6 +105,6 @@ Rounding:
 
 ### Tests
 
-Unit tests are in `test/runtests.jl`.  To run the tests:
+Unit tests are in `test/`.  To run the tests:
 
     $ julia test/runtests.jl

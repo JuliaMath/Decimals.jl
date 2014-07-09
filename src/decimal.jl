@@ -1,33 +1,35 @@
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
 function decimal(str::String)
     if 'e' in str
-        n, expo = split(str, 'e')
-        n = split(n, '.')
-        sgn = ""
-        if n[1][1] == '-'
-            sgn *= "-"
-            n[1] = n[1][2:end]
-        end
-        if int(expo) > 0
-            digits = (length(n) == 2) ? length(n[2]) : 0
-            steps = int(expo) - digits
-            param = sgn * join(n) * repeat("0", steps)
-        else
-            digits = (length(n) == 2) ? length(n[1]) : length(n)
-            steps = -int(expo) - digits
-            param = sgn * "0." * repeat("0", steps) * join(n)
-        end
-        return decimal(param)
+        return decimal(scinote(str))
     end
-    s = (str[1] == '-') ? 1 : 0
     arr = split(str, '.')
-    c = join(arr)
-    q = (length(arr) == 2) ? length(arr[2]) : 0
-    Decimal(s, abs(int(c)), -q)
+    Decimal(
+        (str[1] == '-') ? 1 : 0,
+        abs(int(join(arr))),
+        (length(arr) == 2) ? -length(arr[2]) : 0
+    )
 end
 
 # Convert a number to a decimal
 decimal(x::Number) = decimal(string(x))
+
+# Get decimal() argument from scientific notation
+function scinote(str::String)
+    s = (str[1] == '-') ? "-" : ""
+    n, expo = split(str, 'e')
+    n = split(n, '.')
+    if s == "-"
+        n[1] = n[1][2:end]
+    end
+    if int(expo) > 0
+        shift = int(expo) - ((length(n) == 2) ? length(n[2]) : 0)
+        s * join(n) * repeat("0", shift)
+    else
+        shift = -int(expo) - ((length(n) == 2) ? length(n[1]) : length(n))
+        s * "0." * repeat("0", shift) * join(n)
+    end
+end
 
 # Convert a decimal to a string
 function string(x::Decimal)
