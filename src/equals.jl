@@ -1,7 +1,7 @@
 # Equality
-is(x::Decimal, y::Decimal) = ((x.s === y.s) &&
-                              (x.c === y.c) &&
-                              (x.q === y.q))::Bool
+is(x::Decimal, y::Decimal) = ((x.s == y.s) &&
+                              (x.c == y.c) &&
+                              (x.q == y.q))::Bool
 is(x::Decimal, y::Number) = false
 is(x::Number, y::Decimal) = false
 

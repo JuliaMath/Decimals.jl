@@ -6,7 +6,8 @@ function +(x::Decimal, y::Decimal)
     cx = (-1)^x.s * x.c * 10^max(x.q - y.q, 0)
     cy = (-1)^y.s * y.c * 10^max(y.q - x.q, 0)
     s = (abs(cx) > abs(cy)) ? x.s : y.s
-    norm(Decimal(s, abs(cx + cy), min(x.q, y.q)))
+    c = BigInt(cx) + BigInt(cy)
+    norm(Decimal(s, abs(c), min(x.q, y.q)))
 end
 +(x::Decimal, y::Number) = +(x, decimal(y))
 +(x::Number, y::Decimal) = +(decimal(x), y)
@@ -24,7 +25,7 @@ end
 # Multiplication
 function *(x::Decimal, y::Decimal)
     s = (x.s == y.s) ? 0 : 1
-    norm(Decimal(s, x.c * y.c, x.q + y.q))
+    norm(Decimal(s, BigInt(x.c) * BigInt(y.c), x.q + y.q))
 end
 *(x::Decimal, y::Number) = *(x, decimal(y))
 *(x::Number, y::Decimal) = *(decimal(x), y)

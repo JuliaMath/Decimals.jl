@@ -1,3 +1,8 @@
+# Check if integer
+isint(x::Integer) = (length(string(x)) < length(string(typemax(Int))))
+isint(x::FloatingPoint) = ((round(x) == x) && isint(round(x)))
+isint(x::String) = isint(float(x))
+
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
 function decimal(str::String)
     if 'e' in str
@@ -14,11 +19,11 @@ decimal(x::Number) = decimal(string(x))
 decimal(x::Array) = map(decimal, x)
 
 # Get Decimal constructor parameters from string
-parameters(x::String) = (abs((length(x) < 11) ? int(x) : int64(x)), 0)
+parameters(x::String) = (abs((length(x) < 10) ? int(x) : BigInt(x)), 0)
 
 # Get Decimal constructor parameters from array
 function parameters(x::Array)
-    c = (length(x[2]) < 11) ? int(join(x)) : int64(join(x))
+    c = (length(x[2]) < 10) ? int(join(x)) : BigInt(join(x))
     (abs(c), -length(x[2]))
 end
 
