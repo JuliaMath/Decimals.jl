@@ -35,6 +35,8 @@ end
 .*(x::Array{Decimal}, y::Number) = broadcast(*, x, decimal(y))
 .*{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(*, decimal(x), y)
 .*{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(*, x, decimal(y))
+.*(x::Array{Decimal}, y::Union(BitArray, Array{Bool})) = x .* int(y)
+.*(x::Union(BitArray, Array{Bool}), y::Array{Decimal}) = int(x) .* y
 
 # TODO division
 # TODO exponentiation
