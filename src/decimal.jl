@@ -70,3 +70,4 @@ function number(x::Decimal)
     ix = (str = string(x); fx = float(str); int(fx))
     (ix == fx) ? ix : fx
 end
+number(x::Array{Decimal}) = map(number, x)
