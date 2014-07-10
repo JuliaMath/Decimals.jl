@@ -23,9 +23,3 @@ using Base.Test
 # Triple equals
 @test is(Decimal(0, 2, -3), Decimal(0, 2, -3))
 @test ~is(decimal("0.2"), 0.2)
-
-@test 0.1 === 0.1
-@test 2 === 2
-
-@test Decimal(0, 2, -3) === Decimal(0, 2, -3)
-@test decimal("0.2") !== 0.2

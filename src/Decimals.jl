@@ -7,14 +7,14 @@ module Decimals
 import Core: ===
 import Base: string, float, ==
 
-export Decimal, decimal, string, float, number, norm, round, isequal, is, isint, inv, +, -, *, /, ==, ===
+export Decimal, decimal, string, float, number, norm, round, isequal, is, isint, inv, +, -, *, /, ==
 
 DIGITS = 8
 
 # Numerical value: (-1)^s * c * 10^q
 immutable Decimal
     s::Integer  # sign can be 0 (+) or 1 (-)
-    c::Integer  # coefficient (or significand)
+    c::BigInt   # coefficient (significand)
     q::Integer  # exponent
 end
 

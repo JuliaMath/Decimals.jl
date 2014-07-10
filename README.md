@@ -104,12 +104,12 @@ Equals (`==` and `isequal`):
     julia> x == 0.2
     true
 
-`===` and `is` only return true between two equivalent Decimal objects:
+`is` only returns true between two equivalent Decimal objects:
 
-    julia> x === decimal("0.2")
+    julia> is(x, decimal("0.2"))
     true
 
-    julia> x === 0.2
+    julia> is(x, 0.2)
     false
 
 Rounding:

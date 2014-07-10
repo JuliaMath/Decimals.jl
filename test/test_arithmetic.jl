@@ -6,6 +6,7 @@ using Base.Test
 @test decimal(0.1) + 0.2 == 0.1 + decimal(0.2) == decimal(0.1) + decimal(0.2) == decimal(0.3)
 @test decimal([0.1 0.2]) + [0.3 0.1] == decimal([0.4 0.3])
 @test decimal(2147483646) + decimal(1) == decimal(2147483647)
+@test Decimal(1,3,-2) + decimal("0.2523410412138103") == Decimal(0,2223410412138103,-16)
 
 # Subtraction
 @test d[1] - d[2] == Decimal(0, 1, -1)

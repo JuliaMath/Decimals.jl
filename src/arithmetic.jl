@@ -11,8 +11,8 @@ function +(x::Decimal, y::Decimal)
 end
 +(x::Decimal, y::Number) = +(x, decimal(y))
 +(x::Number, y::Decimal) = +(decimal(x), y)
-+{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(+, x, y)
-+{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(+, x, y)
++{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = +(decimal(x), y)
++{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = +(x, decimal(y))
 
 # Negation
 -(x::Decimal) = Decimal((x.s == 1) ? 0 : 1, x.c, x.q)

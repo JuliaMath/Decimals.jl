@@ -1,10 +1,11 @@
 # Rounding
-function Base.round(x::Decimal, dpts::Int=0)
+function Base.round(x::Decimal, dpts::Int=0; normal::Bool=false)
     shift = dpts + x.q
     if shift > 0 || shift < x.q
-        throw(error("Invalid number of decimal points: $dpts"))
+        (normal) ? x : norm(x, rounded=true)
     else
         c = Base.round(x.c / 10^(-shift))
-        norm(Decimal(x.s, BigInt(c), x.q - shift))
+        d = Decimal(x.s, BigInt(c), x.q - shift)
+        (normal) ? d : norm(d, rounded=true)
     end
 end
