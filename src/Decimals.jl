@@ -1,4 +1,5 @@
-# Basic routines for exact decimal arithmetic (ref. IEEE 754)
+# Decimal arithmetic in Julia
+# @license MIT
 # @author jack@tinybike.net (Jack Peterson), 7/3/2014
 
 module Decimals
@@ -6,10 +7,9 @@ module Decimals
 import Core: ===
 import Base: string, float, ==
 
-export Decimal, decimal, string, float, number, norm, round, isequal, is, isint, inv, +, -, *, /
+export Decimal, decimal, string, float, number, norm, round, isequal, is, isint, inv, +, -, *, /, ==, ===
 
 DIGITS = 8
-BIG10 = BigInt(10)
 
 # Numerical value: (-1)^s * c * 10^q
 immutable Decimal

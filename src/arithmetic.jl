@@ -45,7 +45,7 @@ function Base.inv(x::Decimal)
         str = str[2:end]
     end
     b = ('.' in str) ? length(split(str, '.')[1]) : 0
-    c = round(BIG10^(-x.q + DIGITS) / x.c)
+    c = round(BigInt(10)^(-x.q + DIGITS) / x.c)
     q = (x.q < 0) ? 1 - b - DIGITS : -b - DIGITS
     norm(Decimal(x.s, c, q))
 end
