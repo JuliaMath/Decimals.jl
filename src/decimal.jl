@@ -10,6 +10,9 @@ end
 # Convert a number to a decimal
 decimal(x::Number) = decimal(string(x))
 
+# If it's already a decimal, do nothing
+decimal(x::Decimal) = x
+
 # Convert an array to an array of decimals
 decimal(x::Array) = map(decimal, x)
 
