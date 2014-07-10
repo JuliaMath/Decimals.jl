@@ -32,6 +32,21 @@ using Base.Test
 @test decimal([0.1 0.2]) .* [1.2 2.1] == [Decimal(0,12,-2) Decimal(0,42,-2)]
 @test decimal([0.1,0.2]) * [1.2 2.1] == [Decimal(0,12,-2) Decimal(0,21,-2); Decimal(0,24,-2) Decimal(0,42,-2)]
 @test Decimal(0, 2, -1) * 0.0 == decimal(0)
-# matrix algebra ops?
-# @test decimal([0.1,0.2])' * [1.2 2.1]' ==Decimal(0,54,-2)
-# @test decimal([0.1 0.2]) * [1.2, 2.1] ==Decimal(0,54,-2)
+@test decimal([0.3, 0.6]) .* 5 == [decimal(0.3)*5, decimal(0.6)*5]
+
+# Inversion
+@test inv(Decimal(0, 1, -1)) == Decimal(0, 1, 1)
+@test inv(Decimal(0, 1, 1)) == Decimal(0, 1, -1)
+@test inv(Decimal(1, 2, -1)) == Decimal(1, 5, 0)
+@test inv(Decimal(1, 5, 0)) == Decimal(1, 2, -1)
+@test inv(Decimal(0, 2, -2)) == Decimal(0, 5, 1)
+@test inv(Decimal(0, 5, 1)) == Decimal(0, 2, -2)
+@test inv(Decimal(1, 4, -1)) == Decimal(1, 25, -1)
+@test inv(Decimal(1, 25, -1)) == Decimal(1, 4, -1)
+@test inv(d) == map(inv, d)
+
+# Division
+@test decimal(0.2) / decimal(0.1) == decimal(2)
+@test decimal(0.3) / decimal(0.1) == Decimal(0,3,0)
+@test [decimal(0.3)/decimal(0.1), decimal(0.6)/decimal(0.1)] == [decimal(0.3), decimal(0.6)] ./ decimal(0.1)
+@test [decimal(0.3)/0.1, decimal(0.6)/0.1] == [decimal(0.3), decimal(0.6)] ./ 0.1

@@ -1,8 +1,3 @@
-# Check if integer
-isint(x::Integer) = (length(string(x)) < length(string(typemax(Int))))
-isint(x::FloatingPoint) = ((round(x) == x) && isint(round(x)))
-isint(x::String) = isint(float(x))
-
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
 function decimal(str::String)
     if 'e' in str
@@ -71,3 +66,8 @@ function number(x::Decimal)
     (ix == fx) ? ix : fx
 end
 number(x::Array{Decimal}) = map(number, x)
+
+# Check if integer
+isint(x::Integer) = (length(string(x)) < length(string(typemax(Int))))
+isint(x::FloatingPoint) = ((round(x) == x) && isint(round(x)))
+isint(x::String) = isint(float(x))

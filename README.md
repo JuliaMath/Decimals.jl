@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/tensorjack/Decimals.jl.svg?branch=master)](https://travis-ci.org/tensorjack/Decimals.jl) [![Coverage Status](https://coveralls.io/repos/tensorjack/Decimals.jl/badge.png)](https://coveralls.io/r/tensorjack/Decimals.jl)
 
-Some basic routines for exact decimal arithmetic, as specified in [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point "Wikipedia: IEEE floating point").  Supports addition, subtraction, negation, multiplication, and equality operations; division and exponentiation coming as soon as I find the time to write them.  (Tested in Julia v. 0.3.0-prerelease+4028.)
+Some basic routines for exact decimal arithmetic.  Supports addition, subtraction, negation, multiplication, division, and equality operations; exponentiation coming as soon as I find the time to write it.  Note that this is a pure Julia implementation; calling `libmpdec` functions directly is likely to be faster.  (Tested in Julia v. 0.3.0-prerelease+4028.)
 
 ### Background
 
@@ -73,6 +73,20 @@ Multiplication:
 
     julia> string(x * y)
     "0.02"
+
+Division:
+
+    julia> string(x / y)
+    "2"
+
+Inversion:
+
+    julia> string(inv(x))
+    "5"
+
+Broadcasting:
+
+    julia> decimal([x y]) .* 2
 
 Equals (`==` and `isequal`):
 

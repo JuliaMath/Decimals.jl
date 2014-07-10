@@ -6,8 +6,10 @@ module Decimals
 import Core: ===
 import Base: string, float, ==
 
-# TODO export equality operators
-export Decimal, decimal, string, float, number, norm, round, isequal, is, +, -, *
+export Decimal, decimal, string, float, number, norm, round, isequal, is, isint, inv, +, -, *, /
+
+DIGITS = 8
+BIG10 = BigInt(10)
 
 # Numerical value: (-1)^s * c * 10^q
 immutable Decimal

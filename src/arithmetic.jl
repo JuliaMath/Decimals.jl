@@ -29,15 +29,39 @@ function *(x::Decimal, y::Decimal)
 end
 *(x::Decimal, y::Number) = *(x, decimal(y))
 *(x::Number, y::Decimal) = *(decimal(x), y)
-.*(x::Decimal, y::Array{Decimal}) = [i*x for i in y]
-.*(x::Array{Decimal}, y::Decimal) = [i*y for i in x]
-.*(x::Number, y::Array{Decimal}) = broadcast(*, decimal(x), y)
-.*(x::Array{Decimal}, y::Number) = broadcast(*, x, decimal(y))
+.*(x::Decimal, y::Array{Decimal}) = [i * x for i in y]
+.*(x::Array{Decimal}, y::Decimal) = [i * y for i in x]
+.*(x::Number, y::Array{Decimal}) = broadcast(*, x, y)
+.*(x::Array{Decimal}, y::Number) = broadcast(*, x, y)
 .*{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(*, decimal(x), y)
 .*{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(*, x, decimal(y))
 .*(x::Array{Decimal}, y::Union(BitArray, Array{Bool})) = x .* int(y)
 .*(x::Union(BitArray, Array{Bool}), y::Array{Decimal}) = int(x) .* y
 
-# TODO division
+# Inversion
+function Base.inv(x::Decimal)
+    str = string(x)
+    if str[1] == '-'
+        str = str[2:end]
+    end
+    b = ('.' in str) ? length(split(str, '.')[1]) : 0
+    c = round(BIG10^(-x.q + DIGITS) / x.c)
+    q = (x.q < 0) ? 1 - b - DIGITS : -b - DIGITS
+    norm(Decimal(x.s, c, q))
+end
+Base.inv(x::Array{Decimal}) = map(inv, x)
+
+# Division
+/(x::Decimal, y::Decimal) = x * inv(y)
+/(x::Decinum, y::Decimal) = decimal(x) * inv(y)
+/(x::Decimal, y::Decinum) = x * inv(decimal(y))
+./(x::Decimal, y::Array{Decimal}) = [x / i for i in y]
+./(x::Array{Decimal}, y::Decimal) = [i / y for i in x]
+./(x::Number, y::Array{Decimal}) = broadcast(/, x, y)
+./(x::Array{Decimal}, y::Number) = broadcast(/, x, y)
+./{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(/, decimal(x), y)
+./{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(/, x, decimal(y))
+
 # TODO exponentiation
 # TODO max, min
+# TODO inequalities
