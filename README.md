@@ -86,7 +86,8 @@ Inversion:
 
 Broadcasting:
 
-    julia> decimal([x y]) .* 2
+    julia> [x y] .* 2
+    
 
 Equals (`==` and `isequal`):
 

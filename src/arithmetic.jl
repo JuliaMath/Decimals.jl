@@ -31,8 +31,8 @@ end
 *(x::Number, y::Decimal) = *(decimal(x), y)
 .*(x::Decimal, y::Array{Decimal}) = [i * x for i in y]
 .*(x::Array{Decimal}, y::Decimal) = [i * y for i in x]
-.*(x::Number, y::Array{Decimal}) = broadcast(*, x, y)
-.*(x::Array{Decimal}, y::Number) = broadcast(*, x, y)
+.*(x::Number, y::Array{Decimal}) = decimal(x) .* y
+.*(x::Array{Decimal}, y::Number) = x .* decimal(y)
 .*{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(*, decimal(x), y)
 .*{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(*, x, decimal(y))
 .*(x::Array{Decimal}, y::Union(BitArray, Array{Bool})) = x .* int(y)
@@ -57,8 +57,8 @@ Base.inv(x::Array{Decimal}) = map(inv, x)
 /(x::Decimal, y::Decinum) = x * inv(decimal(y))
 ./(x::Decimal, y::Array{Decimal}) = [x / i for i in y]
 ./(x::Array{Decimal}, y::Decimal) = [i / y for i in x]
-./(x::Number, y::Array{Decimal}) = broadcast(/, x, y)
-./(x::Array{Decimal}, y::Number) = broadcast(/, x, y)
+./(x::Number, y::Array{Decimal}) = decimal(x) ./ y
+./(x::Array{Decimal}, y::Number) = x ./ decimal(y)
 ./{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(/, decimal(x), y)
 ./{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(/, x, decimal(y))
 
