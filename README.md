@@ -87,7 +87,9 @@ Inversion:
 Broadcasting:
 
     julia> [x y] .* 2
-    
+    2-element Array{Decimal,1}:
+     Decimal(0,1,-1)
+     Decimal(0,5,-2)
 
 Equals (`==` and `isequal`):
 

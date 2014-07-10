@@ -59,6 +59,7 @@ end
 
 # Convert a decimal to a float
 Base.float(x::Decimal) = float(string(x))
+Base.float(x::Array{Decimal}) = map(float, x)
 
 # Convert a decimal to an integer if possible, a float if not
 function number(x::Decimal)
