@@ -6,7 +6,6 @@ function Base.norm(x::Decimal; rounded::Bool=false)
             p += 1
         end
     end
-    # c = (isa(x.c, Union(Int64, BigInt))) ? BigInt(x.c / 10^p) : int(x.c / 10^p)
     c = BigInt(x.c / 10^p)
     q = (c == 0 && x.s == 0) ? 0 : x.q + p
     if rounded
