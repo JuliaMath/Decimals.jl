@@ -4,6 +4,8 @@
 
 Basic routines for decimal arithmetic in Julia.  Supports addition, subtraction, negation, multiplication, division, and equality operations; exponentiation coming as soon as I find the time to write it.  This is a pure Julia implementation, so if you are concerned about pure speed, calling `libmpdec` functions directly is likely to be faster.  Tested in Julia v. 0.3.0-prerelease+4028.
 
+Update: I have discovered recently that the built-in `BigFloat` already fills this niche in Julia.  I suggest using this instead of `Decimal`, as it has a more complete feature set, and is probably faster, too :)
+
 ### Background
 
 Why is this needed?  Because floating point arithmetic does things like this:
