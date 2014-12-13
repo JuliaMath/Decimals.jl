@@ -1,13 +1,17 @@
-# Unit tests for Decimals.jl
+using Decimals
+using Base.Test
 
-include("test_constructor.jl")
+tests = ["constructor",
+         "decimal", 
+         "norm",
+         "arithmetic",
+         "equals",
+         "round"]
 
-include("test_decimal.jl")
+println("Running tests:")
 
-include("test_norm.jl")
-
-include("test_arithmetic.jl")
-
-include("test_equals.jl")
-
-include("test_round.jl")
+for t in tests
+    tfile = string("test_", t, ".jl")
+    println(" * $(t) ...")
+    include(tfile)
+end
