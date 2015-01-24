@@ -1,6 +1,6 @@
 ## Decimals.jl
 
-[![Build Status](https://travis-ci.org/tensorjack/Decimals.jl.svg?branch=master)](https://travis-ci.org/tensorjack/Decimals.jl) [![Coverage Status](https://coveralls.io/repos/tensorjack/Decimals.jl/badge.png)](https://coveralls.io/r/tensorjack/Decimals.jl)
+[![Build Status](https://travis-ci.org/tinybike/Decimals.jl.svg?branch=master)](https://travis-ci.org/tinybike/Decimals.jl) [![Coverage Status](https://coveralls.io/repos/tinybike/Decimals.jl/badge.png)](https://coveralls.io/r/tinybike/Decimals.jl)
 
 Basic routines for decimal arithmetic in Julia.  Supports addition, subtraction, negation, multiplication, division, and equality operations; exponentiation coming as soon as I find the time to write it.  This is a pure Julia implementation, so if you are concerned about pure speed, calling `libmpdec` functions directly is likely to be faster.  Tested in Julia v. 0.3.0-prerelease+4028.
 
