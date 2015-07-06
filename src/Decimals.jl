@@ -4,35 +4,50 @@
 
 module Decimals
 
-import Core: ===
-import Base: string, float, ==
+    import Core: ===
+    import Base: string, float, ==
 
-export Decimal, decimal, string, float, number, norm, round, isequal, is, isint, inv, +, -, *, /, ==
+    export Decimal,
+           decimal,
+           string,
+           float,
+           number,
+           norm,
+           round,
+           isequal,
+           is,
+           isint,
+           inv,
+           +,
+           -,
+           *,
+           /,
+           ==
 
-DIGITS = 8
+    DIGITS = 20
 
-# Numerical value: (-1)^s * c * 10^q
-immutable Decimal
-    s::Integer  # sign can be 0 (+) or 1 (-)
-    c::BigInt   # coefficient (significand)
-    q::Integer  # exponent
-end
+    # Numerical value: (-1)^s * c * 10^q
+    immutable Decimal
+        s::Integer  # sign can be 0 (+) or 1 (-)
+        c::BigInt   # coefficient (significand)
+        q::Integer  # exponent
+    end
 
-Decinum = Union(Decimal, Number)
+    Decinum = Union(Decimal, Number)
 
-# Convert between Decimal objects, numbers, and strings
-include("decimal.jl")
+    # Convert between Decimal objects, numbers, and strings
+    include("decimal.jl")
 
-# Decimal normalization
-include("norm.jl")
+    # Decimal normalization
+    include("norm.jl")
 
-# Addition, subtraction, negation, multiplication
-include("arithmetic.jl")
+    # Addition, subtraction, negation, multiplication
+    include("arithmetic.jl")
 
-# Equality
-include("equals.jl")
+    # Equality
+    include("equals.jl")
 
-# Rounding
-include("round.jl")
+    # Rounding
+    include("round.jl")
 
 end
