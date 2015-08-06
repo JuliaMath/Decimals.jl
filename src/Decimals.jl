@@ -1,4 +1,4 @@
-# Decimal arithmetic in Julia
+# Pure Julia decimal arithmetic
 # @license MIT
 # @author jack@tinybike.net (Jack Peterson), 7/3/2014
 
