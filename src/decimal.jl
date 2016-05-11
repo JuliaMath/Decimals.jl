@@ -1,5 +1,5 @@
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
-function decimal(str::String)
+function decimal(str::AbstractString)
     if 'e' in str
         return decimal(scinote(str))
     end
@@ -17,27 +17,27 @@ decimal(x::Decimal) = x
 decimal(x::Array) = map(decimal, x)
 
 # Get Decimal constructor parameters from string
-parameters(x::String) = (abs(BigInt(x)), 0)
+parameters(x::AbstractString) = (abs(parse(BigInt, x)), 0)
 
 # Get Decimal constructor parameters from array
 function parameters(x::Array)
-    c = BigInt(join(x))
+    c = parse(BigInt, join(x))
     (abs(c), -length(x[2]))
 end
 
 # Get decimal() argument from scientific notation
-function scinote(str::String)
+function scinote(str::AbstractString)
     s = (str[1] == '-') ? "-" : ""
     n, expo = split(str, 'e')
     n = split(n, '.')
     if s == "-"
         n[1] = n[1][2:end]
     end
-    if int(expo) > 0
-        shift = int(expo) - ((length(n) == 2) ? length(n[2]) : 0)
+    if parse(Int64, expo) > 0
+        shift = parse(Int64, expo) - ((length(n) == 2) ? length(n[2]) : 0)
         s * join(n) * repeat("0", shift)
     else
-        shift = -int(expo) - ((length(n) == 2) ? length(n[1]) : length(n))
+        shift = -parse(Int64, expo) - ((length(n) == 2) ? length(n[1]) : length(n))
         s * "0." * repeat("0", shift) * join(n)
     end
 end
@@ -60,18 +60,21 @@ function Base.string(x::Decimal)
     ((x.s == 1) ? "-" : "") * c
 end
 
+# Zero value
+Base.zero(::Type{Decimals.Decimal}) = Decimal(0,0,0)
+
 # Convert a decimal to a float
 Base.float(x::Decimal) = float(string(x))
 Base.float(x::Array{Decimal}) = map(float, x)
 
 # Convert a decimal to an integer if possible, a float if not
 function number(x::Decimal)
-    ix = (str = string(x); fx = float(str); int(fx))
+    ix = (str = string(x) ; fx = float(str); round(Int64, fx))
     (ix == fx) ? ix : fx
 end
 number(x::Array{Decimal}) = map(number, x)
 
 # Check if integer
 isint(x::Integer) = (length(string(x)) < length(string(typemax(Int))))
-isint(x::FloatingPoint) = ((round(x) == x) && isint(round(x)))
-isint(x::String) = isint(float(x))
+isint(x::AbstractFloat) = ((round(x) == x) && isint(round(x)))
+isint(x::AbstractString) = isint(float(x))

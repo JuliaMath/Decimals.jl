@@ -1,3 +1,4 @@
+
 # Addition
 # To add, convert both decimals to the same exponent.
 # (If the exponents are different, use the smaller exponent
@@ -11,16 +12,16 @@ function +(x::Decimal, y::Decimal)
 end
 +(x::Decimal, y::Number) = +(x, decimal(y))
 +(x::Number, y::Decimal) = +(decimal(x), y)
-+{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = +(decimal(x), y)
-+{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = +(x, decimal(y))
++{T<:Number}(x::Union{Number, Array{T}}, y::Array{Decimal}) = +(decimal(x), y)
++{T<:Number}(x::Array{Decimal}, y::Union{Number, Array{T}}) = +(x, decimal(y))
 
 # Negation
 -(x::Decimal) = Decimal((x.s == 1) ? 0 : 1, x.c, x.q)
 
 # Subtraction
 -(x::Decinum, y::Decinum) = +(x, -y)
--{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(-, x, y)
--{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(-, x, y)
+-{T<:Number}(x::Union{Number, Array{T}}, y::Array{Decimal}) = broadcast(-, x, y)
+-{T<:Number}(x::Array{Decimal}, y::Union{Number, Array{T}}) = broadcast(-, x, y)
 
 # Multiplication
 function *(x::Decimal, y::Decimal)
@@ -33,11 +34,11 @@ end
 .*(x::Array{Decimal}, y::Decimal) = [i * y for i in x]
 .*(x::Number, y::Array{Decimal}) = decimal(x) .* y
 .*(x::Array{Decimal}, y::Number) = x .* decimal(y)
-.*{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(*, decimal(x), y)
-.*{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(*, x, decimal(y))
+.*{T<:Number}(x::Union{Number, Array{T}}, y::Array{Decimal}) = broadcast(*, decimal(x), y)
+.*{T<:Number}(x::Array{Decimal}, y::Union{Number, Array{T}}) = broadcast(*, x, decimal(y))
 .*(x::Array{Decimal}, y::BitArray) = x .* int(y)
-.*(x::Array{Decimal}, y::Union(BitArray, Array{Bool})) = x .* int(y)
-.*(x::Union(BitArray, Array{Bool}), y::Array{Decimal}) = int(x) .* y
+.*(x::Array{Decimal}, y::Union{BitArray, Array{Bool}}) = x .* int(y)
+.*(x::Union{BitArray, Array{Bool}}, y::Array{Decimal}) = int(x) .* y
 
 # Inversion
 function Base.inv(x::Decimal)
@@ -60,8 +61,8 @@ Base.inv(x::Array{Decimal}) = map(inv, x)
 ./(x::Array{Decimal}, y::Decimal) = [i / y for i in x]
 ./(x::Number, y::Array{Decimal}) = decimal(x) ./ y
 ./(x::Array{Decimal}, y::Number) = x ./ decimal(y)
-./{T<:Number}(x::Union(Number, Array{T}), y::Array{Decimal}) = broadcast(/, decimal(x), y)
-./{T<:Number}(x::Array{Decimal}, y::Union(Number, Array{T})) = broadcast(/, x, decimal(y))
+./{T<:Number}(x::Union{Number, Array{T}}, y::Array{Decimal}) = broadcast(/, decimal(x), y)
+./{T<:Number}(x::Array{Decimal}, y::Union{Number, Array{T}}) = broadcast(/, x, decimal(y))
 
 # TODO exponentiation
 # TODO max, min
