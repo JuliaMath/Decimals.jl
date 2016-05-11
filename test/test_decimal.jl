@@ -17,8 +17,11 @@ using Base.Test
 @test decimal("2.5e6") == decimal(2.5e6) == Decimal(0, 25, 5)
 @test decimal("2.385350e8") == decimal(2.385350e8) == Decimal(0, 238535, 3)
 @test decimal("12.3e-4") == decimal(12.3e-4) == Decimal(0, 123, -5)
-@test decimal("-12.3e4") == decimal(-12.3e4) == Decimal(1, 123000, 0)
+
+@test decimal("-12.3e4") == decimal(-12.3e4) == Decimal(1, 123, 3)
+
 @test decimal("-12.3e-4") == decimal(-12.3e-4) == Decimal(1, 123, -5)
+
 @test decimal("0.1234567891") == decimal(0.1234567891) == Decimal(0,1234567891, -10)
 @test decimal("0.12345678912") == decimal(0.12345678912) == Decimal(0,12345678912, -11)
 
