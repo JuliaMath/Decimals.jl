@@ -14,6 +14,10 @@ using Base.Test
 @test Decimal(0, 2, -3) == Decimal(0, 2, -3)
 @test Decimal(0, 2, -3) != Decimal(0, 2, 3)
 @test Decimal(0, 2, -3) == 0.002
+
+@test -2 == Decimal(1, 2, 0)
+@test 2 != Decimal(1, 2, 0)
+
 @test Decimal(1, 2, 0) == -2
 @test Decimal(1, 2, 0) != 2
 
@@ -21,5 +25,6 @@ using Base.Test
 @test 2 == 2
 
 # Triple equals
-@test is(Decimal(0, 2, -3), Decimal(0, 2, -3))
-@test ~is(decimal("0.2"), 0.2)
+# Is there a way to redefine === in Julia 4.x?
+# @test Decimal(0, 2, -3) === Decimal(0, 2, -3)
+# @test decimal("0.2") === 0.2

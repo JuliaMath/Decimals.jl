@@ -5,7 +5,7 @@
 module Decimals
 
     import Core: ===
-    import Base: string, float, ==
+    import Base: string, float, ==, +, -, *, /, .*, ./, is
 
     export Decimal,
            decimal,
@@ -33,7 +33,7 @@ module Decimals
         q::Integer  # exponent
     end
 
-    Decinum = Union(Decimal, Number)
+    Decinum = Union{Decimal, Number}
 
     # Convert between Decimal objects, numbers, and strings
     include("decimal.jl")
