@@ -7,6 +7,9 @@ function decimal(str::AbstractString)
     norm(Decimal((str[1] == '-') ? 1 : 0, c, q))
 end
 
+# parse a decimal from a string
+Base.parse(::Type{Decimal}, str::AbstractString) = decimal(str)
+
 # Convert a number to a decimal
 decimal(x::Number) = decimal(string(x))
 
