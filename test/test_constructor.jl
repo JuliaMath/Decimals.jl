@@ -1,14 +1,8 @@
 using Decimals
-using Base.Test
+using Compat.Test
 
-# Decimal constructor
-d = [
-    Decimal(0, 2, -1),
-    Decimal(0, 1, -1),
-    Decimal(0, 100, -4),
-    Decimal(0, 1512, -2),
-    Decimal(1, 3, -2),
-    Decimal(1, 4, -6),
-]
+@testset "Decimal constructor" begin
 
 @test isa(d, Array{Decimal,1})
+
+end

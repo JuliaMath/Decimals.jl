@@ -1,20 +1,22 @@
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
-function decimal(str::AbstractString)
+function Base.parse(::Type{Decimal}, str::AbstractString)
     if 'e' in str
-        return decimal(scinote(str))
+        return parse(Decimal, scinote(str))
     end
     c, q = parameters(('.' in str) ? split(str, '.') : str)
-    norm(Decimal((str[1] == '-') ? 1 : 0, c, q))
+    normalize(Decimal((str[1] == '-') ? 1 : 0, c, q))
 end
 
+decimal(str::AbstractString) = parse(Decimal, str)
+
+# convert an array to an array of decimals
+@deprecate decimal(x::Array) map(decimal, x)
+
 # Convert a number to a decimal
-decimal(x::Number) = decimal(string(x))
-
-# If it's already a decimal, do nothing
-decimal(x::Decimal) = x
-
-# Convert an array to an array of decimals
-decimal(x::Array) = map(decimal, x)
+Decimal(num::Real) = parse(Decimal, string(num))
+Base.convert(::Type{Decimal}, num::Real) = Decimal(num::Real)
+decimal(x::Real) = Decimal(x)
+Decimal(x::Decimal) = x
 
 # Get Decimal constructor parameters from string
 parameters(x::AbstractString) = (abs(parse(BigInt, x)), 0)
@@ -43,38 +45,42 @@ function scinote(str::AbstractString)
 end
 
 # Convert a decimal to a string
-function Base.string(x::Decimal)
+function Base.print(io::IO, x::Decimal)
     c = string(x.c)
+    negative = (x.s == 1) ? "-" : ""
     if x.q > 0
-        for i in 1:x.q
-            c *= "0"
-        end
+        print(io, negative, c, repeat("0", x.q))
     elseif x.q < 0
         shift = x.q + length(c)
         if shift > 0
-            c = c[1:shift] * "." * c[(shift+1):end]
+            print(io, negative, c[1:shift], ".", c[(shift+1):end])
         else
-            c = "0." * repeat("0", -shift) * c            
+            print(io, negative, "0.", repeat("0", -shift), c)
         end
+    else
+        print(io, negative, c)
     end
-    ((x.s == 1) ? "-" : "") * c
 end
 
-# Zero value
-Base.zero(::Type{Decimals.Decimal}) = Decimal(0,0,0)
+# Zero/one value
+Base.zero(::Type{Decimal}) = Decimal(0,0,0)
+Base.one(::Type{Decimal}) = Decimal(0,1,0)
 
 # Convert a decimal to a float
-Base.float(x::Decimal) = float(string(x))
-Base.float(x::Array{Decimal}) = map(float, x)
+@deprecate float(x::Decimal) Float64(x)
+@deprecate float(x::Array{Decimal}) map(float, x)
+
+# convert a decimal to any subtype of Real
+(::Type{T})(x::Decimal) where {T<:Real} = parse(T, string(x))
 
 # Convert a decimal to an integer if possible, a float if not
 function number(x::Decimal)
-    ix = (str = string(x) ; fx = float(str); round(Int64, fx))
+    ix = (str = string(x) ; fx = parse(Float64, str); round(Int64, fx))
     (ix == fx) ? ix : fx
 end
-number(x::Array{Decimal}) = map(number, x)
+@deprecate number(x::Array{Decimal}) map(number, x)
 
 # Check if integer
-isint(x::Integer) = (length(string(x)) < length(string(typemax(Int))))
-isint(x::AbstractFloat) = ((round(x) == x) && isint(round(x)))
-isint(x::AbstractString) = isint(float(x))
+@deprecate isint(x::Integer) isinteger(x)
+@deprecate isint(x::AbstractFloat) isinteger(x)
+@deprecate isint(x::AbstractString) isinteger(float(x))

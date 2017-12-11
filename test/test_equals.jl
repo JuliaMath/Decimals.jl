@@ -1,30 +1,35 @@
 using Decimals
-using Base.Test
+using Compat.Test
 
-# Equality
-@test isequal(Decimal(0, 2, -3), Decimal(0, 2, -3))
-@test ~isequal(Decimal(0, 2, -3), Decimal(0, 2, 3))
-@test isequal(Decimal(0, 2, -3), 0.002)
-@test isequal(Decimal(1, 2, 0), -2)
-@test ~isequal(Decimal(1, 2, 0), 2)
+@testset "Equality" begin
 
-@test isequal(0.1, 0.1)
-@test isequal(2, 2)
+@testset "isequal" begin
+    @test isequal(Decimal(0, 2, -3), Decimal(0, 2, -3))
+    @test ~isequal(Decimal(0, 2, -3), Decimal(0, 2, 3))
+    @test isequal(Decimal(0, 2, -3), 0.002)
+    @test isequal(Decimal(1, 2, 0), -2)
+    @test ~isequal(Decimal(1, 2, 0), 2)
+end
 
-@test Decimal(0, 2, -3) == Decimal(0, 2, -3)
-@test Decimal(0, 2, -3) != Decimal(0, 2, 3)
-@test Decimal(0, 2, -3) == 0.002
+@testset "==" begin
+    @test Decimal(0, 2, -3) == Decimal(0, 2, -3)
+    @test Decimal(0, 2, -3) != Decimal(0, 2, 3)
+    @test Decimal(0, 2, -3) == 0.002
 
-@test -2 == Decimal(1, 2, 0)
-@test 2 != Decimal(1, 2, 0)
+    @test -2 == Decimal(1, 2, 0)
+    @test 2 != Decimal(1, 2, 0)
 
-@test Decimal(1, 2, 0) == -2
-@test Decimal(1, 2, 0) != 2
+    @test Decimal(1, 2, 0) == -2
+    @test Decimal(1, 2, 0) != 2
+end
 
-@test 0.1 == 0.1
-@test 2 == 2
+@testset "<" begin
+    @test Decimal(1, 1, 1) < Decimal(0, 1, 1)
+    @test !(Decimal(0, 1, 1) < Decimal(1, 1, 1))
+    @test Decimal(1, 1, 1) < Decimal(1, 0, 1)
+    @test !(Decimal(1, 0, 1) < Decimal(1, 1, 1))
+    @test Decimal(0, 2, -3) < Decimal(0, 2, 3)
+    @test !(Decimal(0, 2, 3) < Decimal(0, 2, -3))
+end
 
-# Triple equals
-# Is there a way to redefine === in Julia 4.x?
-# @test Decimal(0, 2, -3) === Decimal(0, 2, -3)
-# @test decimal("0.2") === 0.2
+end

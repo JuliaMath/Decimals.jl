@@ -1,17 +1,23 @@
 using Decimals
-using Base.Test
+using Compat.Test
 
-tests = ["constructor",
-         "decimal", 
-         "norm",
-         "arithmetic",
-         "equals",
-         "round"]
+@testset "Decimals" begin
 
-println("Running tests:")
+global d = [
+    Decimal(0, 2, -1)
+    Decimal(0, 1, -1)
+    Decimal(0, 100, -4)
+    Decimal(0, 1512, -2)
+    Decimal(1, 3, -2)
+    Decimal(1, 4, -6)
+]
 
-for t in tests
-    tfile = string("test_", t, ".jl")
-    println(" * $(t) ...")
-    include(tfile)
+include("test_constructor.jl")
+include("test_decimal.jl")
+include("test_norm.jl")
+include("test_arithmetic.jl")
+include("test_equals.jl")
+include("test_round.jl")
+include("test_deprecated.jl")
+
 end

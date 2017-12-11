@@ -1,8 +1,10 @@
 ## Decimals.jl
 
-[![Build Status](https://travis-ci.org/tinybike/Decimals.jl.svg?branch=master)](https://travis-ci.org/tinybike/Decimals.jl) [![Coverage Status](https://coveralls.io/repos/tinybike/Decimals.jl/badge.svg?branch=master)](https://coveralls.io/r/tinybike/Decimals.jl?branch=master) [![Decimals](http://pkg.julialang.org/badges/Decimals_0.4.svg)](http://pkg.julialang.org/?pkg=Decimals)
+[![Build Status](https://travis-ci.org/tinybike/Decimals.jl.svg?branch=master)](https://travis-ci.org/tinybike/Decimals.jl)
+[![Coverage Status](https://coveralls.io/repos/tinybike/Decimals.jl/badge.svg?branch=master)](https://coveralls.io/r/tinybike/Decimals.jl?branch=master)
+[![Decimals](https://pkg.julialang.org/badges/Decimals_0.6.svg)](https://pkg.julialang.org/?pkg=Decimals)
 
-Basic routines for decimal arithmetic in Julia.  Supports addition, subtraction, negation, multiplication, division, and equality operations; exponentiation coming as soon as I find the time to write it.  This is a pure Julia implementation, so if you are concerned about pure speed, calling `libmpdec` functions directly is likely to be faster.  Tested in Julia 0.3.
+Basic routines for decimal arithmetic in Julia.  Supports addition, subtraction, negation, multiplication, division, and equality operations; exponentiation coming as soon as I find the time to write it.  This is a pure Julia implementation, so if you are concerned about pure speed, calling `libmpdec` functions directly is likely to be faster.  Tested in Julia 0.6.
 
 ### Background
 
@@ -23,7 +25,23 @@ Clearly, this is not okay for fields like finance, where it's important to be ab
 
 #### The Decimal object
 
-You can create Decimal objects from either strings or numbers, using `decimal()`:
+You can parse Decimal objects from strings:
+
+    julia> parse(Decimal, "0.2")
+    Decimals.Decimal(0,2,-1)
+
+    julia> parse(Decimal, "-2.5e6")
+    Decimals.Decimal(1,25,5)
+
+You can construct Decimal objects from other Real numbers:
+
+    julia> Decimal(0.1)
+    Decimal(0,1,-1)
+
+    julia> Decimal(-1003)
+    Decimals.Decimal(1, 1003, 0)
+
+Or can create Decimal objects from either strings or numbers using `decimal`:
 
     julia> decimal("0.2")
     Decimal(0,2,-1)
@@ -99,18 +117,18 @@ Equals (`==` and `isequal`):
     julia> x != decimal("0.1")
     true
 
+Inequality:
+
+    julia> x >= y
+    true
+
+    julia> isless(x, y)
+    false
+
 `==` returns true for Decimal vs. Number comparisons:
 
     julia> x == 0.2
     true
-
-`is` only returns true between two equivalent Decimal objects:
-
-    julia> is(x, decimal("0.2"))
-    true
-
-    julia> is(x, 0.2)
-    false
 
 Rounding:
 
@@ -124,4 +142,4 @@ Rounding:
 
 Unit tests are in `test/`.  To run the tests:
 
-    $ julia test/runtests.jl
+    julia> Pkg.test("Decimals")
