@@ -1,39 +1,24 @@
 # Pure Julia decimal arithmetic
 # @license MIT
 # @author jack@tinybike.net (Jack Peterson), 7/3/2014
+__precompile__()
 
 module Decimals
-
-    import Core: ===
-    import Base: string, float, ==, +, -, *, /, .*, ./, is
+    import Base: ==, +, -, *, /, <, float, norm, inv
 
     export Decimal,
            decimal,
-           string,
-           float,
-           number,
-           norm,
-           round,
-           isequal,
-           is,
-           isint,
-           inv,
-           +,
-           -,
-           *,
-           /,
-           ==
+           decimal,
+           number
 
     DIGITS = 20
 
     # Numerical value: (-1)^s * c * 10^q
-    immutable Decimal
+    struct Decimal <: Real
         s::Integer  # sign can be 0 (+) or 1 (-)
-        c::BigInt   # coefficient (significand)
+        c::BigInt   # coefficient (significand), must be non-negative
         q::Integer  # exponent
     end
-
-    Decinum = Union{Decimal, Number}
 
     # Convert between Decimal objects, numbers, and strings
     include("decimal.jl")

@@ -1,5 +1,5 @@
 # Normalization: remove trailing zeros in coefficient
-function Base.norm(x::Decimal; rounded::Bool=false)
+function Base.normalize(x::Decimal; rounded::Bool=false)
     p = 0
     if x.c != 0
         while x.c % 10^(p+1) == 0
@@ -14,3 +14,5 @@ function Base.norm(x::Decimal; rounded::Bool=false)
         round(Decimal(x.s, abs(c), q), DIGITS; normal=true)
     end
 end
+
+@deprecate norm(x::Decimal; kwargs...) normalize(x; kwargs...)
