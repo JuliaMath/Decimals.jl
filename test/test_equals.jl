@@ -21,6 +21,14 @@ end
 
     @test Decimal(1, 2, 0) == -2
     @test Decimal(1, 2, 0) != 2
+
+    bf_pi = BigFloat(pi)
+    @test Decimal(bf_pi) == bf_pi
+    @test bf_pi == Decimal(bf_pi)
+
+    bi = big"4608230166434464229556241992703"
+    @test Decimal(bi) == bi
+    @test bi == Decimal(bi)
 end
 
 @testset "<" begin
