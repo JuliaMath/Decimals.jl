@@ -1,5 +1,9 @@
 Base.promote_rule(::Type{Decimal}, ::Type{<:Real}) = Decimal
 
+# override definitions in Base
+Base.promote_rule(::Type{BigFloat}, ::Type{Decimal}) = Decimal
+Base.promote_rule(::Type{BigInt}, ::Type{Decimal}) = Decimal
+
 # Addition
 # To add, convert both decimals to the same exponent.
 # (If the exponents are different, use the smaller exponent
