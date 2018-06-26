@@ -68,7 +68,7 @@ Base.one(::Type{Decimal}) = Decimal(0,1,0)
 
 # Convert a decimal to a float
 @deprecate float(x::Decimal) Float64(x)
-@deprecate float(x::Array{Decimal}) map(float, x)
+@deprecate float(x::Array{Decimal}) map(Float64, x)
 
 # convert a decimal to any subtype of Real
 (::Type{T})(x::Decimal) where {T<:Real} = parse(T, string(x))
@@ -83,4 +83,4 @@ end
 # Check if integer
 @deprecate isint(x::Integer) isinteger(x)
 @deprecate isint(x::AbstractFloat) isinteger(x)
-@deprecate isint(x::AbstractString) isinteger(float(x))
+@deprecate isint(x::AbstractString) isinteger(parse(Float64, x))
