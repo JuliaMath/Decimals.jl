@@ -11,7 +11,7 @@ function Base.normalize(x::Decimal; rounded::Bool=false)
     if rounded
         Decimal(x.s, abs(c), q)
     else
-        round(Decimal(x.s, abs(c), q), DIGITS; normal=true)
+        round(Decimal(x.s, abs(c), q), digits=DIGITS, normal=true)
     end
 end
 

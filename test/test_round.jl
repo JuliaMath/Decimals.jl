@@ -3,14 +3,13 @@ using Compat.Test
 
 @testset "Rounding" begin
 
-@test round(Decimal(7.123456), 0) == Decimal(7)
-@test round(Decimal(7.123456), 2) == Decimal(7.12)
-@test round(Decimal(7.123456), 3) == Decimal(7.123)
-@test round(Decimal(7.123456), 5) == Decimal(7.12346)
-@test round(Decimal(7.123456), 6) == Decimal(7.123456)
+@test round(Decimal(7.123456), digits=0) == Decimal(7)
+@test round(Decimal(7.123456), digits=2) == Decimal(7.12)
+@test round(Decimal(7.123456), digits=3) == Decimal(7.123)
+@test round(Decimal(7.123456), digits=5) == Decimal(7.12346)
+@test round(Decimal(7.123456), digits=6) == Decimal(7.123456)
 
-@test round(0.123, 1) == 0.1
-@test round.([0.1111 0.2222 0.8888], 2) == [0.11 0.22 0.89]
+@test round.(Decimal.([0.1111, 0.2222, 0.8888]), digits=2) == Decimal.([0.11, 0.22, 0.89])
 
 function tet()
     a = parse(Decimal, "1.0000001")

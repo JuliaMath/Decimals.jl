@@ -4,14 +4,14 @@
 __precompile__()
 
 module Decimals
-    import Base: ==, +, -, *, /, <, float, norm, inv
+    import Base: ==, +, -, *, /, <, float, norm, inv, round
 
     export Decimal,
            decimal,
            decimal,
            number
 
-    DIGITS = 20
+    const DIGITS = 20
 
     # Numerical value: (-1)^s * c * 10^q
     struct Decimal <: Real

@@ -132,7 +132,7 @@ Inequality:
 
 Rounding:
 
-    julia> round(decimal(3.1415), 2)
+    julia> round(decimal(3.1415), digits=2)
     Decimal(0,314,-2)
 
     julia> string(ans)
