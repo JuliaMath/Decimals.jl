@@ -4,10 +4,15 @@
 __precompile__()
 
 module Decimals
-    import Base: ==, +, -, *, /, <, float, norm, inv, round
+    import Base: ==, +, -, *, /, <, float, inv, round
+
+    if VERSION < v"0.7.0-DEV.3449"
+        import Base: normalize
+    else
+        export normalize
+    end
 
     export Decimal,
-           decimal,
            decimal,
            number
 
