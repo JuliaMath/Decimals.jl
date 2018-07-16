@@ -5,15 +5,20 @@ function Base.parse(::Type{Decimal}, str::AbstractString)
     # Unpack scientific notation
     scno = split(str, 'e')
     expo = length(scno) == 2 ? parse(Int64, scno[2]) : zero(Int64)
-    # Unpack coefficient and get fractional part
+    # Unpack coefficient and get integer/fractional parts
     coef = split(scno[1], '.')
+    intp = lstrip(coef[1], ('+', '-', '0'))
     frac = length(coef) == 2 ? rstrip(coef[2], '0') : ""
     # Update exponent
     if length(frac) == 0
-        c = rstrip(coef[1], '0')
-        expo += length(coef[1]) - length(c)
+        if length(intp) == 0
+            return Decimal(s, zero(BigInt), zero(Int64))
+        else
+            c = rstrip(intp, '0')
+            expo += length(intp) - length(c)
+        end
     else
-        c = coef[1] * frac
+        c = intp * frac
         expo -= length(frac)
     end
     Decimal(s, abs(parse(BigInt, c)), expo)
