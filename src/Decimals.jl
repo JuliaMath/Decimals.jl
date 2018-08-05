@@ -1,7 +1,7 @@
 # Pure Julia decimal arithmetic
 # @license MIT
 # @author jack@tinybike.net (Jack Peterson), 7/3/2014
-__precompile__()
+VERSION < v"0.7.0-beta2.199" && __precompile__()
 
 module Decimals
     import Base: ==, +, -, *, /, <, float, inv, round
