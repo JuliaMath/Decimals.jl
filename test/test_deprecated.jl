@@ -1,8 +1,9 @@
 using Decimals
 using Compat.Test
+using Compat: @info
 
 @testset "Deprecated Functions" begin
-    info("The following deprecation warnings are expected")
+    @info("The following deprecation warnings are expected")
 
     @test inv(d) == map(inv, d)
 
