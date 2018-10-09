@@ -84,3 +84,6 @@ end
 @deprecate isint(x::Integer) isinteger(x)
 @deprecate isint(x::AbstractFloat) isinteger(x)
 @deprecate isint(x::AbstractString) isinteger(parse(Float64, x))
+
+# Overload Base.show to make Decimals easier to read
+Base.show(io::IO, d::Decimal) = print(io, string(d))
