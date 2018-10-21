@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/JuliaMath/Decimals.jl.svg?branch=master)](https://travis-ci.org/JuliaMath/Decimals.jl)
 [![Coverage Status](https://coveralls.io/repos/github/JuliaMath/Decimals.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaMath/Decimals.jl?branch=master)
-[![Decimals](https://pkg.julialang.org/badges/Decimals_0.6.svg)](https://pkg.julialang.org/?pkg=Decimals)
 
 Basic routines for decimal arithmetic in Julia.  Supports addition, subtraction, negation, multiplication, division, and equality operations; exponentiation coming as soon as I find the time to write it.  This is a pure Julia implementation, so if you are concerned about pure speed, calling `libmpdec` functions directly is likely to be faster.  Tested in Julia 0.6, 0.7, and 1.0.
 
