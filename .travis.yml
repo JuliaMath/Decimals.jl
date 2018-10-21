@@ -6,11 +6,7 @@ julia:
   - 0.7
   - 1.0
   - nightly
-#script:
-#  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-#  - julia -e 'Pkg.init(); Pkg.clone(pwd()); Pkg.test("Decimals")'
-#  - julia --code-coverage test/runtests.jl
-after_success:
+script:
   - |
       julia -e '
           VERSION >= v"0.7.0-DEV.3656" && using Pkg
