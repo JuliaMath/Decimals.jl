@@ -1,27 +1,29 @@
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
 function Base.parse(::Type{Decimal}, str::AbstractString)
     # Read sign
-    s = (str[1] == '-') ? 1 : 0
+    sign = (str[1] == '-') ? 1 : 0
     # Unpack scientific notation
-    scno = split(str, 'e')
-    expo = length(scno) == 2 ? parse(Int64, scno[2]) : zero(Int64)
-    # Unpack coefficient and get integer/fractional parts
-    coef = split(scno[1], '.')
-    intp = lstrip(coef[1], ('+', '-', '0'))
-    frac = length(coef) == 2 ? rstrip(coef[2], '0') : ""
-    # Update exponent
-    if length(frac) == 0
-        if length(intp) == 0
-            return Decimal(s, zero(BigInt), zero(Int64))
+    mantissa_and_exponent = split(lowercase(str), 'e') # Both 'e' and 'E' may act as separators
+    @assert length(mantissa_and_exponent) ≤ 2 "At most one exponent character allowed in scientific notation."
+    exponent = length(mantissa_and_exponent) == 2 ? parse(Int64, mantissa_and_exponent[2]) : zero(Int64)
+    # Split mantissa in integer and fractional parts
+    mantissa = split(mantissa_and_exponent[1], '.')
+    @assert length(mantissa) ≤ 2 "At most one decimal separator allowed in the mantissa."
+    integer_part = lstrip(mantissa[1], ('+', '-', '0'))
+    fractional_part = length(mantissa) == 2 ? rstrip(mantissa[2], '0') : ""
+    # Update exponent (move the decimal separator to the rightmost non-zero digit)
+    if isempty(fractional_part)
+        if isempty(integer_part)
+            return Decimal(sign, zero(BigInt), zero(Int64))
         else
-            c = rstrip(intp, '0')
-            expo += length(intp) - length(c)
+            coefficient = rstrip(integer_part, '0') # coefficient of the Decimal number (integer)
+            exponent += length(integer_part) - length(coefficient)
         end
     else
-        c = intp * frac
-        expo -= length(frac)
+        coefficient = integer_part * fractional_part
+        exponent -= length(fractional_part)
     end
-    Decimal(s, abs(parse(BigInt, c)), expo)
+    Decimal(sign, abs(parse(BigInt, coefficient)), exponent)
 end
 
 decimal(str::AbstractString) = parse(Decimal, str)
