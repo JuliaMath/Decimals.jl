@@ -40,6 +40,9 @@ using Compat.Test
         @test parse(Decimal, "-0012.3450") == Decimal(-12.345) == Decimal(1, 12345, -3)
         @test parse(Decimal, "0012.3450e3") == parse(Decimal, "+0012.3450e3") == Decimal(12.345e3) == Decimal(0, 12345, 0)
         @test parse(Decimal, "-0012.3450e-3") == Decimal(-12.345e-3) == Decimal(1, 12345, -6)
+
+        @test_throws ArgumentError parse(Decimal, "1.2.3")
+        @test_throws ArgumentError parse(Decimal, "1e2e3")
     end
 
     @testset "Using `decimal`" begin
