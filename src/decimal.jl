@@ -4,13 +4,24 @@ function Base.parse(::Type{Decimal}, str::AbstractString)
     sign = (str[1] == '-') ? 1 : 0
     # Unpack scientific notation
     mantissa_and_exponent = split(lowercase(str), 'e') # Both 'e' and 'E' may act as separators
-    @assert length(mantissa_and_exponent) ≤ 2 "At most one exponent character allowed in scientific notation."
-    exponent = length(mantissa_and_exponent) == 2 ? parse(Int64, mantissa_and_exponent[2]) : zero(Int64)
+    # Parse exponent
+    exponent = if length(mantissa_and_exponent) == 1
+        zero(Int64)
+    elseif length(mantissa_and_exponent) == 2
+        parse(Int64, mantissa_and_exponent[2])
+    else
+        throw(ArgumentError("When parsing \"$str\" as a Decimal, more than one scientific notation exponent character was found."))
+    end
     # Split mantissa in integer and fractional parts
     mantissa = split(mantissa_and_exponent[1], '.')
-    @assert length(mantissa) ≤ 2 "At most one decimal separator allowed in the mantissa."
     integer_part = lstrip(mantissa[1], ('+', '-', '0'))
-    fractional_part = length(mantissa) == 2 ? rstrip(mantissa[2], '0') : ""
+    fractional_part = if length(mantissa) == 1
+        ""
+    elseif length(mantissa) == 2
+        rstrip(mantissa[2], '0')
+    else
+        throw(ArgumentError("When parsing \"$str\" as a Decimal, more than one decimal separator was found in the mantissa."))
+    end
     # Update exponent (move the decimal separator to the rightmost non-zero digit)
     if isempty(fractional_part)
         if isempty(integer_part)
