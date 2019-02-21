@@ -4,10 +4,10 @@
 # of the other way round.
 function ==(x::Decimal, y::Decimal)
     # return early on zero
-    zerox = iszero(x)
-    zeroy = iszero(y)
-    if zerox || zeroy
-        return zerox == zeroy
+    x_is_zero = iszero(x)
+    y_is_zero = iszero(y)
+    if x_is_zero || y_is_zero
+        return x_is_zero === y_is_zero
     end
 
     a = normalize(x)
