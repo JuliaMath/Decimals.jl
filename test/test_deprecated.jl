@@ -1,6 +1,5 @@
 using Decimals
-using Compat.Test
-using Compat: @info
+using Test
 
 @testset "Deprecated Functions" begin
     @info("The following deprecation warnings are expected")

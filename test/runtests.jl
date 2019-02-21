@@ -1,5 +1,5 @@
 using Decimals
-using Compat.Test
+using Test
 
 @testset "Decimals" begin
 

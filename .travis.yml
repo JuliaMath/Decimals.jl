@@ -2,15 +2,14 @@ language: julia
 notifications:
   email: false
 julia:
-  - 0.6
   - 0.7
   - 1.0
+  - 1.1
   - nightly
 after_success:
   - |
       julia -e '
-          VERSION >= v"0.7.0-DEV.3656" && using Pkg
-          VERSION >= v"0.7.0-DEV.5183" || cd(Pkg.dir("Decimals"))
+          using Pkg
           Pkg.add("Coverage")
           using Coverage
           Coveralls.submit(Coveralls.process_folder())
