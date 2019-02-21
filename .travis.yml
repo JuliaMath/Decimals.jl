@@ -6,7 +6,7 @@ julia:
   - 0.7
   - 1.0
   - nightly
-script:
+after_success:
   - |
       julia -e '
           VERSION >= v"0.7.0-DEV.3656" && using Pkg
