@@ -9,5 +9,3 @@ function round(x::Decimal; digits::Int=0, normal::Bool=false)
         (normal) ? d : normalize(d, rounded=true)
     end
 end
-
-@deprecate round(x::Decimal, dpts::Int; normal::Bool=false) round(x, digits=dpts, normal=normal)

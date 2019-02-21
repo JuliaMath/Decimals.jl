@@ -9,9 +9,6 @@ end
 
 decimal(str::AbstractString) = parse(Decimal, str)
 
-# convert an array to an array of decimals
-@deprecate decimal(x::Array) map(decimal, x)
-
 # Convert a number to a decimal
 Decimal(num::Real) = parse(Decimal, string(num))
 Base.convert(::Type{Decimal}, num::Real) = Decimal(num::Real)
@@ -66,10 +63,6 @@ end
 Base.zero(::Type{Decimal}) = Decimal(0,0,0)
 Base.one(::Type{Decimal}) = Decimal(0,1,0)
 
-# Convert a decimal to a float
-@deprecate float(x::Decimal) Float64(x)
-@deprecate float(x::Array{Decimal}) map(Float64, x)
-
 # convert a decimal to any subtype of Real
 (::Type{T})(x::Decimal) where {T<:Real} = parse(T, string(x))
 
@@ -78,9 +71,3 @@ function number(x::Decimal)
     ix = (str = string(x) ; fx = parse(Float64, str); round(Int64, fx))
     (ix == fx) ? ix : fx
 end
-@deprecate number(x::Array{Decimal}) map(number, x)
-
-# Check if integer
-@deprecate isint(x::Integer) isinteger(x)
-@deprecate isint(x::AbstractFloat) isinteger(x)
-@deprecate isint(x::AbstractString) isinteger(parse(Float64, x))
