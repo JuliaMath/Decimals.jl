@@ -29,6 +29,10 @@ end
     bi = big"4608230166434464229556241992703"
     @test Decimal(bi) == bi
     @test bi == Decimal(bi)
+
+    @test decimal(12.1) == decimal(12.1)
+
+    @test Decimal(1, 0, -1) == Decimal(0, 0, 0)
 end
 
 @testset "<" begin
@@ -38,6 +42,7 @@ end
     @test !(Decimal(1, 0, 1) < Decimal(1, 1, 1))
     @test Decimal(0, 2, -3) < Decimal(0, 2, 3)
     @test !(Decimal(0, 2, 3) < Decimal(0, 2, -3))
+    @test !(decimal(12.1) < decimal(12.1))
 end
 
 end

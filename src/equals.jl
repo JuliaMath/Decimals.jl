@@ -3,6 +3,13 @@
 # equals() now depends on == instead
 # of the other way round.
 function ==(x::Decimal, y::Decimal)
+    # return early on zero
+    zerox = iszero(x)
+    zeroy = iszero(y)
+    if zerox || zeroy
+        return zerox == zeroy
+    end
+
     a = normalize(x)
     b = normalize(y)
     a.c == b.c && a.q == b.q && a.s == b.s
@@ -16,11 +23,9 @@ function <(x::Decimal, y::Decimal)
         return false
     end
 
-    signdiff = y.s - x.s
-    if signdiff == 1
-        return false
-    elseif signdiff == -1
-        return true
+    # avoid normalization if possible
+    if x.q == y.q
+        return isless(x.s == 0 ? x.c : -x.c, y.s == 0 ? y.c : -y.c)
     end
 
     diff = y - x

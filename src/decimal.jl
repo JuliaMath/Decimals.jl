@@ -71,3 +71,6 @@ function number(x::Decimal)
     ix = (str = string(x) ; fx = parse(Float64, str); round(Int64, fx))
     (ix == fx) ? ix : fx
 end
+
+# sign
+Base.signbit(x::Decimal) = x.s != 0
