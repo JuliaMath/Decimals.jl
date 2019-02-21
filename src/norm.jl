@@ -14,5 +14,3 @@ function normalize(x::Decimal; rounded::Bool=false)
         round(Decimal(x.s, abs(c), q), digits=DIGITS, normal=true)
     end
 end
-
-@deprecate norm(x::Decimal; kwargs...) normalize(x; kwargs...)

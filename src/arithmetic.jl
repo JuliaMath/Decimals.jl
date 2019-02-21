@@ -15,20 +15,12 @@ function +(x::Decimal, y::Decimal)
     c = BigInt(cx) + BigInt(cy)
     normalize(Decimal(s, abs(c), min(x.q, y.q)))
 end
-@deprecate (+)(x::Number, y::Array{Decimal}) x .+ y
-@deprecate (+)(x::Array{Decimal}, y::Number) x .+ y
-@deprecate (+)(x::Array{<:Number}, y::Array{Decimal}) x .+ y
-@deprecate (+)(x::Array{Decimal}, y::Array{<:Number}) x .+ y
 
 # Negation
 -(x::Decimal) = Decimal((x.s == 1) ? 0 : 1, x.c, x.q)
 
 # Subtraction
 -(x::Decimal, y::Decimal) = +(x, -y)
-@deprecate (-)(x::Number, y::Array{Decimal}) x .- y
-@deprecate (-)(x::Array{Decimal}, y::Number) x .- y
-@deprecate (-)(x::Array{<:Number}, y::Array{Decimal}) x .- y
-@deprecate (-)(x::Array{Decimal}, y::Array{<:Number}) x .- y
 
 # Multiplication
 function *(x::Decimal, y::Decimal)
@@ -47,7 +39,6 @@ function Base.inv(x::Decimal)
     q = (x.q < 0) ? 1 - b - DIGITS : -b - DIGITS
     normalize(Decimal(x.s, c, q))
 end
-@deprecate inv(x::Array{Decimal}) map(inv, x)
 
 # Division
 /(x::Decimal, y::Decimal) = x * inv(y)

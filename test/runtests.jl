@@ -1,5 +1,5 @@
 using Decimals
-using Compat.Test
+using Test
 
 @testset "Decimals" begin
 
@@ -18,6 +18,5 @@ include("test_norm.jl")
 include("test_arithmetic.jl")
 include("test_equals.jl")
 include("test_round.jl")
-include("test_deprecated.jl")
 
 end
