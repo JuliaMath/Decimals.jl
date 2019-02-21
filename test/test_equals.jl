@@ -5,10 +5,11 @@ using Test
 
 @testset "isequal" begin
     @test isequal(Decimal(0, 2, -3), Decimal(0, 2, -3))
-    @test ~isequal(Decimal(0, 2, -3), Decimal(0, 2, 3))
+    @test !isequal(Decimal(0, 2, -3), Decimal(0, 2, 3))
     @test isequal(Decimal(0, 2, -3), 0.002)
     @test isequal(Decimal(1, 2, 0), -2)
-    @test ~isequal(Decimal(1, 2, 0), 2)
+    @test !isequal(Decimal(1, 2, 0), 2)
+    @test !isequal(Decimal(1, 0, -1), Decimal(0, 0, 0))
 end
 
 @testset "==" begin
@@ -43,6 +44,8 @@ end
     @test Decimal(0, 2, -3) < Decimal(0, 2, 3)
     @test !(Decimal(0, 2, 3) < Decimal(0, 2, -3))
     @test !(decimal(12.1) < decimal(12.1))
+    @test !(Decimal(1, 0, -1) < Decimal(0, 0, 0))
+    @test !(Decimal(0, 0, 0) < Decimal(1, 0, -1))
 end
 
 end

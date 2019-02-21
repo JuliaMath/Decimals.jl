@@ -13,7 +13,7 @@ module Decimals
     const DIGITS = 20
 
     # Numerical value: (-1)^s * c * 10^q
-    struct Decimal <: Real
+    struct Decimal <: AbstractFloat
         s::Integer  # sign can be 0 (+) or 1 (-)
         c::BigInt   # coefficient (significand), must be non-negative
         q::Integer  # exponent
