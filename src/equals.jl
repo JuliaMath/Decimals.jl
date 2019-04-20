@@ -38,3 +38,33 @@ function <(x::Decimal, y::Decimal)
         return farther_from_0
     end
 end
+
+# Special case equality with AbstractFloat to allow comparison against Inf/Nan
+# which are not representable in Decimal
+
+==(a::AbstractFloat, b::Decimal) = b == a
+function ==(a::Decimal, b::AbstractFloat)
+    # Decimal does not represent NaN/Inf
+    (isinf(b) || isnan(b)) && return false
+    ==(promote(a, b)...)
+end
+
+function Base.min(a::AbstractFloat, b::Decimal)
+    !signbit(a) && isinf(a) && return convert(promote_type(typeof(a), typeof(b)), b)
+    min(promote(a, b)...)
+end
+function Base.min(a::Decimal, b::AbstractFloat)
+    !signbit(b) && isinf(b) && return convert(promote_type(typeof(a), typeof(b)), a)
+    min(promote(a, b)...)
+end
+Base.min(a::Decimal, b::Decimal) = invoke(min, Tuple{T, T} where T<:AbstractFloat, a, b)
+
+function Base.max(a::AbstractFloat, b::Decimal)
+    signbit(a) && isinf(a) && return convert(promote_type(typeof(a), typeof(b)), b)
+    max(promote(a, b)...)
+end
+function Base.max(a::Decimal, b::AbstractFloat)
+    signbit(b) && isinf(b) && return convert(promote_type(typeof(a), typeof(b)), a)
+    max(promote(a, b)...)
+end
+Base.max(a::Decimal, b::Decimal) = invoke(max, Tuple{T, T} where T<:AbstractFloat, a, b)
