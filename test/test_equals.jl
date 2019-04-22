@@ -48,4 +48,16 @@ end
     @test !(Decimal(0, 0, 0) < Decimal(1, 0, -1))
 end
 
+@testset "Inf/Nan" begin
+    d = parse(Decimal, "10.1")
+    @test d == min(d, Inf) == min(Inf, d) == min(d, d)
+    @test d == min(d, 20.0) == min(20.0, d)
+    @test d == max(d, 1.0) == max(1.0, d)
+    @test Decimal(1.0) == min(d, 1.0) == min(1.0, d)
+    @test Decimal(20.0) == max(d, 20.0) == max(20.0, d)
+    @test d == max(d, -Inf) == max(-Inf, d) == max(d, d)
+    @test d != Inf
+    @test d != NaN
+end
+
 end
