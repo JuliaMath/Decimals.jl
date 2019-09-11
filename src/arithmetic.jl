@@ -30,13 +30,8 @@ end
 
 # Inversion
 function Base.inv(x::Decimal)
-    str = string(x)
-    if str[1] == '-'
-        str = str[2:end]
-    end
-    b = ('.' in str) ? length(split(str, '.')[1]) : 0
-    c = round(BigInt(10)^(-x.q + DIGITS) / x.c)
-    q = (x.q < 0) ? 1 - b - DIGITS : -b - DIGITS
+    c = round(BigInt(10)^(-x.q + DIGITS) / x.c) # the decimal point of 1/x.c is shifted by -x.q so that the integer part of the result is correct and then it is shifted further by DIGITS to also cover some digits from the fractional part.
+    q = -DIGITS # we only need to remember that there are these digits after the decimal point
     normalize(Decimal(x.s, c, q))
 end
 
