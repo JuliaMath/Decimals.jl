@@ -3,7 +3,7 @@
 # @author jack@tinybike.net (Jack Peterson), 7/3/2014
 
 module Decimals
-    import Base: ==, +, -, *, /, <, float, inv, round
+    import Base: ==, +, -, *, /, <, float, inv, round, trunc
 
     export Decimal,
            decimal,
