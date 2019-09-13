@@ -46,6 +46,7 @@ end
     @test inv(Decimal(0, 5, 1)) == Decimal(0, 2, -2)
     @test inv(Decimal(1, 4, -1)) == Decimal(1, 25, -1)
     @test inv(Decimal(1, 25, -1)) == Decimal(1, 4, -1)
+    @test inv(Decimal(0, 123, -1)) == Decimal(0, 813008130081300813, -19) # 1/12.3 ≈ 0.08 
 end
 
 @testset "Division" begin

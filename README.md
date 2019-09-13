@@ -51,14 +51,14 @@ Or can create Decimal objects from either strings or numbers using `decimal`:
     julia> decimal("-2.5e6")
     Decimal(1,25,5)
 
-To convert back to a string or a float:
+To convert back to a string or a number (float in this case):
 
     julia> x = decimal("0.2");
 
     julia> string(x)
     "0.2"
 
-    julia> float(x)
+    julia> number(x)
     0.2
 
 It is also possible to call the Decimal constructor directly, by specifying the sign (`s`), coefficient (`c`), and exponent (`q`):
