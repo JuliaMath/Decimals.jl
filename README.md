@@ -84,53 +84,53 @@ julia> Decimal(1,2,-2)
 
 The numerical value of a Decimal is given by `(-1)^s * c * 10^q`.  `s` must be 0 (positive) or 1 (negative);  `c` must be non-negative; `c` and `q` must be integers.
 
-#### Operations
+### Operations
 ```julia
 julia> x, y = decimal("0.2"), decimal("0.1");
 ```
-##### Addition
+#### Addition
 ```julia
 julia> string(x + y)
 "0.3"
 ```
 
-##### Subtraction
+#### Subtraction
 ```julia
 julia> string(x - y)
 "0.1"
 ```
 
-##### Negation
+#### Negation
 ```julia
 julia> string(-x)
 "-0.2"
 ```
-##### Multiplication
+#### Multiplication
 ```julia
 julia> string(x * y)
 "0.02"
 ```
 
-##### Division
+#### Division
 ```julia
 julia> string(x / y)
 "2"
 ```
 
-##### Inversion
+#### Inversion
 ```julia
 julia> string(inv(x))
 "5"
 ```
 
-##### Broadcasting
+#### Broadcasting
 ```julia
 julia> [x y] .* 2
 2-element Array{Decimal,1}:
  Decimal(0,1,-1)
  Decimal(0,5,-2)
 ```
-##### Equals (`==` and `isequal`)
+#### Equals (`==` and `isequal`)
 ```julia
 julia> x == decimal("0.2")
 true
@@ -139,7 +139,7 @@ julia> x != decimal("0.1")
 true
 ```
 
-##### Inequality
+#### Inequality
 ```julia
 julia> x >= y
 true
@@ -148,13 +148,13 @@ julia> isless(x, y)
 false
 ```
 
-##### `==` returns true for Decimal vs. Number comparisons
+#### `==` returns true for Decimal vs. Number comparisons
 ```julia
 julia> x == 0.2
 true
 ```
 
-##### Rounding
+#### Rounding
 ```julia
 julia> round(decimal(3.1415), digits=2)
 Decimal(0,314,-2)
