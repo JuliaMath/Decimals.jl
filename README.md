@@ -159,7 +159,7 @@ julia> string(ans)
 "3.14"
 ```
 
-## Comarison with other packages
+## Comparison with other packages
 
 Unlike another Julia package called [`DecFP`](https://github.com/JuliaMath/DecFP.jl), which aims at implementing the [IEEE 754-2008 standard](https://en.wikipedia.org/wiki/IEEE_754-2008_revision) introducing 32, 64, and 64-bit precisions ([decimal32](https://en.wikipedia.org/wiki/Decimal32_floating-point_format), [decimal64](https://en.wikipedia.org/wiki/Decimal64_floating-point_format) and [decimal128](https://en.wikipedia.org/wiki/Decimal128_floating-point_format), respectively), this package allows arbitrary precision. Note, however, that in comparision with `DecFP`, which is is essentially a wrapper for a specialized [Intel® Decimal Floating-Point Math Library](https://software.intel.com/en-us/articles/intel-decimal-floating-point-math-library), the present package is more computationally demanding. If more computational efficiency is demanded, functions from [`libmpdec`](http://www.bytereef.org/mpdecimal/index.html) library can be called directly.
 
