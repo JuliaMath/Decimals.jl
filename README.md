@@ -13,10 +13,6 @@ Why is this needed?  The following code in Julia gives an answer
 
 In words, the binary floating point arithmetics implemented in computers has finite resolution - not all real numbers (even within the limits) can be expressed exactly. While many scientific and engineering fields can handle this behavior, it is not acceptable in fields like finance, where it's important to be able to trust that $0.30 is actually 30 cents, rather than 30.000000000000004 cents.
 
-Unlike another Julia package called [`DecFP`](https://github.com/JuliaMath/DecFP.jl), which aims at implementing the [IEEE 754-2008 standard](https://en.wikipedia.org/wiki/IEEE_754-2008_revision) introducing 32, 64, and 64-bit precisions ([decimal32](https://en.wikipedia.org/wiki/Decimal32_floating-point_format), [decimal64](https://en.wikipedia.org/wiki/Decimal64_floating-point_format) and [decimal128](https://en.wikipedia.org/wiki/Decimal128_floating-point_format), respectively), this package allows arbitrary precision. Note, however, that in comparision with `DecFP`, which is is essentially a wrapper for a specialized [Intel® Decimal Floating-Point Math Library](https://software.intel.com/en-us/articles/intel-decimal-floating-point-math-library), the present package is more computationally demanding. If more computational efficiency is demanded, functions from [`libmpdec`](http://www.bytereef.org/mpdecimal/index.html) library can be called directly.
-
-The closest equivalent (and inspiration) for the present package in Python is the standard built-in [`decimal`](https://docs.python.org/3.7/library/decimal.html) package, which is based on [General Decimal Arithmetic Specification by IBM](http://speleotrove.com/decimal/decarith.html). Since version 3.3 of Python, it is actually [`libmpdec`](http://www.bytereef.org/mpdecimal/index.html)/[`cdecimal`](https://www.bytereef.org/mpdecimal/doc/cdecimal/index.html) that is under the hood.
-
 ## Installation
 ```julia
 julia> Pkg.add("Decimals")
@@ -162,6 +158,12 @@ Decimal(0,314,-2)
 julia> string(ans)
 "3.14"
 ```
+
+## Comarison with other packages
+
+Unlike another Julia package called [`DecFP`](https://github.com/JuliaMath/DecFP.jl), which aims at implementing the [IEEE 754-2008 standard](https://en.wikipedia.org/wiki/IEEE_754-2008_revision) introducing 32, 64, and 64-bit precisions ([decimal32](https://en.wikipedia.org/wiki/Decimal32_floating-point_format), [decimal64](https://en.wikipedia.org/wiki/Decimal64_floating-point_format) and [decimal128](https://en.wikipedia.org/wiki/Decimal128_floating-point_format), respectively), this package allows arbitrary precision. Note, however, that in comparision with `DecFP`, which is is essentially a wrapper for a specialized [Intel® Decimal Floating-Point Math Library](https://software.intel.com/en-us/articles/intel-decimal-floating-point-math-library), the present package is more computationally demanding. If more computational efficiency is demanded, functions from [`libmpdec`](http://www.bytereef.org/mpdecimal/index.html) library can be called directly.
+
+The closest equivalent (and inspiration) for the present package in Python is the standard built-in [`decimal`](https://docs.python.org/3.7/library/decimal.html) package, which is based on [General Decimal Arithmetic Specification by IBM](http://speleotrove.com/decimal/decarith.html). Since version 3.3 of Python, it is actually [`libmpdec`](http://www.bytereef.org/mpdecimal/index.html)/[`cdecimal`](https://www.bytereef.org/mpdecimal/doc/cdecimal/index.html) that is under the hood.
 
 ## Further reading
 
