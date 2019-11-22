@@ -7,7 +7,7 @@ using Test
     @test Decimal(0.1) + 0.2 == 0.1 + Decimal(0.2) == Decimal(0.1) + Decimal(0.2) == Decimal(0.3)
     @test Decimal.([0.1 0.2]) .+ [0.3 0.1] == Decimal.([0.4 0.3])
     @test Decimal(2147483646) + Decimal(1) == Decimal(2147483647)
-    @test Decimal(1,3,-2) + parse(Decimal, "0.2523410412138103") == Decimal(0,2223410412138103,-16)
+    @test Decimal(1,3,-2) + parse(Decimal, "0.2523410412138103") == Decimal(false,2223410412138103,-16)
 end
 
 @testset "Subtraction" begin
@@ -38,15 +38,15 @@ end
 end
 
 @testset "Inversion" begin
-    @test inv(Decimal(0, 1, -1)) == Decimal(0, 1, 1)
-    @test inv(Decimal(0, 1, 1)) == Decimal(0, 1, -1)
-    @test inv(Decimal(1, 2, -1)) == Decimal(1, 5, 0)
-    @test inv(Decimal(1, 5, 0)) == Decimal(1, 2, -1)
-    @test inv(Decimal(0, 2, -2)) == Decimal(0, 5, 1)
-    @test inv(Decimal(0, 5, 1)) == Decimal(0, 2, -2)
-    @test inv(Decimal(1, 4, -1)) == Decimal(1, 25, -1)
-    @test inv(Decimal(1, 25, -1)) == Decimal(1, 4, -1)
-    @test inv(Decimal(0, 123, -1)) == Decimal(0, 813008130081300813, -19) # 1/12.3 ≈ 0.08 
+    @test inv(Decimal(false, 1, -1)) == Decimal(false, 1, 1)
+    @test inv(Decimal(false, 1, 1)) == Decimal(false, 1, -1)
+    @test inv(Decimal(true, 2, -1)) == Decimal(true, 5, 0)
+    @test inv(Decimal(true, 5, 0)) == Decimal(true, 2, -1)
+    @test inv(Decimal(false, 2, -2)) == Decimal(false, 5, 1)
+    @test inv(Decimal(false, 5, 1)) == Decimal(false, 2, -2)
+    @test inv(Decimal(true, 4, -1)) == Decimal(true, 25, -1)
+    @test inv(Decimal(true, 25, -1)) == Decimal(true, 4, -1)
+    @test inv(Decimal(false, 123, -1)) == Decimal(false, 813008130081300813, -19) # 1/12.3 ≈ 0.08
 end
 
 @testset "Division" begin

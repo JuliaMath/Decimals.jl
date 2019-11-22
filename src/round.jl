@@ -1,5 +1,5 @@
 # Rounding
-function round(x::Decimal; digits::Int=0, normal::Bool=false)
+function Base.round(x::Decimal; digits::Int=0, normal::Bool=false)
     shift = BigInt(digits) + x.q
     if shift > BigInt(0) || shift < x.q
         (normal) ? x : normalize(x, rounded=true)
@@ -10,7 +10,7 @@ function round(x::Decimal; digits::Int=0, normal::Bool=false)
     end
 end
 
-function trunc(x::Decimal; digits::Int=0, normal::Bool=false)
+function Base.trunc(x::Decimal; digits::Int=0, normal::Bool=false)
     shift = BigInt(digits) + x.q
     if shift > BigInt(0) || shift < x.q
         (normal) ? x : normalize(x, rounded=true)

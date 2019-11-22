@@ -4,24 +4,24 @@ using Test
 @testset "Equality" begin
 
 @testset "isequal" begin
-    @test isequal(Decimal(0, 2, -3), Decimal(0, 2, -3))
-    @test !isequal(Decimal(0, 2, -3), Decimal(0, 2, 3))
-    @test isequal(Decimal(0, 2, -3), 0.002)
-    @test isequal(Decimal(1, 2, 0), -2)
-    @test !isequal(Decimal(1, 2, 0), 2)
-    @test !isequal(Decimal(1, 0, -1), Decimal(0, 0, 0))
+    @test isequal(Decimal(false, 2, -3), Decimal(false, 2, -3))
+    @test !isequal(Decimal(false, 2, -3), Decimal(false, 2, 3))
+    @test isequal(Decimal(false, 2, -3), 0.002)
+    @test isequal(Decimal(true, 2, 0), -2)
+    @test !isequal(Decimal(true, 2, 0), 2)
+    @test !isequal(Decimal(true, 0, -1), Decimal(false, 0, 0))
 end
 
 @testset "==" begin
-    @test Decimal(0, 2, -3) == Decimal(0, 2, -3)
-    @test Decimal(0, 2, -3) != Decimal(0, 2, 3)
-    @test Decimal(0, 2, -3) == 0.002
+    @test Decimal(false, 2, -3) == Decimal(false, 2, -3)
+    @test Decimal(false, 2, -3) != Decimal(false, 2, 3)
+    @test Decimal(false, 2, -3) == 0.002
 
-    @test -2 == Decimal(1, 2, 0)
-    @test 2 != Decimal(1, 2, 0)
+    @test -2 == Decimal(true, 2, 0)
+    @test 2 != Decimal(true, 2, 0)
 
-    @test Decimal(1, 2, 0) == -2
-    @test Decimal(1, 2, 0) != 2
+    @test Decimal(true, 2, 0) == -2
+    @test Decimal(true, 2, 0) != 2
 
     bf_pi = BigFloat(pi)
     @test Decimal(bf_pi) == bf_pi
@@ -33,19 +33,19 @@ end
 
     @test decimal(12.1) == decimal(12.1)
 
-    @test Decimal(1, 0, -1) == Decimal(0, 0, 0)
+    @test Decimal(true, 0, -1) == Decimal(false, 0, 0)
 end
 
 @testset "<" begin
-    @test Decimal(1, 1, 1) < Decimal(0, 1, 1)
-    @test !(Decimal(0, 1, 1) < Decimal(1, 1, 1))
-    @test Decimal(1, 1, 1) < Decimal(1, 0, 1)
-    @test !(Decimal(1, 0, 1) < Decimal(1, 1, 1))
-    @test Decimal(0, 2, -3) < Decimal(0, 2, 3)
-    @test !(Decimal(0, 2, 3) < Decimal(0, 2, -3))
+    @test Decimal(true, 1, 1) < Decimal(false, 1, 1)
+    @test !(Decimal(false, 1, 1) < Decimal(true, 1, 1))
+    @test Decimal(true, 1, 1) < Decimal(true, 0, 1)
+    @test !(Decimal(true, 0, 1) < Decimal(true, 1, 1))
+    @test Decimal(false, 2, -3) < Decimal(false, 2, 3)
+    @test !(Decimal(false, 2, 3) < Decimal(false, 2, -3))
     @test !(decimal(12.1) < decimal(12.1))
-    @test !(Decimal(1, 0, -1) < Decimal(0, 0, 0))
-    @test !(Decimal(0, 0, 0) < Decimal(1, 0, -1))
+    @test !(Decimal(true, 0, -1) < Decimal(false, 0, 0))
+    @test !(Decimal(false, 0, 0) < Decimal(true, 0, -1))
 end
 
 @testset "Inf/Nan" begin

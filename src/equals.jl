@@ -2,7 +2,7 @@
 
 # equals() now depends on == instead
 # of the other way round.
-function ==(x::Decimal, y::Decimal)
+function Base.:(==)(x::Decimal, y::Decimal)
     # return early on zero
     x_is_zero = iszero(x)
     y_is_zero = iszero(y)
@@ -17,7 +17,7 @@ end
 
 Base.iszero(x::Decimal) = iszero(x.c)
 
-function <(x::Decimal, y::Decimal)
+function Base.:(<)(x::Decimal, y::Decimal)
     # return early on zero
     if iszero(x) && iszero(y)
         return false
@@ -42,8 +42,8 @@ end
 # Special case equality with AbstractFloat to allow comparison against Inf/Nan
 # which are not representable in Decimal
 
-==(a::AbstractFloat, b::Decimal) = b == a
-function ==(a::Decimal, b::AbstractFloat)
+Base.:(==)(a::AbstractFloat, b::Decimal) = b == a
+function Base.:(==)(a::Decimal, b::AbstractFloat)
     # Decimal does not represent NaN/Inf
     (isinf(b) || isnan(b)) && return false
     ==(promote(a, b)...)

@@ -3,35 +3,36 @@
 # @author jack@tinybike.net (Jack Peterson), 7/3/2014
 
 module Decimals
-    import Base: ==, +, -, *, /, <, float, inv, round, trunc
 
-    export Decimal,
-           decimal,
-           number,
-           normalize
+export Decimal,
+       decimal,
+       number,
+       normalize
 
-    const DIGITS = 20
+const DIGITS = 20
 
-    # Numerical value: (-1)^s * c * 10^q
-    struct Decimal <: AbstractFloat
-        s::Integer  # sign can be 0 (+) or 1 (-)
-        c::BigInt   # coefficient (significand), must be non-negative
-        q::Integer  # exponent
-    end
+# Numerical value: (-1)^s * c * 10^q
+struct Decimal <: AbstractFloat
+    s::Bool  # sign can be 0 (+) or 1 (-)
+    c::BigInt   # coefficient (significand), must be non-negative
+    q::Int  # exponent
 
-    # Convert between Decimal objects, numbers, and strings
-    include("decimal.jl")
+    Decimal(s::Integer, c::Integer, e::Integer) = new(Bool(s), c, e)
+end
 
-    # Decimal normalization
-    include("norm.jl")
+# Convert between Decimal objects, numbers, and strings
+include("decimal.jl")
 
-    # Addition, subtraction, negation, multiplication
-    include("arithmetic.jl")
+# Decimal normalization
+include("norm.jl")
 
-    # Equality
-    include("equals.jl")
+# Addition, subtraction, negation, multiplication
+include("arithmetic.jl")
 
-    # Rounding
-    include("round.jl")
+# Equality
+include("equals.jl")
+
+# Rounding
+include("round.jl")
 
 end
