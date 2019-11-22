@@ -1,10 +1,12 @@
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
 function Base.parse(::Type{Decimal}, str::AbstractString)
-    if 'e' in str
+    if 'e' ∈ str
         return parse(Decimal, scinote(str))
+    elseif 'E' ∈ str
+        return parse(Decimal, scinote(lowercase(str)))
     end
     c, q = parameters(('.' in str) ? split(str, '.') : str)
-    normalize(Decimal((str[1] == '-') ? 1 : 0, c, q))
+    normalize(Decimal((str[1] == '-'), c, q))
 end
 
 decimal(str::AbstractString) = parse(Decimal, str)
@@ -60,8 +62,10 @@ function Base.print(io::IO, x::Decimal)
 end
 
 # Zero/one value
-Base.zero(::Type{Decimal}) = Decimal(0,0,0)
-Base.one(::Type{Decimal}) = Decimal(0,1,0)
+Base.zero(::Type{Decimal}) = Decimal(false,0,0)
+Base.one(::Type{Decimal}) = Decimal(false,1,0)
+
+Base.float(x::Decimal) = parse(Float64, string(x))
 
 # convert a decimal to any subtype of Real
 (::Type{T})(x::Decimal) where {T<:Real} = parse(T, string(x))
@@ -73,4 +77,6 @@ function number(x::Decimal)
 end
 
 # sign
-Base.signbit(x::Decimal) = x.s != 0
+Base.signbit(x::Decimal) = x.s
+
+Base.show(io::IO, x::Decimal) = write(io, "decimal(\""*string(x)*"\")")
