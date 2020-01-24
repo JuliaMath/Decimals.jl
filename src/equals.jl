@@ -40,7 +40,7 @@ function <(x::Decimal, y::Decimal)
 end
 
 function <=(x::Decimal, y::Decimal)
-    return x == y || x < y
+    return x < y || x == y
 end
 
 # Special case equality with AbstractFloat to allow comparison against Inf/Nan
