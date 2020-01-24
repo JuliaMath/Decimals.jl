@@ -48,6 +48,42 @@ end
     @test !(Decimal(0, 0, 0) < Decimal(1, 0, -1))
 end
 
+@testset ">" begin
+    @test !(Decimal(1, 1, 1) > Decimal(0, 1, 1))
+    @test Decimal(0, 1, 1) > Decimal(1, 1, 1)
+    @test !(Decimal(1, 1, 1) > Decimal(1, 0, 1))
+    @test Decimal(1, 0, 1) > Decimal(1, 1, 1)
+    @test !(Decimal(0, 2, -3) > Decimal(0, 2, 3))
+    @test Decimal(0, 2, 3) > Decimal(0, 2, -3)
+    @test !(decimal(12.1) > decimal(12.1))
+    @test !(Decimal(1, 0, -1) > Decimal(0, 0, 0))
+    @test !(Decimal(0, 0, 0) > Decimal(1, 0, -1))
+end
+
+@testset "<=" begin
+    @test Decimal(1, 1, 1) <= Decimal(0, 1, 1)
+    @test !(Decimal(0, 1, 1) <= Decimal(1, 1, 1))
+    @test Decimal(1, 1, 1) <= Decimal(1, 0, 1)
+    @test !(Decimal(1, 0, 1) <= Decimal(1, 1, 1))
+    @test Decimal(0, 2, -3) <= Decimal(0, 2, 3)
+    @test !(Decimal(0, 2, 3) <= Decimal(0, 2, -3))
+    @test decimal(12.1) <= decimal(12.1)
+    @test Decimal(1, 0, -1) <= Decimal(0, 0, 0)
+    @test Decimal(0, 0, 0) <= Decimal(1, 0, -1)
+end
+
+@testset ">=" begin
+    @test !(Decimal(1, 1, 1) >= Decimal(0, 1, 1))
+    @test Decimal(0, 1, 1) >= Decimal(1, 1, 1)
+    @test !(Decimal(1, 1, 1) >= Decimal(1, 0, 1))
+    @test Decimal(1, 0, 1) >= Decimal(1, 1, 1)
+    @test !(Decimal(0, 2, -3) >= Decimal(0, 2, 3))
+    @test Decimal(0, 2, 3) >= Decimal(0, 2, -3)
+    @test decimal(12.1) >= decimal(12.1)
+    @test Decimal(1, 0, -1) >= Decimal(0, 0, 0)
+    @test Decimal(0, 0, 0) >= Decimal(1, 0, -1)
+end
+
 @testset "Inf/Nan" begin
     d = parse(Decimal, "10.1")
     @test d == min(d, Inf) == min(Inf, d) == min(d, d)
