@@ -10,7 +10,8 @@ end
 # Support for tryparse: useful also for integration with other packages, e.g. CSVFiles.jl, Parsers.jl
 function Base.tryparse(::Type{Decimal}, str::AbstractString)
     if 'e' in str
-        return tryparse(Decimal, _scinote_internal(str))
+        sci = @something _scinote_internal(str) return
+        return tryparse(Decimal, sci)
     end
     c, q = @something _parameters_internal(('.' in str) ? split(str, '.') : str) return
     normalize(Decimal((str[1] == '-') ? 1 : 0, c, q))

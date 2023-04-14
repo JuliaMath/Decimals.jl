@@ -29,6 +29,34 @@ using Test
         @test parse(Decimal, "0.12345678912") == Decimal(0.12345678912) == Decimal(0,12345678912, -11)
     end
 
+    @testset "Direct with Base.tryparse" begin
+        @test tryparse(Decimal, "0.01") == Decimal(0.01) == Decimal(0, 1, -2)
+        @test tryparse(Decimal, ".001") == Decimal(.001) == Decimal(0, 1, -3)
+        @test tryparse(Decimal, "15.23") == Decimal(15.23) == Decimal(0, 1523, -2)
+        @test tryparse(Decimal, "543") == Decimal(543) == Decimal(0, 543, 0)
+        @test tryparse(Decimal, "-345") == Decimal(-345) == Decimal(1, 345, 0)
+        @test tryparse(Decimal, "000123") == Decimal(000123) == Decimal(0, 123, 0)
+        @test tryparse(Decimal, "-00032") == Decimal(-00032) == Decimal(1, 32, 0)
+        @test tryparse(Decimal, "200100") == Decimal(200100) == Decimal(0, 2001, 2)
+        @test tryparse(Decimal, "-.123") == Decimal(-.123) == Decimal(1, 123, -3)
+        @test tryparse(Decimal, "1.23000") == Decimal(1.23000) == Decimal(0, 123, -2)
+        @test tryparse(Decimal, "4734.612") == Decimal(4734.612) == Decimal(0, 4734612, -3)
+        @test tryparse(Decimal, "541724.2") == Decimal(541724.2) == Decimal(0,5417242,-1)
+        @test tryparse(Decimal, "2.5e6") == Decimal(2.5e6) == Decimal(0, 25, 5)
+        @test tryparse(Decimal, "2.385350e8") == Decimal(2.385350e8) == Decimal(0, 238535, 3)
+        @test tryparse(Decimal, "12.3e-4") == Decimal(12.3e-4) == Decimal(0, 123, -5)
+
+        @test tryparse(Decimal, "-12.3e4") == Decimal(-12.3e4) == Decimal(1, 123, 3)
+
+        @test tryparse(Decimal, "-12.3e-4") == Decimal(-12.3e-4) == Decimal(1, 123, -5)
+
+        @test tryparse(Decimal, "0.1234567891") == Decimal(0.1234567891) == Decimal(0,1234567891, -10)
+        @test tryparse(Decimal, "0.12345678912") == Decimal(0.12345678912) == Decimal(0,12345678912, -11)
+
+        @test tryparse(Decimal, "notadecimal") === nothing
+        @test tryparse(Decimal, "1,000.00") === nothing
+    end
+
     @testset "Using `decimal`" begin
         @test decimal("1.0") == Decimal(0, 1, 0)
         @test decimal(8.1) == Decimal(0, 81, -1)
