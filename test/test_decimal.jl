@@ -17,6 +17,7 @@ using Test
         @test parse(Decimal, "1.23000") == Decimal(1.23000) == Decimal(0, 123, -2)
         @test parse(Decimal, "4734.612") == Decimal(4734.612) == Decimal(0, 4734612, -3)
         @test parse(Decimal, "541724.2") == Decimal(541724.2) == Decimal(0,5417242,-1)
+        @test parse(Decimal, "1e0") == Decimal(0, 1, 0)
         @test parse(Decimal, "2.5e6") == Decimal(2.5e6) == Decimal(0, 25, 5)
         @test parse(Decimal, "2.385350e8") == Decimal(2.385350e8) == Decimal(0, 238535, 3)
         @test parse(Decimal, "12.3e-4") == Decimal(12.3e-4) == Decimal(0, 123, -5)
