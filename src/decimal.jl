@@ -32,7 +32,7 @@ function scinote(str::AbstractString)
     if s == "-"
         n[1] = n[1][2:end]
     end
-    if parse(Int64, expo) > 0
+    if parse(Int64, expo) >= 0
         shift = parse(Int64, expo) - ((length(n) == 2) ? length(n[2]) : 0)
         s * join(n) * repeat("0", shift)
     else
