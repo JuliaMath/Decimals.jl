@@ -27,6 +27,22 @@ using Test
 
         @test parse(Decimal, "0.1234567891") == Decimal(0.1234567891) == Decimal(0,1234567891, -10)
         @test parse(Decimal, "0.12345678912") == Decimal(0.12345678912) == Decimal(0,12345678912, -11)
+
+        @test parse(Decimal, "1.0000001e6") == Decimal(1.0000001e6) == Decimal(0, 10000001, -1)
+        @test parse(Decimal, "30e-2") == Decimal(30e-2) == Decimal(0, 3, -1)
+        @test parse(Decimal, "0.1234567e-15") == Decimal(0.1234567e-15) == Decimal(0, 1234567, -22)
+        @test parse(Decimal, "123456789.1234567899e-11") == Decimal(0, 1234567891234567899, -21)
+
+        @test parse(Decimal, "0.0") == Decimal(0) == Decimal(0.0) == Decimal(0, 0, 0)
+        @test parse(Decimal, "-0.0") == Decimal(-0.0) == Decimal(1, 0, 0)
+        
+        @test parse(Decimal, "0012.3450") == parse(Decimal, "+0012.3450") == Decimal(12.345) == Decimal(0, 12345, -3)
+        @test parse(Decimal, "-0012.3450") == Decimal(-12.345) == Decimal(1, 12345, -3)
+        @test parse(Decimal, "0012.3450e3") == parse(Decimal, "+0012.3450e3") == Decimal(12.345e3) == Decimal(0, 12345, 0)
+        @test parse(Decimal, "-0012.3450e-3") == Decimal(-12.345e-3) == Decimal(1, 12345, -6)
+
+        @test_throws ArgumentError parse(Decimal, "1.2.3")
+        @test_throws ArgumentError parse(Decimal, "1e2e3")
     end
 
     @testset "Using `decimal`" begin

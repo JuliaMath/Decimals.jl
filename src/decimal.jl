@@ -1,10 +1,40 @@
 # Convert a string to a decimal, e.g. "0.01" -> Decimal(0, 1, -2)
 function Base.parse(::Type{Decimal}, str::AbstractString)
-    if 'e' in str
-        return parse(Decimal, scinote(str))
+    # Read sign
+    sign = (str[1] == '-') ? 1 : 0
+    # Unpack scientific notation
+    mantissa_and_exponent = split(lowercase(str), 'e') # Both 'e' and 'E' may act as separators
+    # Parse exponent
+    exponent = if length(mantissa_and_exponent) == 1
+        zero(Int64)
+    elseif length(mantissa_and_exponent) == 2
+        parse(Int64, mantissa_and_exponent[2])
+    else
+        throw(ArgumentError("When parsing \"$str\" as a Decimal, more than one scientific notation exponent character was found."))
     end
-    c, q = parameters(('.' in str) ? split(str, '.') : str)
-    normalize(Decimal((str[1] == '-') ? 1 : 0, c, q))
+    # Split mantissa in integer and fractional parts
+    mantissa = split(mantissa_and_exponent[1], '.')
+    integer_part = lstrip(mantissa[1], ('+', '-', '0'))
+    fractional_part = if length(mantissa) == 1
+        ""
+    elseif length(mantissa) == 2
+        rstrip(mantissa[2], '0')
+    else
+        throw(ArgumentError("When parsing \"$str\" as a Decimal, more than one decimal separator was found in the mantissa."))
+    end
+    # Update exponent (move the decimal separator to the rightmost non-zero digit)
+    if isempty(fractional_part)
+        if isempty(integer_part)
+            return Decimal(sign, zero(BigInt), zero(Int64))
+        else
+            coefficient = rstrip(integer_part, '0') # coefficient of the Decimal number (integer)
+            exponent += length(integer_part) - length(coefficient)
+        end
+    else
+        coefficient = integer_part * fractional_part
+        exponent -= length(fractional_part)
+    end
+    Decimal(sign, abs(parse(BigInt, coefficient)), exponent)
 end
 
 decimal(str::AbstractString) = parse(Decimal, str)
@@ -14,32 +44,6 @@ Decimal(num::Real) = parse(Decimal, string(num))
 Base.convert(::Type{Decimal}, num::Real) = Decimal(num::Real)
 decimal(x::Real) = Decimal(x)
 Decimal(x::Decimal) = x
-
-# Get Decimal constructor parameters from string
-parameters(x::AbstractString) = (abs(parse(BigInt, x)), 0)
-
-# Get Decimal constructor parameters from array
-function parameters(x::Array)
-    c = parse(BigInt, join(x))
-    (abs(c), -length(x[2]))
-end
-
-# Get decimal() argument from scientific notation
-function scinote(str::AbstractString)
-    s = (str[1] == '-') ? "-" : ""
-    n, expo = split(str, 'e')
-    n = split(n, '.')
-    if s == "-"
-        n[1] = n[1][2:end]
-    end
-    if parse(Int64, expo) > 0
-        shift = parse(Int64, expo) - ((length(n) == 2) ? length(n[2]) : 0)
-        s * join(n) * repeat("0", shift)
-    else
-        shift = -parse(Int64, expo) - ((length(n) == 2) ? length(n[1]) : length(n))
-        s * "0." * repeat("0", shift) * join(n)
-    end
-end
 
 # Convert a decimal to a string
 function Base.print(io::IO, x::Decimal)
