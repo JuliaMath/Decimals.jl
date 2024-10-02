@@ -8,6 +8,8 @@ using Test
     @test Decimal.([0.1 0.2]) .+ [0.3 0.1] == Decimal.([0.4 0.3])
     @test Decimal(2147483646) + Decimal(1) == Decimal(2147483647)
     @test Decimal(1,3,-2) + parse(Decimal, "0.2523410412138103") == Decimal(0,2223410412138103,-16)
+
+    @test Decimal(0, 10000000000000000001, -19) + Decimal(0, 1, 0) == Decimal(0, 20000000000000000001, -19)
 end
 
 @testset "Subtraction" begin
