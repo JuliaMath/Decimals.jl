@@ -4,16 +4,24 @@ Base.promote_rule(::Type{Decimal}, ::Type{<:Real}) = Decimal
 Base.promote_rule(::Type{BigFloat}, ::Type{Decimal}) = Decimal
 Base.promote_rule(::Type{BigInt}, ::Type{Decimal}) = Decimal
 
+const BigTen = BigInt(10)
+
 # Addition
 # To add, convert both decimals to the same exponent.
 # (If the exponents are different, use the smaller exponent
 # to make sure we're adding integers.)
 function +(x::Decimal, y::Decimal)
-    cx = (-1)^x.s * x.c * 10^max(x.q - y.q, 0)
-    cy = (-1)^y.s * y.c * 10^max(y.q - x.q, 0)
-    s = (abs(cx) > abs(cy)) ? x.s : y.s
-    c = BigInt(cx) + BigInt(cy)
-    normalize(Decimal(s, abs(c), min(x.q, y.q)))
+    if x.q < y.q
+        x, y = y, x
+    end
+    # Here: x.q ≥ y.q
+    # a₁ * 10^q₁ + a₂ * 10^q₂ =
+    # (a₁ * 10^(q₁ - q₂) + a₂) * 10^q₂
+    #  ^^^^^^^^^^^^^^^^^ this is integer because q₁ ≥ q₂
+    q = x.q - y.q
+    c = (-1)^x.s * x.c * BigTen^q + (-1)^y.s * y.c
+    s = signbit(c)
+    return normalize(Decimal(s, abs(c), y.q))
 end
 
 # Negation
