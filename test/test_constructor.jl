@@ -3,6 +3,6 @@ using Test
 
 @testset "Decimal constructor" begin
 
-@test isa(d, Array{Decimal,1})
+@test d isa Vector{Decimal}
 
 end

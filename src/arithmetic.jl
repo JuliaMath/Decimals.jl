@@ -10,7 +10,7 @@ const BigTen = BigInt(10)
 # To add, convert both decimals to the same exponent.
 # (If the exponents are different, use the smaller exponent
 # to make sure we're adding integers.)
-function +(x::Decimal, y::Decimal)
+function Base.:(+)(x::Decimal, y::Decimal)
     if x.q < y.q
         x, y = y, x
     end
@@ -25,25 +25,25 @@ function +(x::Decimal, y::Decimal)
 end
 
 # Negation
--(x::Decimal) = Decimal((x.s == 1) ? 0 : 1, x.c, x.q)
+Base.:(-)(x::Decimal) = Decimal(!x.s, x.c, x.q)
 
 # Subtraction
--(x::Decimal, y::Decimal) = +(x, -y)
+Base.:(-)(x::Decimal, y::Decimal) = +(x, -y)
 
 # Multiplication
-function *(x::Decimal, y::Decimal)
-    s = (x.s == y.s) ? 0 : 1
+function Base.:(*)(x::Decimal, y::Decimal)
+    s = x.s != y.s
     normalize(Decimal(s, BigInt(x.c) * BigInt(y.c), x.q + y.q))
 end
 
 # Inversion
 function Base.inv(x::Decimal)
-    c = round(BigInt(10)^(-x.q + DIGITS) / x.c) # the decimal point of 1/x.c is shifted by -x.q so that the integer part of the result is correct and then it is shifted further by DIGITS to also cover some digits from the fractional part.
+    c = round(BigInt, BigInt(10)^(-x.q + DIGITS) / x.c) # the decimal point of 1/x.c is shifted by -x.q so that the integer part of the result is correct and then it is shifted further by DIGITS to also cover some digits from the fractional part.
     q = -DIGITS # we only need to remember that there are these digits after the decimal point
     normalize(Decimal(x.s, c, q))
 end
 
 # Division
-/(x::Decimal, y::Decimal) = x * inv(y)
+Base.:(/)(x::Decimal, y::Decimal) = x * inv(y)
 
 # TODO exponentiation
