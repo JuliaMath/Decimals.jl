@@ -1,7 +1,6 @@
 
 ## Decimals.jl: Arbitrary precision decimal floating point arithmetics in Julia
 
-[![Build Status](https://travis-ci.org/JuliaMath/Decimals.jl.svg?branch=master)](https://travis-ci.org/JuliaMath/Decimals.jl)
 [![Coverage Status](https://coveralls.io/repos/github/JuliaMath/Decimals.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaMath/Decimals.jl?branch=master)
 
 The `Decimals` package provides basic data type and functions for arbitrary precision [decimal floating point](https://en.wikipedia.org/wiki/Decimal_floating_point) arithmetic in Julia. It supports addition, subtraction, negation, multiplication, division, and equality operations.
