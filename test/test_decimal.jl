@@ -24,6 +24,7 @@ using Test
         @test parse(Decimal, "-12.3e4") == Decimal(-12.3e4) == Decimal(true, 123, 3)
 
         @test parse(Decimal, "-12.3e-4") == Decimal(-12.3e-4) == Decimal(true, 123, -5)
+        @test parse(Decimal, "-12.3E-4") == Decimal(true, 123, -5)
 
         @test parse(Decimal, "0.1234567891") == Decimal(0.1234567891) == Decimal(false,1234567891, -10)
         @test parse(Decimal, "0.12345678912") == Decimal(0.12345678912) == Decimal(false,12345678912, -11)

@@ -65,8 +65,6 @@ end
 Base.zero(::Type{Decimal}) = Decimal(false, 0, 0)
 Base.one(::Type{Decimal}) = Decimal(false, 1, 0)
 
-Base.float(x::Decimal) = parse(Float64, string(x))
-
 # convert a decimal to any subtype of Real
 (::Type{T})(x::Decimal) where {T<:Real} = parse(T, string(x))
 
@@ -79,4 +77,3 @@ end
 # sign
 Base.signbit(x::Decimal) = x.s
 
-Base.show(io::IO, x::Decimal) = write(io, "decimal(\"$x\")")
