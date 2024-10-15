@@ -39,7 +39,7 @@ function Base.:(<)(x::Decimal, y::Decimal)
     end
 end
 
-function <=(x::Decimal, y::Decimal)
+function Base.:(<=)(x::Decimal, y::Decimal)
     return x < y || x == y
 end
 
