@@ -6,7 +6,7 @@ function Base.parse(::Type{Decimal}, str::AbstractString)
         return parse(Decimal, scinote(lowercase(str)))
     end
     c, q = parameters(('.' in str) ? split(str, '.') : str)
-    normalize(Decimal((str[1] == '-'), c, q))
+    normalize(Decimal(str[1] == '-', c, q))
 end
 
 decimal(str::AbstractString) = parse(Decimal, str)
@@ -62,8 +62,8 @@ function Base.print(io::IO, x::Decimal)
 end
 
 # Zero/one value
-Base.zero(::Type{Decimal}) = Decimal(false,0,0)
-Base.one(::Type{Decimal}) = Decimal(false,1,0)
+Base.zero(::Type{Decimal}) = Decimal(false, 0, 0)
+Base.one(::Type{Decimal}) = Decimal(false, 1, 0)
 
 Base.float(x::Decimal) = parse(Float64, string(x))
 
@@ -79,4 +79,4 @@ end
 # sign
 Base.signbit(x::Decimal) = x.s
 
-Base.show(io::IO, x::Decimal) = write(io, "decimal(\""*string(x)*"\")")
+Base.show(io::IO, x::Decimal) = write(io, "decimal(\"$x\")")

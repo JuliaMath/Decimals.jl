@@ -10,7 +10,7 @@ const BigTen = BigInt(10)
 # To add, convert both decimals to the same exponent.
 # (If the exponents are different, use the smaller exponent
 # to make sure we're adding integers.)
-function +(x::Decimal, y::Decimal)
+function Base.:(+)(x::Decimal, y::Decimal)
     if x.q < y.q
         x, y = y, x
     end
@@ -22,16 +22,17 @@ function +(x::Decimal, y::Decimal)
     c = (-1)^x.s * x.c * BigTen^q + (-1)^y.s * y.c
     s = signbit(c)
     return normalize(Decimal(s, abs(c), y.q))
+end
 
 # Negation
-Base.:(-)(x::Decimal) = Decimal((x.s == 1) ? 0 : 1, x.c, x.q)
+Base.:(-)(x::Decimal) = Decimal(!x.s, x.c, x.q)
 
 # Subtraction
 Base.:(-)(x::Decimal, y::Decimal) = +(x, -y)
 
 # Multiplication
 function Base.:(*)(x::Decimal, y::Decimal)
-    s = (x.s == y.s) ? 0 : 1
+    s = x.s != y.s
     normalize(Decimal(s, BigInt(x.c) * BigInt(y.c), x.q + y.q))
 end
 
