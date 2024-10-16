@@ -82,4 +82,3 @@ end
 
 # sign
 Base.signbit(x::Decimal) = x.s
-
