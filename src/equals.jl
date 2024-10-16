@@ -15,8 +15,6 @@ function Base.:(==)(x::Decimal, y::Decimal)
     a.c == b.c && a.q == b.q && a.s == b.s
 end
 
-Base.iszero(x::Decimal) = iszero(x.c)
-
 function Base.:(<)(x::Decimal, y::Decimal)
     # return early on zero
     if iszero(x) && iszero(y)

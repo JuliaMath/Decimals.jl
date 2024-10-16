@@ -20,6 +20,8 @@ struct Decimal <: AbstractFloat
     Decimal(s::Integer, c::Integer, e::Integer) = new(Bool(s), c, e)
 end
 
+include("bigint.jl")
+
 # Convert between Decimal objects, numbers, and strings
 include("decimal.jl")
 
@@ -34,5 +36,7 @@ include("equals.jl")
 
 # Rounding
 include("round.jl")
+
+include("hash.jl")
 
 end
