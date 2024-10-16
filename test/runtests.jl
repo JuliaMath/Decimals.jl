@@ -13,6 +13,8 @@ global d = [
 ]
 
 include("test_constructor.jl")
+include("test_parse.jl")
+include("test_show.jl")
 include("test_decimal.jl")
 include("test_norm.jl")
 include("test_arithmetic.jl")

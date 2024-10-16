@@ -5,7 +5,6 @@
 module Decimals
 
 export Decimal,
-       decimal,
        number,
        normalize
 
@@ -34,5 +33,9 @@ include("equals.jl")
 
 # Rounding
 include("round.jl")
+
+include("parse.jl")
+
+include("show.jl")
 
 end

@@ -21,7 +21,7 @@ end
 @testset "Negation" begin
     @test -Decimal.([0.3 0.2]) == [-Decimal(0.3) -Decimal(0.2)]
     @test -Decimal(0.3) == zero(Decimal) - Decimal(0.3)
-    @test iszero(decimal(12.1) - decimal(12.1))
+    @test iszero(Decimal(12.1) - Decimal(12.1))
 end
 
 @testset "Multiplication" begin
