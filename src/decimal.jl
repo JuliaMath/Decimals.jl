@@ -83,3 +83,26 @@ end
 # sign
 Base.signbit(x::Decimal) = x.s
 
+function isdivisible(x::BigInt, n::Int)
+    return x % n == 0
+end
+
+function Base.decompose(x::Decimal)
+    if iszero(x)
+        return (big(0), 0, big((-1)^x.s))
+    end
+
+    coef = (-1)^x.s * x.c
+
+    if x.q ≥ 0
+        return (coef * big(5)^x.q, x.q, big(1))
+    else
+        q = -x.q
+        while q > 0 && isdivisible(coef, 5)
+            coef = coef ÷ 5
+            q -= 1
+        end
+        return (coef, x.q, big(5) ^ q)
+    end
+end
+
