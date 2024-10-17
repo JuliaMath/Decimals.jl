@@ -13,71 +13,94 @@ Why is this needed?  The following code in Julia gives an answer
 In words, the binary floating point arithmetics implemented in computers has finite resolution - not all real numbers (even within the limits) can be expressed exactly. While many scientific and engineering fields can handle this behavior, it is not acceptable in fields like finance, where it's important to be able to trust that $0.30 is actually 30 cents, rather than 30.000000000000004 cents.
 
 ## Installation
+
 ```julia
 julia> Pkg.add("Decimals")
 ```
 or just `Ctrl`+`]` and
-
 ```julia
 (v1.2) pkg> add Decimals
 ```
+
 ## Usage
+
 ```julia
 julia> using Decimals
 ```
-### Creating the `Decimal` object
+
+### Construction
+
+
+`Decimal` is constructed by passing values `s`, `c`, `q` such that
+`x = (-1)^s * c * 10^q`:
+```julia
+julia> Decimal(0, 1, -1)
+0.1
+
+julia> Decimal(1, 1, -1)
+-0.1
+```
+
+
+### Parsing from string
 
 You can parse `Decimal` objects from strings:
 
 ```julia
-julia> parse(Decimal, "0.2")
-Decimal(0,2,-1)
-
-julia> parse(Decimal, "-2.5e6")
-Decimal(1,25,5)
-```
-
-You can also construct `Decimal` objects from real numbers in Julia:
-```julia
-julia> Decimal(0.1)
-Decimal(0,1,-1)
-
-julia> Decimal(-1003)
-Decimal(1, 1003, 0)
-```
-
-Or can create `Decimal` objects from either strings or numbers using `decimal`:
-
-```julia
-julia> decimal("0.2")
-Decimal(0,2,-1)
-
-julia> decimal(0.1)
-Decimal(0,1,-1)
-
-julia> decimal("-2.5e6")
-Decimal(1,25,5)
-```
-
-To convert back to a string or a number (float in this case):
-
-```julia
-julia> x = decimal("0.2");
-
-julia> string(x)
+julia> x = "0.2"
 "0.2"
 
-julia> number(x)
+julia> parse(Decimal, x)
+0.2
+
+julia> tryparse(Decimal, x)
 0.2
 ```
+Parsing support scientific notation.
 
-It is also possible to call the Decimal constructor directly, by specifying the sign (`s`), coefficient (`c`), and exponent (`q`):
+### Conversion
 
+Any real number can be converted to a `Decimal`:
 ```julia
-julia> Decimal(1,2,-2)
+julia> Decimal(0.2)
+0.2
+
+julia> Decimal(-10)
+-10
 ```
 
-The numerical value of a Decimal is given by `(-1)^s * c * 10^q`.  `s` must be 0 (positive) or 1 (negative);  `c` must be non-negative; `c` and `q` must be integers.
+A `Decimal` can be converted to numeric types that can represent it:
+```julia
+julia> Float64(Decimal(0.2))
+0.2
+
+julia> Int(Decimal(10))
+10
+
+julia> Float64(Decimal(0, 1, 512))
+ERROR: ArgumentError: cannot parse "100[...]" as Float64
+
+julia> Int(Decimal(0.4))
+ERROR: ArgumentError: invalid base 10 digit '.' in "0.4"
+```
+
+### String representation
+
+A string in the decimal form of a `Decimal` can be obtained via
+`string(::Decimal)`:
+```julia
+julia> string(Decimal(0.2))
+"0.2"
+```
+
+The 2- and 3-args methods for `show` are implemented:
+```julia
+julia> repr(Decimal(1000000.0))
+"Decimal(0, 10, 5)"
+
+julia> repr("text/plain", Decimal(1000000.0))
+"1.0E+6"
+```
 
 ### Operations
 ```julia
