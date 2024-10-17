@@ -65,6 +65,12 @@ end
 Base.zero(::Type{Decimal}) = Decimal(false, 0, 0)
 Base.one(::Type{Decimal}) = Decimal(false, 1, 0)
 
+Base.iszero(x::Decimal) = iszero(x.c)
+
+# As long as we do not support Inf/NaN
+Base.isfinite(x::Decimal) = true
+Base.isnan(x::Decimal) = false
+
 # convert a decimal to any subtype of Real
 (::Type{T})(x::Decimal) where {T<:Real} = parse(T, string(x))
 
