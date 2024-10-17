@@ -1,3 +1,31 @@
+macro dec_str(s)
+    # Taken from @big_str in Base
+    msg = "Invalid decimal: $s"
+    throw_error = :(throw(ArgumentError($msg)))
+
+    if '_' in s
+        # remove _ in s[2:end-1]
+        bf = IOBuffer(maxsize=lastindex(s))
+        c = s[1]
+        print(bf, c)
+        is_prev_underscore = (c == '_')
+        is_prev_dot = (c == '.')
+        for c in SubString(s, 2, lastindex(s) - 1)
+            c != '_' && print(bf, c)
+            c == '_' && is_prev_dot && return throw_error
+            c == '.' && is_prev_underscore && return throw_error
+            is_prev_underscore = (c == '_')
+            is_prev_dot = (c == '.')
+        end
+        print(bf, s[end])
+        s = String(take!(bf))
+    end
+
+    x = tryparse(Decimal, s)
+    x === nothing || return x
+    return throw_error
+end
+
 function Base.tryparse(::Type{Decimal}, str::AbstractString)
     regex = Regex(string(
         "^",
@@ -44,4 +72,3 @@ function Base.parse(::Type{Decimal}, str::AbstractString)
     isnothing(x) && throw(ArgumentError("Invalid decimal: $str"))
     return x
 end
-

@@ -56,7 +56,15 @@ julia> parse(Decimal, x)
 julia> tryparse(Decimal, x)
 0.2
 ```
-Parsing support scientific notation.
+Parsing support scientific notation.  Alternatively, you can use the `@dec_str`
+macro, which also supports the thousands separator `_`:
+```julia
+julia> dec"0.2"
+0.2
+
+julia> dec"1_000.000_001"
+1000.000001
+```
 
 ### Conversion
 

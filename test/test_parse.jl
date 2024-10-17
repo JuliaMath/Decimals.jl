@@ -27,4 +27,16 @@
         @test isnothing(tryparse(Decimal, "1e1e1"))
         @test isnothing(tryparse(Decimal, "1-1"))
     end
+
+    @testset "@dec_str" begin
+        @test dec"1.123" == Decimal(0, 1123, -3)
+        @test dec"-1.123" == Decimal(1, 1123, -3)
+        @test dec"123" == Decimal(0, 123, 0)
+        @test dec"-123" == Decimal(1, 123, 0)
+        @test dec"1_000.002" == Decimal(0, 1000002, -3)
+        @test dec"1_000_000.002" == Decimal(0, 1000000002, -3)
+
+        @test_throws ArgumentError dec"100_"
+        @test_throws ArgumentError dec"100_.0"
+    end
 end

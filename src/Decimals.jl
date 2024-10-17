@@ -6,7 +6,8 @@ module Decimals
 
 export Decimal,
        number,
-       normalize
+       normalize,
+       @dec_str
 
 const DIGITS = 20
 
