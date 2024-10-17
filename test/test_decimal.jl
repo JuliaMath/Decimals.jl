@@ -80,4 +80,9 @@ end
     @test string(number(Decimal(false, 543, -1))) == "54.3"
 end
 
+@testset "Number functions" begin
+    @test isfinite(Decimal(0, 1, 1))
+    @test !isnan(Decimal(0, 1, 1))
+end
+
 end
