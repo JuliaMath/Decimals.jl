@@ -3,6 +3,34 @@ using Test
 
 @testset "Equality" begin
 
+@testset "cmp" begin
+    @test cmp(parse(Decimal, "-2" ), parse(Decimal, "-2")) == 0
+    @test cmp(parse(Decimal, "-2" ), parse(Decimal, "-1")) == -1
+    @test cmp(parse(Decimal, "-2" ), parse(Decimal, "0")) == -1
+    @test cmp(parse(Decimal, "-2" ), parse(Decimal, "1")) == -1
+    @test cmp(parse(Decimal, "-2" ), parse(Decimal, "2")) == -1
+    @test cmp(parse(Decimal, "-1" ), parse(Decimal, "-2")) == 1
+    @test cmp(parse(Decimal, "-1" ), parse(Decimal, "-1")) == 0
+    @test cmp(parse(Decimal, "-1" ), parse(Decimal, "0")) == -1
+    @test cmp(parse(Decimal, "-1" ), parse(Decimal, "1")) == -1
+    @test cmp(parse(Decimal, "-1" ), parse(Decimal, "2")) == -1
+    @test cmp(parse(Decimal, "0" ), parse(Decimal, "-2")) == 1
+    @test cmp(parse(Decimal, "0" ), parse(Decimal, "-1")) == 1
+    @test cmp(parse(Decimal, "0" ), parse(Decimal, "0")) == 0
+    @test cmp(parse(Decimal, "0" ), parse(Decimal, "1")) == -1
+    @test cmp(parse(Decimal, "0" ), parse(Decimal, "2")) == -1
+    @test cmp(parse(Decimal, "1" ), parse(Decimal, "-2")) == 1
+    @test cmp(parse(Decimal, "1" ), parse(Decimal, "-1")) == 1
+    @test cmp(parse(Decimal, "1" ), parse(Decimal, "0")) == 1
+    @test cmp(parse(Decimal, "1" ), parse(Decimal, "1")) == 0
+    @test cmp(parse(Decimal, "1" ), parse(Decimal, "2")) == -1
+    @test cmp(parse(Decimal, "2" ), parse(Decimal, "-2")) == 1
+    @test cmp(parse(Decimal, "2" ), parse(Decimal, "-1")) == 1
+    @test cmp(parse(Decimal, "2" ), parse(Decimal, "0")) == 1
+    @test cmp(parse(Decimal, "2" ), parse(Decimal, "1")) == 1
+    @test cmp(parse(Decimal, "2" ), parse(Decimal, "2")) == 0
+end
+
 @testset "isequal" begin
     @test isequal(Decimal(false, 2, -3), Decimal(false, 2, -3))
     @test !isequal(Decimal(false, 2, -3), Decimal(false, 2, 3))
