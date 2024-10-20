@@ -21,6 +21,7 @@ struct Decimal <: AbstractFloat
 end
 
 include("bigint.jl")
+include("context.jl")
 
 # Convert between Decimal objects, numbers, and strings
 include("decimal.jl")
