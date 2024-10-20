@@ -4,7 +4,8 @@ Base.promote_rule(::Type{Decimal}, ::Type{<:Real}) = Decimal
 Base.promote_rule(::Type{BigFloat}, ::Type{Decimal}) = Decimal
 Base.promote_rule(::Type{BigInt}, ::Type{Decimal}) = Decimal
 
-const BigTen = BigInt(10)
+Base.:(+)(x::Decimal) = fix(x)
+Base.:(-)(x::Decimal) = fix(Decimal(!x.s, x.c, x.q))
 
 # Addition
 # To add, convert both decimals to the same exponent.
@@ -23,9 +24,6 @@ function Base.:(+)(x::Decimal, y::Decimal)
     s = signbit(c)
     return normalize(Decimal(s, abs(c), y.q))
 end
-
-# Negation
-Base.:(-)(x::Decimal) = Decimal(!x.s, x.c, x.q)
 
 # Subtraction
 Base.:(-)(x::Decimal, y::Decimal) = +(x, -y)
