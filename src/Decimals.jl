@@ -5,9 +5,9 @@
 module Decimals
 
 export Decimal,
-       decimal,
        number,
-       normalize
+       normalize,
+       @dec_str
 
 const DIGITS = 20
 
@@ -38,5 +38,9 @@ include("equals.jl")
 include("round.jl")
 
 include("hash.jl")
+
+include("parse.jl")
+
+include("show.jl")
 
 end

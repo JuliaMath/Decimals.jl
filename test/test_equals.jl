@@ -31,8 +31,6 @@ end
     @test Decimal(bi) == bi
     @test bi == Decimal(bi)
 
-    @test decimal(12.1) == decimal(12.1)
-
     @test Decimal(true, 0, -1) == Decimal(false, 0, 0)
 end
 
@@ -43,7 +41,6 @@ end
     @test !(Decimal(true, 0, 1) < Decimal(true, 1, 1))
     @test Decimal(false, 2, -3) < Decimal(false, 2, 3)
     @test !(Decimal(false, 2, 3) < Decimal(false, 2, -3))
-    @test !(decimal(12.1) < decimal(12.1))
     @test !(Decimal(true, 0, -1) < Decimal(false, 0, 0))
     @test !(Decimal(false, 0, 0) < Decimal(true, 0, -1))
 end
@@ -55,7 +52,6 @@ end
     @test Decimal(1, 0, 1) > Decimal(1, 1, 1)
     @test !(Decimal(0, 2, -3) > Decimal(0, 2, 3))
     @test Decimal(0, 2, 3) > Decimal(0, 2, -3)
-    @test !(decimal(12.1) > decimal(12.1))
     @test !(Decimal(1, 0, -1) > Decimal(0, 0, 0))
     @test !(Decimal(0, 0, 0) > Decimal(1, 0, -1))
 end
@@ -67,7 +63,6 @@ end
     @test !(Decimal(1, 0, 1) <= Decimal(1, 1, 1))
     @test Decimal(0, 2, -3) <= Decimal(0, 2, 3)
     @test !(Decimal(0, 2, 3) <= Decimal(0, 2, -3))
-    @test decimal(12.1) <= decimal(12.1)
     @test Decimal(1, 0, -1) <= Decimal(0, 0, 0)
     @test Decimal(0, 0, 0) <= Decimal(1, 0, -1)
 end
@@ -79,7 +74,6 @@ end
     @test Decimal(1, 0, 1) >= Decimal(1, 1, 1)
     @test !(Decimal(0, 2, -3) >= Decimal(0, 2, 3))
     @test Decimal(0, 2, 3) >= Decimal(0, 2, -3)
-    @test decimal(12.1) >= decimal(12.1)
     @test Decimal(1, 0, -1) >= Decimal(0, 0, 0)
     @test Decimal(0, 0, 0) >= Decimal(1, 0, -1)
 end
