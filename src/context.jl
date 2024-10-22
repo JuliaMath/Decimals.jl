@@ -1,5 +1,29 @@
 using ScopedValues
 
+"""
+    Context
+
+User-selectable parametrization of the decimal arithmetics. The parameters are:
+
+| Parameter                | Description                                                       |
+|:-------------------------|:------------------------------------------------------------------|
+| `precision::Int`         | Maximum number of significand digits (default: `28`)              |
+| `rounding::RoundingMode` | Rounding mode to be used when necessary (default: `RoundNearest`) |
+| `Emax::Int`              | Maximum adjusted exponent (default: `999999`)                     |
+| `Emin::Int`              | Minimum adjusted exponent (default: `-999999`)                    |
+
+The parameters can be set via the (unexported) function [`with_context`](@ref)
+or macro [`@with_context`](@ref):
+```jldoctest
+julia> Decimals.with_context(precision=1) do
+           +dec"0.1234"
+       end
+0.1
+
+julia> Decimals.@with_context (precision=1,) +dec"0.1234"
+0.1
+```
+"""
 Base.@kwdef struct Context
     precision::Int=28
     rounding::RoundingMode=RoundNearest

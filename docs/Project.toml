@@ -1,0 +1,3 @@
+[deps]
+Decimals = "abce61dc-4473-55a0-ba07-351d65e31d42"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
