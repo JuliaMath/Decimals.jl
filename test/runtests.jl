@@ -23,4 +23,6 @@ include("test_hash.jl")
 include("test_norm.jl")
 include("test_round.jl")
 
+include("test_compare.jl")
+
 end
