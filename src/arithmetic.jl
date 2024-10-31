@@ -44,4 +44,6 @@ end
 # Division
 Base.:(/)(x::Decimal, y::Decimal) = x * inv(y)
 
+Base.abs(x::Decimal) = fix(Decimal(false, x.c, x.q))
+
 # TODO exponentiation
