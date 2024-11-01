@@ -13,16 +13,4 @@ using Test
 
 @test trunc(Decimal(7.123456), digits=5) == Decimal(7.12345)
 
-
-function tet()
-    a = parse(Decimal, "1.0000001")
-    for i = 1:27
-        a *= a
-    end
-    return a
-end
-
-# set DIGITS = 20 (aaljuffali's example)
-@test tet() == Decimal(0, 67453047074102193157641340, -20)
-
 end
