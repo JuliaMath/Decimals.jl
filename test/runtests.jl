@@ -25,6 +25,7 @@ include("test_round.jl")
 include("test_show.jl")
 
 include("dectests/test_abs.jl")
+include("dectests/test_add.jl")
 include("dectests/test_compare.jl")
 include("dectests/test_max.jl")
 include("dectests/test_min.jl")
