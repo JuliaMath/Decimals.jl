@@ -110,8 +110,11 @@ function Base.:(+)(x::Decimal, y::Decimal)
     end
 end
 
-# Subtraction
-Base.:(-)(x::Decimal, y::Decimal) = +(x, -y)
+function Base.:(-)(x::Decimal, y::Decimal)
+    # Doing `x + (-y)` might involve intermediate rounding due to `-y`
+    y = Decimal(!y.s, y.c, y.q)
+    return x + y
+end
 
 function Base.:(*)(x::Decimal, y::Decimal)
     s = x.s != y.s
