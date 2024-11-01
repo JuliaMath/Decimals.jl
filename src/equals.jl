@@ -24,7 +24,7 @@ function Base.cmp(x::Decimal, y::Decimal)
     # If both x.c and x.q is greater (or equal, or less) than y.c and y.q,
     # then x is greater (or equal, or less) than y
     if cmp_c == cmp_q
-        return cmp_c
+        return ifelse(x.s, -cmp_c, cmp_c)
     end
 
     # Adjusted exponent of x and y
@@ -81,6 +81,64 @@ Base.:(==)(x::Decimal, y::Decimal) = iszero(cmp(x, y))
 Base.:(<)(x::Decimal, y::Decimal) = cmp(x, y) < 0
 Base.:(<=)(x::Decimal, y::Decimal) = cmp(x, y) <= 0
 
+function Base.min(x::Decimal, y::Decimal)
+    c = cmp(x, y)
+    if c < 0
+        return fix(x)
+    elseif c > 0
+        return fix(y)
+    end
+
+    # The operands are numerically equal
+
+    # If the signs differ, the negative operand is returned
+    if x.s != y.s
+        return x.s ? fix(x) : fix(y)
+    end
+
+    # If the signs and exponents are equal, either can be returned
+    if x.q == y.q
+        return fix(x)
+    end
+
+    # If the signs are positive, the operand with the minimum exponent is returned
+    # If the signs are negative, the operand with the maximum exponent is returned
+    if x.s
+        return x.q ≤ y.q ? fix(x) : fix(y)
+    else
+        return x.q ≤ y.q ? fix(y) : fix(x)
+    end
+end
+
+function Base.max(x::Decimal, y::Decimal)
+    c = cmp(x, y)
+    if c < 0
+        return fix(y)
+    elseif c > 0
+        return fix(x)
+    end
+
+    # The operands are numerically equal
+
+    # If the signs differ, the positive operand is returned
+    if x.s != y.s
+        return x.s ? fix(y) : fix(x)
+    end
+
+    # If the signs and exponents are equal, either can be returned
+    if x.q == y.q
+        return fix(x)
+    end
+
+    # If the signs are positive, the operand with the maximum exponent is returned
+    # If the signs are negative, the operand with the minimum exponent is returned
+    if x.s
+        return x.q ≤ y.q ? fix(y) : fix(x)
+    else
+        return x.q ≤ y.q ? fix(x) : fix(y)
+    end
+end
+
 # Special case equality with AbstractFloat to allow comparison against Inf/Nan
 # which are not representable in Decimal
 
@@ -99,7 +157,6 @@ function Base.min(a::Decimal, b::AbstractFloat)
     !signbit(b) && isinf(b) && return convert(promote_type(typeof(a), typeof(b)), a)
     min(promote(a, b)...)
 end
-Base.min(a::Decimal, b::Decimal) = invoke(min, Tuple{T, T} where T<:AbstractFloat, a, b)
 
 function Base.max(a::AbstractFloat, b::Decimal)
     signbit(a) && isinf(a) && return convert(promote_type(typeof(a), typeof(b)), b)
@@ -109,4 +166,3 @@ function Base.max(a::Decimal, b::AbstractFloat)
     signbit(b) && isinf(b) && return convert(promote_type(typeof(a), typeof(b)), a)
     max(promote(a, b)...)
 end
-Base.max(a::Decimal, b::Decimal) = invoke(max, Tuple{T, T} where T<:AbstractFloat, a, b)

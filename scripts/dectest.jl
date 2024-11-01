@@ -66,6 +66,10 @@ function print_operation(io, operation, operands)
         print_compare(io, operands...)
     elseif operation == "divide"
         print_divide(io, operands...)
+    elseif operation == "max"
+        print_max(io, operands...)
+    elseif operation == "min"
+        print_min(io, operands...)
     elseif operation == "minus"
         print_minus(io, operands...)
     elseif operation == "multiply"
@@ -85,6 +89,8 @@ print_add(io, x, y) = print(io, decimal(x), " + ", decimal(y))
 print_apply(io, x) = print(io, decimal(x))
 print_compare(io, x, y) = print(io, "cmp(", decimal(x), ", ", decimal(y), ")")
 print_divide(io, x, y) = print(io, decimal(x), " / ", decimal(y))
+print_max(io, x, y) = print(io, "max(", decimal(x), ", ", decimal(y), ")")
+print_min(io, x, y) = print(io, "min(", decimal(x), ", ", decimal(y), ")")
 print_minus(io, x) = print(io, "-(", decimal(x), ")")
 print_multiply(io, x, y) = print(io, decimal(x), " * ", decimal(y))
 print_plus(io, x) = print(io, "+(", decimal(x), ")")
