@@ -149,6 +149,7 @@ function translate(io, dectest_path)
         else
             test = _test(line)
             any(isspecial, test.operands) && continue
+            occursin("Unsupported", directives["rounding"]) && continue
             print_test(io, test, directives)
         end
     end

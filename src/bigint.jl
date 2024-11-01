@@ -57,3 +57,17 @@ function cancelfactor(x::BigInt, ::Val{N}) where {N}
 
     return x, q
 end
+
+if VERSION < v"1.9.0"
+    # Taken from PR #41246 at JuliaLang/julia
+    # The methods are present from 1.9 so if we bump the required Julia version
+    # to 1.9, we can remove this block
+
+    function Base.div(x::Integer, y::Integer, ::typeof(RoundFromZero))
+        signbit(x) == signbit(y) ? div(x, y, RoundUp) : div(x, y, RoundDown)
+    end
+
+    function Base.rem(x, y, ::typeof(RoundFromZero))
+        signbit(x) == signbit(y) ? rem(x, y, RoundUp) : rem(x, y, RoundDown)
+    end
+end
