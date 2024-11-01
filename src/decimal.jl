@@ -4,13 +4,18 @@ Decimal(x::Decimal) = x
 Decimal(x::Real) = parse(Decimal, string(x))
 Base.convert(::Type{Decimal}, x::Real) = Decimal(x)
 
+function BigInt(x::Decimal)
+    coef = BigInt(x.c * BigTen ^ x.q)
+    return x.s ? -coef : coef
+end
+
 # From Decimal to numbers
 (::Type{T})(x::Decimal) where {T<:Number} = parse(T, string(x))
 
 # String representation of Decimal
 function Base.string(x::Decimal)
     io = IOBuffer()
-    show_plain(io, x)
+    scientific_notation(io, x)
     return String(take!(io))
 end
 
