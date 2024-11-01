@@ -4,6 +4,10 @@ else
     const libgmp = Base.GMP.libgmp
 end
 
+const BigZero = BigInt(0)
+const BigOne = BigInt(1)
+const BigTen = BigInt(10)
+
 function isdivisible(x::BigInt, n::Int)
     r = ccall((:__gmpz_divisible_ui_p, libgmp), Cint,
               (Base.GMP.MPZ.mpz_t, Culong), x, n)
