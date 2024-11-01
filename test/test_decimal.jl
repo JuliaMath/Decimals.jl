@@ -39,7 +39,7 @@ end
     @test string(Decimal(true, 345, 0)) == "-345"
     @test string(Decimal(false, 123, 0)) == "123"
     @test string(Decimal(true, 32, 0)) == "-32"
-    @test string(Decimal(false, 2001, 2)) == "200100"
+    @test string(Decimal(false, 2001, 2)) == "2.001E+5"
     @test string(Decimal(true, 123, -3)) == "-0.123"
     @test string(Decimal(false, 123, -2)) == "1.23"
 end
