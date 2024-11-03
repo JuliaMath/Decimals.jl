@@ -7,7 +7,9 @@ module Decimals
 export Decimal,
        number,
        normalize,
-       @dec_str
+       @dec_str,
+       DivisionByZeroError,
+       UndefinedDivisionError
 
 const DIGITS = 20
 

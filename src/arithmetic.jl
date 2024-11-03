@@ -4,6 +4,20 @@ Base.promote_rule(::Type{Decimal}, ::Type{<:Real}) = Decimal
 Base.promote_rule(::Type{BigFloat}, ::Type{Decimal}) = Decimal
 Base.promote_rule(::Type{BigInt}, ::Type{Decimal}) = Decimal
 
+"""
+    DivisionByZeroError
+
+Division was attempted with a denominator value of 0.
+"""
+struct DivisionByZeroError <: Exception end
+
+"""
+    UndefinedDivisionError
+
+Division was attempted with both numerator and denominator value of 0.
+"""
+struct UndefinedDivisionError <: Exception end
+
 Base.:(+)(x::Decimal) = fix(x)
 Base.:(-)(x::Decimal) = fix(Decimal(!x.s, x.c, x.q))
 
@@ -121,15 +135,86 @@ function Base.:(*)(x::Decimal, y::Decimal)
     return fix(Decimal(s, x.c * y.c, x.q + y.q))
 end
 
-# Inversion
-function Base.inv(x::Decimal)
-    c = round(BigInt, BigInt(10)^(-x.q + DIGITS) / x.c) # the decimal point of 1/x.c is shifted by -x.q so that the integer part of the result is correct and then it is shifted further by DIGITS to also cover some digits from the fractional part.
-    q = -DIGITS # we only need to remember that there are these digits after the decimal point
-    normalize(Decimal(x.s, c, q))
+function Base.:(/)(x::Decimal, y::Decimal)
+    if iszero(y)
+        if iszero(x)
+            throw(UndefinedDivisionError())
+        else
+            throw(DivisionByZeroError())
+        end
+    end
+
+    s = x.s != y.s
+
+    # 0 / y, where y ≠ 0
+    if iszero(x)
+        return Decimal(s, BigZero, x.q - y.q)
+    end
+
+    prec = precision(Decimal)
+
+    # We are computing
+    #
+    #     (x.c * 10^x.q) / (y.c * 10^y.q)
+    #   = (x.c / y.c) * 10^(x.q - y.q).
+    #
+    # The coefficient `x.c / y.c` is not an integer in general.
+    # We could just compute the division, resulting in a BigFloat, and round
+    # the result. However, we would have to use `setprecision` to ensure the
+    # BigFloat has enough precision. To avoid that, we compute the division
+    # with a sufficient precision ourselves.
+    #
+    # We write the division as
+    #
+    #     (x.c / y.c) * 10^(x.q - y.q) * 10^(d - d)
+    #   = ((x.c * 10^d) / y.c) * 10^(x.q - y.q - d)        (P1)
+    #   = (x.c / (y.c * 10^(-d))) * 10^(x.q - y.q - d),    (P2)
+    #
+    # where `d` is any integer, which we use to increase the dividend `x.c` (if
+    # `d ≥ 0`) or the divisor `y.c` (if `d < 0`) before performing integer
+    # division so that the result has required precision.
+    #
+    # Assume that `x.c * 10^d` has `m + d` digits and `y.c` has `n` digits,
+    # which means
+    #
+    #   10^(m + d - 1) ≤ x < 10^(m + d)
+    #       10^(n - 1) ≤ y < 10^n.
+    #
+    # We can thus bound the quotient `(x.c * 10^d) / y.c`:
+    #
+    #   10^(m + d - 1) / 10^n < x/y < 10^(m + d) / 10^(n - 1)
+    #      10^(m + d - n - 1) < x/y < 10^(m + d - n + 1)
+    #
+    # We set `d` so that the lower-bound has `prec + 1` digits (i.e., it is
+    # equal to `10^prec`):
+    #
+    #   10^(m + d - n - 1) = 10^prec
+    #                    d = prec - m + n + 1
+    #
+    # If the lower-bound has `prec + 1` digits, it means that any quotient has
+    # at least that amount of digits. We need `prec + 1` (instead of `prec`)
+    # digits because the least-significant digit is needed for correct
+    # rounding (done by the `fix` function).
+
+    d = prec - ndigits(x.c) + ndigits(y.c) + 1
+    q = x.q - y.q - d
+
+    if d > 0
+        # If `d` is positive, we take the path denoted (P1)
+        c = div(x.c * BigTen^d, y.c)
+    elseif d < 0
+        # If `d` is negative, we take the path denoted (P2)
+        c = div(x.c, y.c * BigTen^(-d))
+    else
+        c = div(x.c, y.c)
+    end
+
+    return fix(Decimal(s, c, q))
 end
 
-# Division
-Base.:(/)(x::Decimal, y::Decimal) = x * inv(y)
+function Base.inv(x::Decimal)
+    return Decimal(false, BigOne, 0) / x
+end
 
 Base.abs(x::Decimal) = fix(Decimal(false, x.c, x.q))
 
