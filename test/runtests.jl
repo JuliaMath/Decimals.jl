@@ -24,14 +24,17 @@ include("test_parse.jl")
 include("test_round.jl")
 include("test_show.jl")
 
-include("dectests/test_abs.jl")
-include("dectests/test_add.jl")
-include("dectests/test_compare.jl")
-include("dectests/test_max.jl")
-include("dectests/test_min.jl")
-include("dectests/test_minus.jl")
-include("dectests/test_multiply.jl")
-include("dectests/test_plus.jl")
-include("dectests/test_subtract.jl")
+@testset "DecTests" begin
+    include("dectests/test_abs.jl")
+    include("dectests/test_add.jl")
+    include("dectests/test_compare.jl")
+    include("dectests/test_divide.jl")
+    include("dectests/test_max.jl")
+    include("dectests/test_min.jl")
+    include("dectests/test_minus.jl")
+    include("dectests/test_multiply.jl")
+    include("dectests/test_plus.jl")
+    include("dectests/test_subtract.jl")
+end
 
 end

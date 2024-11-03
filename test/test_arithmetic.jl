@@ -1,4 +1,5 @@
 using Decimals
+using Decimals: @with_context
 using Test
 
 @testset "Arithmetic" begin
@@ -39,15 +40,72 @@ end
 end
 
 @testset "Inversion" begin
-    @test inv(Decimal(false, 1, -1)) == Decimal(false, 1, 1)
-    @test inv(Decimal(false, 1, 1)) == Decimal(false, 1, -1)
-    @test inv(Decimal(true, 2, -1)) == Decimal(true, 5, 0)
-    @test inv(Decimal(true, 5, 0)) == Decimal(true, 2, -1)
-    @test inv(Decimal(false, 2, -2)) == Decimal(false, 5, 1)
-    @test inv(Decimal(false, 5, 1)) == Decimal(false, 2, -2)
-    @test inv(Decimal(true, 4, -1)) == Decimal(true, 25, -1)
-    @test inv(Decimal(true, 25, -1)) == Decimal(true, 4, -1)
-    @test inv(Decimal(false, 123, -1)) == Decimal(false, 813008130081300813, -19) # 1/12.3 ≈ 0.08
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1") == dec"1"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"2") == dec"0.5"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"3") == dec"0.333333333"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"2") == dec"0.5"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"4") == dec"0.25"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"8") == dec"0.125"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"16") == dec"0.0625"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"32") == dec"0.03125"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"64") == dec"0.015625"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"-2") == dec"-0.5"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"-4") == dec"-0.25"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"-8") == dec"-0.125"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"-16") == dec"-0.0625"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"-32") == dec"-0.03125"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"-64") == dec"-0.015625"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1e-8") == dec"1e+8"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1e-9") == dec"1e+9"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1e-10") == dec"1e+10"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1e-11") == dec"1e+11"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1e-12") == dec"1e+12"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1") == dec"1"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"2") == dec"0.5"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"3") == dec"0.333333333"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"4") == dec"0.25"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"5") == dec"0.2"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"6") == dec"0.166666667"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"7") == dec"0.142857143"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"8") == dec"0.125"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"9") == dec"0.111111111"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"10") == dec"0.1"
+    @with_context (Emax=384, Emin=-383, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1") == dec"1"
+    @with_context (Emax=999999999, Emin=-999999999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1e999999999") == dec"1e-999999999"
+    @with_context (Emax=999999999, Emin=-999999999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"0.9e999999999") == dec"1.11111111e-999999999"
+    @with_context (Emax=999999999, Emin=-999999999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"0.99e999999999") == dec"1.01010101e-999999999"
+    @with_context (Emax=999999999, Emin=-999999999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"0.999999999e999999999") == dec"1.00000000e-999999999"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"12345678000") == dec"8.10000066e-11"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567800") == dec"8.10000066e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567890") == dec"8.10000007e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567891") == dec"8.10000007e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"12345678901") == dec"8.10000007e-11"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567896") == dec"8.10000003e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567897") == dec"8.10000003e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567898") == dec"8.10000002e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567899") == dec"8.10000001e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567900") == dec"8.10000001e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567901") == dec"8.10000000e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567902") == dec"8.09999999e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567896.000000000000") == dec"8.10000003e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567896.000000000001") == dec"8.10000003e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567896.000000000000000000000000000000000000000009") == dec"8.10000003e-10"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"1234567897.900010000000000000000000000000000000000009") == dec"8.10000002e-10"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"12345678000") == dec"8.10000066420005e-11"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"1234567800") == dec"8.10000066420005e-10"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"1234567890") == dec"8.10000007371000e-10"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"1234567891") == dec"8.10000006714900e-10"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"12345678901") == dec"8.10000007305390e-11"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"1234567896") == dec"8.10000003434400e-10"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"1.0e+33") == dec"1e-33"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"10e+33") == dec"1e-34"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"1.0e-33") == dec"1e+33"
+    @with_context (Emax=999, Emin=-999, precision=15, rounding=RoundNearestTiesAway) @test inv(dec"10e-33") == dec"1e+32"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"9.9") == dec"0.101010101"
+    @with_context (Emax=999, Emin=-999, precision=8, rounding=RoundNearestTiesAway) @test inv(dec"9.9") == dec"0.10101010"
+    @with_context (Emax=999, Emin=-999, precision=7, rounding=RoundNearestTiesAway) @test inv(dec"9.9") == dec"0.1010101"
+    @with_context (Emax=999, Emin=-999, precision=6, rounding=RoundNearestTiesAway) @test inv(dec"9.9") == dec"0.101010"
+    @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"2") == dec"0.5"
 end
 
 @testset "Division" begin

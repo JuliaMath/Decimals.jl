@@ -108,6 +108,14 @@ function print_test(io, test, directives)
         print(io, "@test_throws OverflowError ")
         print_operation(io, test.operation, test.operands)
         println(io)
+    elseif :division_undefined ∈ test.conditions
+        print(io, "@test_throws UndefinedDivisionError ")
+        print_operation(io, test.operation, test.operands)
+        println(io)
+    elseif :division_by_zero ∈ test.conditions
+        print(io, "@test_throws DivisionByZeroError ")
+        print_operation(io, test.operation, test.operands)
+        println(io)
     else
         print(io, "@test ")
         print_operation(io, test.operation, test.operands)
