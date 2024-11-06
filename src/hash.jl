@@ -8,7 +8,7 @@ function Base.decompose(x::Decimal)
     if x.q ≥ 0
         return (coef * big(5)^x.q, x.q, BigOne)
     else
-        coef, exp = cancelfactor(coef, Val(5))
+        coef, exp = cancelfactor(coef, Val(5), -x.q)
         q = -x.q - exp
         return (coef, x.q, big(5) ^ q)
     end

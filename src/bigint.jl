@@ -33,22 +33,24 @@ function maxexp(n::Int)
 end
 
 """
-    cancelfactor(x::BigInt, ::Val{N})
+    cancelfactor(x::BigInt, ::Val{N}, m::Integer)
 
-Remove all occurrences of the factor `N` from `x`. The result is pair `(y, E)`
-such that `x = y * N^E`.
+Remove `m` occurrences of the factor `N` from `x`. The result is pair `(y, E)`
+such that `x = y * N^E`. If `m` is not provided, all factors are removed.
 """
-function cancelfactor(x::BigInt, ::Val{N}) where {N}
+function cancelfactor(x::BigInt, ::Val{N}, m::Integer=typemax(Int)) where {N}
     if iszero(x)
         return x, 0
     end
 
     q = 0
-    while isdivisible(x, N)
+    while q < m && isdivisible(x, N)
         d = N
         q += 1
         for e in 2:maxexp(N)
-            isdivisible(x, d * N) || break
+            if (q == m) || !isdivisible(x, d * N)
+                break
+            end
             d *= N
             q += 1
         end
