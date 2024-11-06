@@ -46,3 +46,9 @@ end
     @test isfinite(Decimal(0, 1, 1))
     @test !isnan(Decimal(0, 1, 1))
 end
+
+@testset "Normalize" begin
+    x = normalize(dec"-15.11000")
+    @test (x.c % 10) ≠ 0
+    @test x == dec"-15.11"
+end
