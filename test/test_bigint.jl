@@ -40,5 +40,9 @@
         @test Decimals.cancelfactor(big(3)^8, Val(3)) == (big(1), 8)
         @test Decimals.cancelfactor(big(3)^128, Val(3)) == (big(1), 128)
         @test Decimals.cancelfactor(big(948659)^8, Val(948659)) == (big(1), 8)
+
+        @test Decimals.cancelfactor(big(5^5), Val(5)) == (big(1), 5)
+        @test Decimals.cancelfactor(big(5^5), Val(5), 0) == (big(5^5), 0)
+        @test Decimals.cancelfactor(big(5^5), Val(5), 3) == (big(25), 3)
     end
 end
