@@ -212,10 +212,6 @@ function Base.:(/)(x::Decimal, y::Decimal)
     return fix(Decimal(s, c, q))
 end
 
-function Base.inv(x::Decimal)
-    return Decimal(false, BigOne, 0) / x
-end
-
 Base.abs(x::Decimal) = fix(Decimal(false, x.c, x.q))
 
 # TODO exponentiation

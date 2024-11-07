@@ -9,6 +9,7 @@ using Test
         @test hash(Decimal(0.09375)) == hash(0.09375)
         @test hash(Decimal(-3)) == hash(-3)
         @test hash(Decimal(-0.09375)) == hash(-0.09375)
+        @test hash(Decimal(1.1)) == hash(1.1)
 
         # Equality implies same hash
         @test hash(Decimal(0, 100, 0)) == hash(Decimal(0, 10, 1))

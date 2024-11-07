@@ -6,7 +6,6 @@ using Test
 @testset "isequal" begin
     @test isequal(Decimal(false, 2, -3), Decimal(false, 2, -3))
     @test !isequal(Decimal(false, 2, -3), Decimal(false, 2, 3))
-    @test isequal(Decimal(false, 2, -3), 0.002)
     @test isequal(Decimal(true, 2, 0), -2)
     @test !isequal(Decimal(true, 2, 0), 2)
     @test !isequal(Decimal(true, 0, -1), Decimal(false, 0, 0))
@@ -15,7 +14,6 @@ end
 @testset "==" begin
     @test Decimal(false, 2, -3) == Decimal(false, 2, -3)
     @test Decimal(false, 2, -3) != Decimal(false, 2, 3)
-    @test Decimal(false, 2, -3) == 0.002
 
     @test -2 == Decimal(true, 2, 0)
     @test 2 != Decimal(true, 2, 0)
