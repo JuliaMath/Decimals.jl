@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Operations · Decimals.jl</title><meta name="title" content="Operations · Decimals.jl"/><meta property="og:title" content="Operations · Decimals.jl"/><meta property="twitter:title" content="Operations · Decimals.jl"/><meta name="description" content="Documentation for Decimals.jl."/><meta property="og:description" content="Documentation for Decimals.jl."/><meta property="twitter:description" content="Documentation for Decimals.jl."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">Decimals.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Introduction</a></li><li class="is-active"><a class="tocitem" href>Operations</a><ul class="internal"><li><a class="tocitem" href="#Arithmetic-operations"><span>Arithmetic operations</span></a></li><li><a class="tocitem" href="#Comparison-operations"><span>Comparison operations</span></a></li><li><a class="tocitem" href="#Miscellaneous"><span>Miscellaneous</span></a></li><li><a class="tocitem" href="#Normalization"><span>Normalization</span></a></li><li><a class="tocitem" href="#Exception-types"><span>Exception types</span></a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Operations</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Operations</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaMath/Decimals.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaMath/Decimals.jl/blob/master/docs/src/operations.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Operations"><a class="docs-heading-anchor" href="#Operations">Operations</a><a id="Operations-1"></a><a class="docs-heading-anchor-permalink" href="#Operations" title="Permalink"></a></h1><p>Users can parametrize the decimal arithmetic by setting <a href="#Decimals.Context"><code>Decimals.Context</code></a> using the <a href="#Decimals.with_context"><code>Decimals.with_context</code></a> function or the <a href="#Decimals.@with_context"><code>Decimals.@with_context</code></a> macro. Operations affected by context are denoted by the badge <img src="https://img.shields.io/badge/ctxt-affected-blue" alt="Affected by context"/>.</p><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="Decimals.Context" href="#Decimals.Context"><code>Decimals.Context</code></a> — <span class="docstring-category">Type</span><span class="is-flex-grow-1 docstring-article-toggle-button" title="Collapse docstring"></span></header><section><div><pre><code class="language-julia hljs">Context</code></pre><p>User-selectable parametrization of the decimal arithmetics. The parameters are:</p><table><tr><th style="text-align: left">Parameter</th><th style="text-align: left">Description</th></tr><tr><td style="text-align: left"><code>precision::Int</code></td><td style="text-align: left">Maximum number of significand digits (default: <code>28</code>)</td></tr><tr><td style="text-align: left"><code>rounding::RoundingMode</code></td><td style="text-align: left">Rounding mode to be used when necessary (default: <code>RoundNearest</code>)</td></tr><tr><td style="text-align: left"><code>Emax::Int</code></td><td style="text-align: left">Maximum adjusted exponent (default: <code>999999</code>)</td></tr><tr><td style="text-align: left"><code>Emin::Int</code></td><td style="text-align: left">Minimum adjusted exponent (default: <code>-999999</code>)</td></tr></table><p>The parameters can be set via the (unexported) function <a href="#Decimals.with_context"><code>with_context</code></a> or macro <a href="#Decimals.@with_context"><code>@with_context</code></a>:</p><pre><code class="language-julia-repl hljs">julia&gt; Decimals.with_context(precision=1) do
+           +dec&quot;0.1234&quot;
+       end
+0.1
+
+julia&gt; Decimals.@with_context (precision=1,) +dec&quot;0.1234&quot;
+0.1</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaMath/Decimals.jl/blob/fe9400d276346a40cb2c9bdf787b1d0d7fec909c/src/context.jl#L3-L26">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="Decimals.with_context" href="#Decimals.with_context"><code>Decimals.with_context</code></a> — <span class="docstring-category">Function</span><span class="is-flex-grow-1 docstring-article-toggle-button" title="Collapse docstring"></span></header><section><div><pre><code class="language-julia hljs">with_context(f; kwargs...)</code></pre><p>Run <code>f</code> with <a href="#Decimals.Context"><code>Context</code></a> parametrized by <code>kwargs</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; Decimals.with_context(precision=42) do
+    precision(Decimal)
+end
+42</code></pre><p>See also <a href="#Decimals.@with_context"><code>@with_context</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaMath/Decimals.jl/blob/fe9400d276346a40cb2c9bdf787b1d0d7fec909c/src/context.jl#L39-L54">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="Decimals.@with_context" href="#Decimals.@with_context"><code>Decimals.@with_context</code></a> — <span class="docstring-category">Macro</span><span class="is-flex-grow-1 docstring-article-toggle-button" title="Collapse docstring"></span></header><section><div><pre><code class="language-julia hljs">@with_context params expr</code></pre><p>Run <code>expr</code> with <a href="#Decimals.Context"><code>Context</code></a> parametrized by a named tuple <code>params</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; Decimals.@with_context (precision=42, ) precision(Decimal)
+42</code></pre><p>See also <a href="#Decimals.with_context"><code>with_context</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaMath/Decimals.jl/blob/fe9400d276346a40cb2c9bdf787b1d0d7fec909c/src/context.jl#L59-L72">source</a></section></article><h2 id="Arithmetic-operations"><a class="docs-heading-anchor" href="#Arithmetic-operations">Arithmetic operations</a><a id="Arithmetic-operations-1"></a><a class="docs-heading-anchor-permalink" href="#Arithmetic-operations" title="Permalink"></a></h2><h3 id="Unary-plus,-minus"><a class="docs-heading-anchor" href="#Unary-plus,-minus">Unary plus, minus</a><a id="Unary-plus,-minus-1"></a><a class="docs-heading-anchor-permalink" href="#Unary-plus,-minus" title="Permalink"></a></h3><p><img src="https://img.shields.io/badge/ctxt-affected-blue" alt="Affected by context"/></p><p>The unary plus, <code>+x</code>, and unary minus, <code>-x</code>, is equivalent to <code>0 + x</code> and <code>0 - x</code>, respectively.</p><pre><code class="language-julia-repl hljs">julia&gt; x = dec&quot;1.1&quot;
+1.1
+
+julia&gt; +x
+1.1
+
+julia&gt; -x
+-1.1</code></pre><h3 id="Addition,-subtraction"><a class="docs-heading-anchor" href="#Addition,-subtraction">Addition, subtraction</a><a id="Addition,-subtraction-1"></a><a class="docs-heading-anchor-permalink" href="#Addition,-subtraction" title="Permalink"></a></h3><p><img src="https://img.shields.io/badge/ctxt-affected-blue" alt="Affected by context"/></p><p>Addition and subtraction are implemented via the binary operators <code>+</code> and <code>y</code>.</p><pre><code class="language-julia-repl hljs">julia&gt; x = dec&quot;1.1&quot;
+1.1
+
+julia&gt; y = dec&quot;2.2&quot;
+2.2
+
+julia&gt; x + y
+3.3
+
+julia&gt; x - y
+-1.1</code></pre><h3 id="Multiplication,-division"><a class="docs-heading-anchor" href="#Multiplication,-division">Multiplication, division</a><a id="Multiplication,-division-1"></a><a class="docs-heading-anchor-permalink" href="#Multiplication,-division" title="Permalink"></a></h3><p><img src="https://img.shields.io/badge/ctxt-affected-blue" alt="Affected by context"/></p><p>Multiplication and division are implemented via the binary operators <code>*</code> and <code>/</code>.</p><p>Division by zero throws <a href="#Decimals.DivisionByZeroError"><code>DivisionByZeroError</code></a> unless the dividend is also zero, in which case <a href="#Decimals.UndefinedDivisionError"><code>UndefinedDivisionError</code></a> is thrown.</p><pre><code class="language-julia-repl hljs">julia&gt; x = dec&quot;2&quot;
+2
+
+julia&gt; y = dec&quot;3&quot;
+3
+
+julia&gt; x * y
+6
+
+julia&gt; x / y
+0.6666666666666666666666666667
+
+julia&gt; x / dec&quot;0&quot;
+ERROR: DivisionByZeroError()
+
+julia&gt; dec&quot;0&quot; / dec&quot;0&quot;
+ERROR: UndefinedDivisionError()</code></pre><h3 id="Absolute-value"><a class="docs-heading-anchor" href="#Absolute-value">Absolute value</a><a id="Absolute-value-1"></a><a class="docs-heading-anchor-permalink" href="#Absolute-value" title="Permalink"></a></h3><p><img src="https://img.shields.io/badge/ctxt-affected-blue" alt="Affected by context"/></p><p>Absolute value is implemented via the <code>Base.abs</code> function.</p><pre><code class="language-julia-repl hljs">julia&gt; abs(dec&quot;1&quot;)
+1
+
+julia&gt; abs(dec&quot;-1&quot;)
+1</code></pre><h3 id="Minimum,-maximum"><a class="docs-heading-anchor" href="#Minimum,-maximum">Minimum, maximum</a><a id="Minimum,-maximum-1"></a><a class="docs-heading-anchor-permalink" href="#Minimum,-maximum" title="Permalink"></a></h3><p><img src="https://img.shields.io/badge/ctxt-affected-blue" alt="Affected by context"/></p><p>Selecting the minimum and maximum of two <code>Decimal</code>s is implemented via the <code>Base.min</code> and <code>Base.max</code> functions.</p><pre><code class="language-julia-repl hljs">julia&gt; x = dec&quot;0.123&quot;
+0.123
+
+julia&gt; y = dec&quot;4.567&quot;
+4.567
+
+julia&gt; min(x, y)
+0.123
+
+julia&gt; max(x, y)
+4.567</code></pre><h2 id="Comparison-operations"><a class="docs-heading-anchor" href="#Comparison-operations">Comparison operations</a><a id="Comparison-operations-1"></a><a class="docs-heading-anchor-permalink" href="#Comparison-operations" title="Permalink"></a></h2><p>The basic comparison operation is implemented via <code>Base.cmp</code>, which compares <code>x</code> and <code>y</code> and returns <code>-1</code>, <code>0</code>, or <code>+1</code> if <code>x</code> is less than, equal to, or greater than <code>y</code>.</p><pre><code class="language-julia-repl hljs">julia&gt; x = dec&quot;0.123&quot;
+0.123
+
+julia&gt; y = dec&quot;4.567&quot;
+4.567
+
+julia&gt; cmp(x, y)
+-1
+
+julia&gt; cmp(y, x)
+1</code></pre><p>The binary operators <code>==</code>, <code>&lt;</code>, and <code>&lt;=</code> are also implemented.</p><pre><code class="language-julia-repl hljs">julia&gt; x = dec&quot;0.123&quot;
+0.123
+
+julia&gt; y = dec&quot;4.567&quot;
+4.567
+
+julia&gt; x == y
+false
+
+julia&gt; x &lt; y
+true
+
+julia&gt; x &gt; y
+false
+
+julia&gt; x &lt;= y
+true
+
+julia&gt; x &gt;= y
+false</code></pre><h2 id="Miscellaneous"><a class="docs-heading-anchor" href="#Miscellaneous">Miscellaneous</a><a id="Miscellaneous-1"></a><a class="docs-heading-anchor-permalink" href="#Miscellaneous" title="Permalink"></a></h2><h3 id="Hashing"><a class="docs-heading-anchor" href="#Hashing">Hashing</a><a id="Hashing-1"></a><a class="docs-heading-anchor-permalink" href="#Hashing" title="Permalink"></a></h3><p>Hashing of <code>Decimal</code>s is supported via the <code>Base.hash</code> function. It holds for the output hash code that <code>x == y</code> implies <code>hash(x) == hash(y)</code>, and this is true even if one of the operands is not a <code>Decimal</code>.</p><pre><code class="language-julia-repl hljs">julia&gt; x = Decimal(0, 2125, -3)
+2.125
+
+julia&gt; y = Decimal(0, 212500, -5)
+2.12500
+
+julia&gt; hash(x) == hash(y)
+true
+
+julia&gt; hash(x) == hash(2.125)
+true</code></pre><h3 id="Rounding"><a class="docs-heading-anchor" href="#Rounding">Rounding</a><a id="Rounding-1"></a><a class="docs-heading-anchor-permalink" href="#Rounding" title="Permalink"></a></h3><p>The standard interface for rounding floating-point numbers is supported:</p><pre><code class="language-julia-repl hljs">julia&gt; x = dec&quot;123.45678&quot;
+123.45678
+
+julia&gt; round(x) # Round to the nearest integer
+123
+
+julia&gt; round(Int, x) # Round to the nearest integer and convert to Int
+123
+
+julia&gt; round(x, RoundUp) # Round using a particular rounding mode
+124
+
+julia&gt; round(x, digits=4) # Round to four decimal places
+123.4568
+
+julia&gt; round(x, sigdigits=4) # Round to four significant digits
+123.5</code></pre><p>Our test suite covers six rounding modes that are specified by the Decimal arithmetic specification.  The rounding modes are</p><ul><li><code>RoundNearest</code> (<em>round-half-even</em> in the specification),</li><li><code>RoundNearestTiesAway</code> (<em>round-half-up</em>),</li><li><code>RoundUp</code> (<em>round-ceiling</em>),</li><li><code>RoundDown</code> (<em>round-floor</em>),</li><li><code>RoundFromZero</code> (<em>round-up</em>),</li><li><code>RoundToZero</code> (<em>round-down</em>).</li></ul><p>The default mode is <code>RoundNearest</code>.</p><h2 id="Normalization"><a class="docs-heading-anchor" href="#Normalization">Normalization</a><a id="Normalization-1"></a><a class="docs-heading-anchor-permalink" href="#Normalization" title="Permalink"></a></h2><p><img src="https://img.shields.io/badge/ctxt-affected-blue" alt="Affected by context"/></p><p>Normalization of a <code>Decimal</code> removes all trailing zeros of the coefficient <span>$c$</span> while adjusting the exponent <span>$q$</span> so that the <code>Decimal</code> remains the same (up to the precision given by context). The operation is semantically equivalent to unary plus.</p><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="Decimals.normalize" href="#Decimals.normalize"><code>Decimals.normalize</code></a> — <span class="docstring-category">Function</span><span class="is-flex-grow-1 docstring-article-toggle-button" title="Collapse docstring"></span></header><section><div><pre><code class="language-julia hljs">normalize(x::Decimal)</code></pre><p>Return an equal number reduced to its simplest form with all trailing zeros in the coefficient removed.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; x = dec&quot;1.2000&quot;
+1.2000
+
+julia&gt; x.c # Coefficient of `x`
+12000
+
+julia&gt; y = normalize(dec&quot;1.2000&quot;)
+1.2
+
+julia&gt; y.c # Coefficient of `y`
+12
+
+julia&gt; x == y
+true</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaMath/Decimals.jl/blob/fe9400d276346a40cb2c9bdf787b1d0d7fec909c/src/decimal.jl#L10-L33">source</a></section></article><h2 id="Exception-types"><a class="docs-heading-anchor" href="#Exception-types">Exception types</a><a id="Exception-types-1"></a><a class="docs-heading-anchor-permalink" href="#Exception-types" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="Decimals.DivisionByZeroError" href="#Decimals.DivisionByZeroError"><code>Decimals.DivisionByZeroError</code></a> — <span class="docstring-category">Type</span><span class="is-flex-grow-1 docstring-article-toggle-button" title="Collapse docstring"></span></header><section><div><pre><code class="language-julia hljs">DivisionByZeroError</code></pre><p>Division was attempted with a denominator value of 0.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaMath/Decimals.jl/blob/fe9400d276346a40cb2c9bdf787b1d0d7fec909c/src/arithmetic.jl#L7-L11">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="Decimals.UndefinedDivisionError" href="#Decimals.UndefinedDivisionError"><code>Decimals.UndefinedDivisionError</code></a> — <span class="docstring-category">Type</span><span class="is-flex-grow-1 docstring-article-toggle-button" title="Collapse docstring"></span></header><section><div><pre><code class="language-julia hljs">UndefinedDivisionError</code></pre><p>Division was attempted with both numerator and denominator value of 0.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaMath/Decimals.jl/blob/fe9400d276346a40cb2c9bdf787b1d0d7fec909c/src/arithmetic.jl#L14-L18">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Introduction</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.7.0 on <span class="colophon-date" title="Monday 11 November 2024 08:15">Monday 11 November 2024</span>. Using Julia version 1.11.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
