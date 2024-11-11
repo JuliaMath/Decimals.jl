@@ -24,26 +24,13 @@ end
 
 include("bigint.jl")
 include("context.jl")
-
-# Convert between Decimal objects, numbers, and strings
+include("conversion.jl")
 include("decimal.jl")
-
-# Decimal normalization
-include("norm.jl")
-
-# Addition, subtraction, negation, multiplication
 include("arithmetic.jl")
-
-# Equality
 include("equals.jl")
-
-# Rounding
 include("round.jl")
-
 include("hash.jl")
-
 include("parse.jl")
-
 include("show.jl")
 
 end
