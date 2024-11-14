@@ -110,6 +110,8 @@ using Decimals: @with_context
 @with_context (Emax = 999, Emin = -999, precision = 9, rounding = RoundingMode{:NearestTiesAway}()) @test(normalize(dec"-120") == dec"-1.2e+2")
 @with_context (Emax = 999, Emin = -999, precision = 9, rounding = RoundingMode{:NearestTiesAway}()) @test(normalize(dec"120.00") == dec"1.2e+2")
 @with_context (Emax = 999, Emin = -999, precision = 9, rounding = RoundingMode{:NearestTiesAway}()) @test(normalize(dec"0.00") == dec"0")
+@with_context (Emax = 999999999, Emin = -999999999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test_throws(OverflowError, normalize(dec"9.999e+999999999"))
+@with_context (Emax = 999999999, Emin = -999999999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test_throws(OverflowError, normalize(dec"-9.999e+999999999"))
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(normalize(dec"1.00e-999") == dec"1e-999")
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(normalize(dec"0.1e-999") == dec"1e-1000")
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(normalize(dec"0.10e-999") == dec"1e-1000")

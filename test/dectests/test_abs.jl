@@ -48,6 +48,7 @@ using Decimals: @with_context
 @with_context (Emax = 384, Emin = -383, precision = 9, rounding = RoundingMode{:NearestTiesAway}()) @test(abs(dec"-56267e-2") == dec"562.67")
 @with_context (Emax = 384, Emin = -383, precision = 9, rounding = RoundingMode{:NearestTiesAway}()) @test(abs(dec"-56267e-1") == dec"5626.7")
 @with_context (Emax = 384, Emin = -383, precision = 9, rounding = RoundingMode{:NearestTiesAway}()) @test(abs(dec"-56267e-0") == dec"56267")
+@with_context (Emax = 999999999, Emin = -999999999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test_throws(OverflowError, abs(dec"9.999e+999999999"))
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(abs(dec"1.00e-999") == dec"1.00e-999")
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(abs(dec"0.1e-999") == dec"1e-1000")
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(abs(dec"0.10e-999") == dec"1.0e-1000")
