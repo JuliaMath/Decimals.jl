@@ -47,7 +47,6 @@ function translate(io, dectest_path)
 
             test = parse_test(line)
             any(isspecial, test.operands) && continue
-            isspecial(test.result) && continue
 
             dectest = decimal_test(test, directives)
             println(io, dectest)
@@ -57,7 +56,7 @@ end
 
 function isspecial(value)
     value = lowercase(value)
-    return occursin(r"(inf|nan|#|\?)", value)
+    return occursin(r"(inf|nan|#)", value)
 end
 
 function parse_precision(line)

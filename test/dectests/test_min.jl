@@ -189,6 +189,7 @@ using Decimals: @with_context
 @with_context (Emax = 999999999, Emin = -999999999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(min(dec"75410", dec"66666") == dec"6.67e+4")
 @with_context (Emax = 999999999, Emin = -999999999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(min(dec"75411", dec"33333") == dec"3.33e+4")
 @with_context (Emax = 999999999, Emin = -999999999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(min(dec"9.999e+999999999", dec"0") == dec"0")
+@with_context (Emax = 999999999, Emin = -999999999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test_throws(OverflowError, min(dec"-9.999e+999999999", dec"0"))
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(min(dec"1.00e-999", dec"0") == dec"0")
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(min(dec"0.1e-999", dec"0") == dec"0")
 @with_context (Emax = 999, Emin = -999, precision = 3, rounding = RoundingMode{:NearestTiesAway}()) @test(min(dec"0.10e-999", dec"0") == dec"0")
