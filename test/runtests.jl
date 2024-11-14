@@ -32,6 +32,7 @@ include("test_show.jl")
     include("dectests/test_min.jl")
     include("dectests/test_minus.jl")
     include("dectests/test_multiply.jl")
+    include("dectests/test_normalize.jl")
     include("dectests/test_plus.jl")
     include("dectests/test_subtract.jl")
 end
