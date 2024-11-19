@@ -24,8 +24,6 @@ function Decimal(x::AbstractFloat)
     return Decimal(s, c, q)
 end
 
-Base.convert(::Type{Decimal}, x::Real) = Decimal(x)
-
 function Base.BigFloat(x::Decimal)
     y = BigFloat(x.c)
     if x.q ≥ 0
