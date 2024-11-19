@@ -2,6 +2,11 @@ using Decimals
 using Test
 
 @testset "Conversions" begin
+    @testset "Decimal to Decimal" begin
+        x = Decimal(1, 2, 3)
+        @test Decimal(x) === x
+    end
+
     @testset "$T" for T in [Float32, Float64, BigFloat]
         @test T(Decimal(T(0.0))) == T(0.0)
         @test T(Decimal(T(-0.0))) == T(-0.0)
