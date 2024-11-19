@@ -214,4 +214,28 @@ end
 
 Base.abs(x::Decimal) = fix(Decimal(false, x.c, x.q))
 
-# TODO exponentiation
+# Exponentiation, please test
+
+function ^(x::Decimal, y::Decimal)
+    #(-1.23)^(something) code to catch errors prior to the routine
+    x.s == 1 && begin
+        (y.q < 0  && throw(DomainError(y),"Exponentiation yielding a complex result requires a complex argument."))
+    end
+    y.s == 1 && (return ^(inv(x),-y))
+    y.q < 0 && (return Decimal(BigFloat(x)^BigFloat(y))) #add correction to precision, its too much
+    
+    if iseven(y.c) #squared number
+        zs = 0
+    else
+        if x.s == 0 
+            zs =0
+        else
+            zs = 1
+        end
+    end
+    
+        zc = x.c^((y.c)*(10^y.q))
+        zq = (x.q)*((y.c)*(10^y.q))
+        return  Decimal(zs,zc,zq)
+ 
+end
