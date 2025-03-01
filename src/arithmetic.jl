@@ -201,12 +201,18 @@ function Base.:(/)(x::Decimal, y::Decimal)
 
     if d > 0
         # If `d` is positive, we take the path denoted (P1)
-        c = div(x.c * BigTen^d, y.c)
+        c, rem = divrem(x.c * BigTen^d, y.c)
     elseif d < 0
         # If `d` is negative, we take the path denoted (P2)
-        c = div(x.c, y.c * BigTen^(-d))
+        c, rem = divrem(x.c, y.c * BigTen^(-d))
     else
-        c = div(x.c, y.c)
+        c, rem = divrem(x.c, y.c)
+    end
+
+    # When the result is non-exact, and the last coefficient digit is 5, we
+    # need to increment the coefficient for correct rounding
+    if rem > 0 && isdivisible(c, 5)
+        c += 1
     end
 
     return fix(Decimal(s, c, q))
