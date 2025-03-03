@@ -1,6 +1,6 @@
 name = "Decimals"
 uuid = "abce61dc-4473-55a0-ba07-351d65e31d42"
-version = "0.5.0"
+version = "0.5.1"
 
 [deps]
 ScopedValues = "7e506255-f358-4e82-b7e4-beb19740aa63"
