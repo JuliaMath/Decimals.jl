@@ -73,4 +73,7 @@ using Test
     @with_context (Emax=999, Emin=-999, precision=9, rounding=RoundNearestTiesAway) @test inv(dec"2") == dec"0.5"
 end
 
+Decimals.@with_context (precision=2, rounding=RoundNearest) @test dec"10500000" / dec"10000" == Decimal(0, 10, 2)
+Decimals.@with_context (precision=2, rounding=RoundNearest) @test dec"10500009" / dec"10000" == Decimal(0, 11, 2)
+
 end
