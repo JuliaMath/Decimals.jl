@@ -5,7 +5,6 @@
 module Decimals
 
 export Decimal,
-       number,
        normalize,
        @dec_str,
        DivisionByZeroError,
@@ -26,7 +25,9 @@ include("bigint.jl")
 include("context.jl")
 include("conversion.jl")
 include("decimal.jl")
-include("arithmetic.jl")
+include("arithmetic/elementary.jl")
+include("arithmetic/exceptions.jl")
+include("arithmetic/sqrt.jl")
 include("equals.jl")
 include("round.jl")
 include("hash.jl")
