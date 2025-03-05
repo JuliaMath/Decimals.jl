@@ -13,6 +13,8 @@ include("test_parse.jl")
 include("test_round.jl")
 include("test_show.jl")
 
+include("arithmetic/test_sqrt.jl")
+
 @testset "DecTests" begin
     include("dectests/test_abs.jl")
     include("dectests/test_add.jl")
@@ -24,6 +26,7 @@ include("test_show.jl")
     include("dectests/test_multiply.jl")
     include("dectests/test_normalize.jl")
     include("dectests/test_plus.jl")
+    include("dectests/test_sqrt.jl")
     include("dectests/test_subtract.jl")
 end
 
