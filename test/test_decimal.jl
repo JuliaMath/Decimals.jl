@@ -64,3 +64,7 @@ end
     @test (x.c % 10) ≠ 0
     @test x == dec"-15.11"
 end
+
+@testset "Promotion" for T in [Float64, BigInt, BigFloat]
+    @test promote_type(Decimal, T) == Decimal
+end
