@@ -96,7 +96,7 @@ ERROR: UndefinedDivisionError()
 Square root is implemented via the `Base.sqrt` function.
 ```jldoctest
 julia> sqrt(dec"9")
-3.000000000000000000000000000
+3
 
 julia> sqrt(dec"2")
 1.414213562373095048801688724
