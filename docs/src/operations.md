@@ -95,7 +95,7 @@ ERROR: UndefinedDivisionError()
 
 Square root is implemented via the `Base.sqrt` function.
 ```jldoctest
-ulia> sqrt(dec"9")
+julia> sqrt(dec"9")
 3.000000000000000000000000000
 
 julia> sqrt(dec"2")
