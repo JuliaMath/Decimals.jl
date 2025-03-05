@@ -48,6 +48,10 @@ function Base.sqrt(x::Decimal)
     if isdivisible(d, 5) && d^2 != c
         d += 1
     end
+
+    d, m = cancelfactor(d, Val(10))
+    r += m
+
     return fix(Decimal(0, d, r))
 end
 
