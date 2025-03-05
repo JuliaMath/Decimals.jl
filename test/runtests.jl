@@ -10,7 +10,7 @@ include("test_decimal.jl")
 include("test_equals.jl")
 include("test_hash.jl")
 include("test_parse.jl")
-#include("test_round.jl")
+include("test_round.jl")
 include("test_show.jl")
 
 include("arithmetic/test_sqrt.jl")
