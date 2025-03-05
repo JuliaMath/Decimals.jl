@@ -3,6 +3,18 @@ Base.signbit(x::Decimal) = x.s
 Base.zero(::Type{Decimal}) = Decimal(false, 0, 0)
 Base.one(::Type{Decimal}) = Decimal(false, 1, 0)
 
+function Base.isone(x::Decimal)
+    if signbit(x)
+        return false
+    end
+
+    if x.q < 0
+        c, m = cancelfactor(x.c, Val(10), -x.q)
+        return isone(c) && (m == -x.q)
+    else
+        return isone(x.c) && iszero(x.q)
+    end
+end
 Base.iszero(x::Decimal) = iszero(x.c)
 Base.isfinite(x::Decimal) = true
 Base.isnan(x::Decimal) = false

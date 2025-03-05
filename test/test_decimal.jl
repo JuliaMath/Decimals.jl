@@ -46,7 +46,14 @@ end
 
     @test isone(one(Decimal))
     @test isone(Decimal(0, 1, 0))
+    @test !isone(Decimal(1, 1, 0))
     @test !isone(Decimal(0, 0, 1))
+    @test !isone(Decimal(0, 1, 1))
+    @test !isone(Decimal(0, 2, 0))
+
+    @test isone(Decimal(0, 1000, -3))
+    @test !isone(Decimal(0, 1000, -2))
+    @test !isone(Decimal(0, 1000, -4))
 
     @test isfinite(Decimal(0, 1, 1))
     @test !isnan(Decimal(0, 1, 1))
