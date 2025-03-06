@@ -47,6 +47,7 @@ function translate(io, dectest_path)
 
             test = parse_test(line)
             any(isspecial, test.operands) && continue
+            isspecial(test.result) && continue
 
             dectest = decimal_test(test, directives)
             println(io, dectest)
@@ -60,7 +61,7 @@ function isspecial(value)
 end
 
 function parse_precision(line)
-    m = match(r"^precision:\s*(\d+)$", line)
+    m = match(r"^precision:\s*(\d+).*$", line)
     isnothing(m) && throw(ArgumentError(line))
     return parse(Int, m[1])
 end
@@ -187,6 +188,8 @@ function decimal_operation(operation, operands)
         return decimal_reduce(operands...)
     elseif operation == "subtract"
         return decimal_subtract(operands...)
+    elseif operation == "squareroot"
+        return decimal_sqrt(operands...)
     else
         throw(ArgumentError(operation))
     end
@@ -204,4 +207,5 @@ decimal_multiply(x, y) = :($(dec(x)) * $(dec(y)))
 decimal_plus(x) = :(+($(dec(x))))
 decimal_reduce(x) = :(normalize($(dec(x))))
 decimal_subtract(x, y) = :($(dec(x)) - $(dec(y)))
+decimal_sqrt(x) = :(sqrt($(dec(x))))
 

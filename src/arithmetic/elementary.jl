@@ -1,22 +1,6 @@
 Base.promote_rule(::Type{Decimal}, ::Type{<:Real}) = Decimal
-
-# override definitions in Base
 Base.promote_rule(::Type{BigFloat}, ::Type{Decimal}) = Decimal
 Base.promote_rule(::Type{BigInt}, ::Type{Decimal}) = Decimal
-
-"""
-    DivisionByZeroError
-
-Division was attempted with a denominator value of 0.
-"""
-struct DivisionByZeroError <: Exception end
-
-"""
-    UndefinedDivisionError
-
-Division was attempted with both numerator and denominator value of 0.
-"""
-struct UndefinedDivisionError <: Exception end
 
 Base.:(+)(x::Decimal) = fix(x)
 Base.:(-)(x::Decimal) = fix(Decimal(!x.s, x.c, x.q))
@@ -220,4 +204,3 @@ end
 
 Base.abs(x::Decimal) = fix(Decimal(false, x.c, x.q))
 
-# TODO exponentiation

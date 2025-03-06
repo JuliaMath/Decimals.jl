@@ -89,6 +89,19 @@ julia> dec"0" / dec"0"
 ERROR: UndefinedDivisionError()
 ```
 
+### Square root
+
+![Affected by context](https://img.shields.io/badge/ctxt-affected-blue)
+
+Square root is implemented via the `Base.sqrt` function.
+```jldoctest
+julia> sqrt(dec"9")
+3
+
+julia> sqrt(dec"2")
+1.414213562373095048801688724
+```
+
 ### Absolute value
 
 ![Affected by context](https://img.shields.io/badge/ctxt-affected-blue)
