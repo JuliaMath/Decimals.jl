@@ -14,6 +14,7 @@ include("test_round.jl")
 include("test_show.jl")
 
 include("arithmetic/test_sqrt.jl")
+include("arithmetic/test_inv.jl")
 
 @testset "DecTests" begin
     include("dectests/test_abs.jl")
