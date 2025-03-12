@@ -72,7 +72,7 @@ See also [`with_context`](@ref).
 """
 macro with_context(params, expr)
     return quote
-        @with Decimals.CONTEXT => Decimals.Context(;$params...) $(esc(expr))
+        @with CONTEXT => Context(;$(esc(params))...) $(esc(expr))
     end
 end
 

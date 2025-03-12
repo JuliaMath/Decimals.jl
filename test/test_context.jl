@@ -6,10 +6,11 @@ using Decimals: @with_context, with_context
 @testset "Context" begin
     @testset "precision" begin
         @test precision(Decimal) == 28
-        with_context(precision=42) do
-            @test precision(Decimal) == 42
+        prec = 42
+        with_context(precision=prec) do
+            @test precision(Decimal) == prec
         end
-        @with_context (precision=42,) @test precision(Decimal) == 42
+        @with_context (precision=prec,) @test precision(Decimal) == prec
     end
 
     @testset "rounding" begin
