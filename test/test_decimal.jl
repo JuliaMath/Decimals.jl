@@ -57,6 +57,16 @@ end
 
     @test isfinite(Decimal(0, 1, 1))
     @test !isnan(Decimal(0, 1, 1))
+
+    if VERSION ≥ v"1.13"
+        @test ispositive(Decimal(0, 1, 0))
+        @test !ispositive(Decimal(0, 0, 1))
+        @test !ispositive(Decimal(1, 1, 0))
+
+        @test isnegative(Decimal(1, 1, 0))
+        @test !isnegative(Decimal(0, 0, 1))
+        @test !isnegative(Decimal(0, 1, 0))
+    end
 end
 
 @testset "Normalize" begin

@@ -19,6 +19,11 @@ Base.iszero(x::Decimal) = iszero(x.c)
 Base.isfinite(x::Decimal) = true
 Base.isnan(x::Decimal) = false
 
+if VERSION ≥ v"1.13"
+    Base.ispositive(x::Decimal) = !x.s && !iszero(x.c)
+    Base.isnegative(x::Decimal) = x.s && !iszero(x.c)
+end
+
 """
     normalize(x::Decimal)
 
